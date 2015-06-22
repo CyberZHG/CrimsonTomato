@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -35,6 +36,8 @@ public class TimerWidget extends Widget {
     private Date end;
     private String note;
 
+    private float transStrokeWidth;
+
     public TimerWidget(Context context, View view) {
         super(context, view);
     }
@@ -43,19 +46,40 @@ public class TimerWidget extends Widget {
     public void selfDraw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.rgb(244, 10, 6));
+        paint.setColor(Color.rgb(243, 103, 111));
+        paint.setTypeface(Typeface.SANS_SERIF);
+        paint.setTextSize((int)(h * 0.2));
+        paint.setTextAlign(Paint.Align.CENTER);
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        float fontHeight = fontMetrics.bottom - fontMetrics.top;
+        float textBaseY = y + getH() - (getH() - fontHeight) / 2 - fontMetrics.bottom;
         int left = x + PADDING;
         int top = y + PADDING;
         int right = x + w - PADDING;
         int bottom = y + h - PADDING;
+        int midX = (left + right) / 2;
         RectF oval = new RectF(left, top, right, bottom);
         switch (state) {
             case STATE_WAIT:
+                paint.setStrokeWidth(5.0f);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawArc(oval, 0, 360, false, paint);
+                paint.setColor(Color.WHITE);
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
+                break;
             case STATE_TRANS_TO_RUNNING:
+                paint.setStrokeWidth(this.transStrokeWidth);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawArc(oval, 0, 360, false, paint);
+                break;
             case STATE_FINISHED:
                 paint.setStrokeWidth(5.0f);
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawArc(oval, 0, 360, false, paint);
+                paint.setColor(Color.WHITE);
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawText(this.context.getString(R.string.timer_finished), midX, textBaseY, paint);
                 break;
             case STATE_RUNNING:
                 paint.setStrokeWidth(1.0f);
@@ -63,10 +87,15 @@ public class TimerWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
                 paint.setStrokeWidth(3.0f);
                 long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
-                float innerAngle = interval % (1000 * 60) / 60.0f * 360;
-                float outerAngle = interval / (1000 * 60) / 25.0f * 360;
-                canvas.drawArc(new RectF(left + 1, top + 1, right - 1, bottom - 1), 0, innerAngle, false, paint);
-                canvas.drawArc(new RectF(left - 1, top - 1, right + 1, bottom + 1), 0, outerAngle, false, paint);
+                float second = interval % (1000 * 60) / 60.0f;
+                float minute = interval / (1000.0f * 60) / 25.0f;
+                float innerAngle = second * 360;
+                float outerAngle = minute * 360;
+                canvas.drawArc(new RectF(left + 1, top + 1, right - 1, bottom - 1), -90, innerAngle, false, paint);
+                canvas.drawArc(new RectF(left - 1, top - 1, right + 1, bottom + 1), -90, outerAngle, false, paint);
+                paint.setColor(Color.WHITE);
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawText(getRemainTimeString(), midX, textBaseY, paint);
                 break;
         }
     }
@@ -79,6 +108,7 @@ public class TimerWidget extends Widget {
                     this.begin = new Date();
                     this.current = new Date();
                     this.state = STATE_TRANS_TO_RUNNING;
+                    this.transStrokeWidth = 5.0f;
                 }
                 break;
             case STATE_TRANS_TO_RUNNING:
@@ -100,6 +130,7 @@ public class TimerWidget extends Widget {
                             dialog.dismiss();
                         }
                     });
+                    builder.create();
                 }
                 break;
             case STATE_FINISHED:
@@ -127,7 +158,6 @@ public class TimerWidget extends Widget {
                     layout.addView(editText, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                     builder.setView(layout);
-
                     builder.setPositiveButton(this.context.getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -144,6 +174,7 @@ public class TimerWidget extends Widget {
                             dialog.dismiss();
                         }
                     });
+                    builder.create();
                 }
                 break;
         }
@@ -164,7 +195,11 @@ public class TimerWidget extends Widget {
     public void onTimeEvent() {
         switch (state) {
             case STATE_TRANS_TO_RUNNING:
-                this.state = STATE_RUNNING;
+                if (this.transStrokeWidth > 1.0f) {
+                    this.transStrokeWidth -= 0.2f;
+                } else {
+                    this.state = STATE_RUNNING;
+                }
                 this.postInvalidate();
                 break;
             case STATE_RUNNING:
@@ -177,5 +212,24 @@ public class TimerWidget extends Widget {
                 break;
         }
         super.onTimeEvent();
+    }
+
+    private String getRemainTimeString() {
+        long interval = 25 * 60 - (current.getTime() - begin.getTime()) / 1000;
+        if (interval < 0) {
+            interval = 0;
+        }
+        long minute = interval / 60;
+        long second = interval % 60;
+        String ret = "";
+        if (minute < 10) {
+            ret += "0";
+        }
+        ret += minute + " : ";
+        if (second < 10) {
+            ret += "0";
+        }
+        ret += second;
+        return ret;
     }
 }
