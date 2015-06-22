@@ -45,8 +45,8 @@ public abstract class WidgetContainer {
         int x = (int)event.getX();
         int y = (int)event.getY();
         for (Widget widget : this.widgets) {
-            if (widget.getX() <= x && x <= widget.getX() + widget.getW()) {
-                if (widget.getY() <= y && y <= widget.getY() + widget.getH()) {
+            if (widget.getLeft() <= x && x <= widget.getRight()) {
+                if (widget.getTop() <= y && y <= widget.getBottom()) {
                     if (widget.onTouchEvent(event)) {
                         this.lastTouchWidget = widget;
                         return true;
@@ -55,6 +55,12 @@ public abstract class WidgetContainer {
             }
         }
         return false;
+    }
+
+    public void onTimeEvent() {
+        for (Widget widget : this.widgets) {
+            widget.onTimeEvent();
+        }
     }
 
     public abstract void selfDraw(Canvas canvas);

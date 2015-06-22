@@ -22,7 +22,7 @@ public class MainScene extends Scene {
         int cy = this.height / 2;
         int radius = (int)(Math.min(cx, cy) * 0.8);
         int diameter = radius * 2;
-        this.timerWidget = new TimerWidget(context);
+        this.timerWidget = new TimerWidget(context, view);
         this.timerWidget.setGeometry(cx - radius, cy - radius, diameter, diameter);
         this.addChild(this.timerWidget);
     }

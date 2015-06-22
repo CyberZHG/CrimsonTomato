@@ -8,6 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import zhaohg.crimson.data.TomatoData;
 import zhaohg.crimson.scene.MainScene;
 import zhaohg.crimson.scene.Scene;
@@ -28,6 +31,14 @@ public class MainActivity extends Activity {
         this.mainView = new MainView(this);
         this.scene = new MainScene(this, this.mainView);
         this.setContentView(this.mainView);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                scene.onTimeEvent();
+            }
+        }, 0, 50);
     }
 
     public class MainView extends View {

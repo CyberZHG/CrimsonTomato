@@ -9,6 +9,7 @@ import android.graphics.RectF;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ import zhaohg.crimson.data.TomatoData;
 
 public class TimerWidget extends Widget {
 
+    private static int PADDING = 5;
+
     private static final int STATE_WAIT = 0;
     private static final int STATE_TRANS_TO_RUNNING = 1;
     private static final int STATE_RUNNING = 2;
@@ -28,11 +31,12 @@ public class TimerWidget extends Widget {
 
     private int state = STATE_WAIT;
     private Date begin;
+    private Date current;
     private Date end;
     private String note;
 
-    public TimerWidget(Context context) {
-        super(context);
+    public TimerWidget(Context context, View view) {
+        super(context, view);
     }
 
     @Override
@@ -40,10 +44,31 @@ public class TimerWidget extends Widget {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.rgb(244, 10, 6));
-        paint.setStrokeWidth(3.0f);
-        paint.setStyle(Paint.Style.STROKE);
-        RectF oval = new RectF(x, y, x + w, y + h);
-        canvas.drawArc(oval, 0, 360, false, paint);
+        int left = x + PADDING;
+        int top = y + PADDING;
+        int right = x + w - PADDING;
+        int bottom = y + h - PADDING;
+        RectF oval = new RectF(left, top, right, bottom);
+        switch (state) {
+            case STATE_WAIT:
+            case STATE_TRANS_TO_RUNNING:
+            case STATE_FINISHED:
+                paint.setStrokeWidth(5.0f);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawArc(oval, 0, 360, false, paint);
+                break;
+            case STATE_RUNNING:
+                paint.setStrokeWidth(1.0f);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawArc(oval, 0, 360, false, paint);
+                paint.setStrokeWidth(3.0f);
+                long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
+                float innerAngle = interval % (1000 * 60) / 60.0f * 360;
+                float outerAngle = interval / (1000 * 60) / 25.0f * 360;
+                canvas.drawArc(new RectF(left + 1, top + 1, right - 1, bottom - 1), 0, innerAngle, false, paint);
+                canvas.drawArc(new RectF(left - 1, top - 1, right + 1, bottom + 1), 0, outerAngle, false, paint);
+                break;
+        }
     }
 
     @Override
@@ -52,6 +77,7 @@ public class TimerWidget extends Widget {
             case STATE_WAIT:
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     this.begin = new Date();
+                    this.current = new Date();
                     this.state = STATE_TRANS_TO_RUNNING;
                 }
                 break;
@@ -121,6 +147,7 @@ public class TimerWidget extends Widget {
                 }
                 break;
         }
+        this.postInvalidate();
         return true;
     }
 
@@ -131,5 +158,24 @@ public class TimerWidget extends Widget {
         tomato.setNote(this.note);
         TomatoData tomatoData = new TomatoData(this.context);
         tomatoData.addTomato(tomato);
+    }
+
+    @Override
+    public void onTimeEvent() {
+        switch (state) {
+            case STATE_TRANS_TO_RUNNING:
+                this.state = STATE_RUNNING;
+                this.postInvalidate();
+                break;
+            case STATE_RUNNING:
+                this.current = new Date();
+                long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
+                if (interval > 25) {
+                    this.state = STATE_FINISHED;
+                }
+                this.postInvalidate();
+                break;
+        }
+        super.onTimeEvent();
     }
 }
