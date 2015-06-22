@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
+import zhaohg.crimson.data.TomatoData;
 import zhaohg.crimson.scene.MainScene;
 import zhaohg.crimson.scene.Scene;
 
@@ -18,6 +19,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TomatoData tomatoData = new TomatoData(this);
+        tomatoData.initDatabase();
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.mainView = new MainView(this);
         this.scene = new MainScene(this, this.mainView);
