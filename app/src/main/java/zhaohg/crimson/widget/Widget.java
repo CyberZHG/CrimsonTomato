@@ -61,4 +61,5 @@ public abstract class Widget extends WidgetContainer {
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
+
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 
@@ -37,6 +38,11 @@ public class MainActivity extends Activity {
         @Override
         protected void onDraw(Canvas canvas) {
             scene.onDraw(canvas);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            return scene.onTouchEvent(event);
         }
     }
 

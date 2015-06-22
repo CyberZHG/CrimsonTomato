@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Crimson</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="dialog_give_up_title">Give Up</string>
+    <string name="dialog_give_up_message">Are you wish to give up?</string>
+    <string name="dialog_comment_title">Comment</string>
+    <string name="dialog_comment_message">What did you do:</string>
 </resources>
