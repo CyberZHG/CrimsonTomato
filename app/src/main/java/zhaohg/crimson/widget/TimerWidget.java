@@ -46,7 +46,7 @@ public class TimerWidget extends Widget {
     public void selfDraw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.rgb(243, 103, 111));
+        paint.setColor(Color.rgb(212, 46, 24));
         paint.setTypeface(Typeface.SANS_SERIF);
         paint.setTextSize((int)(h * 0.2));
         paint.setTextAlign(Paint.Align.CENTER);
@@ -87,7 +87,7 @@ public class TimerWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
                 paint.setStrokeWidth(3.0f);
                 long interval = current.getTime() - begin.getTime();
-                float second = interval % (1000 * 60) / 60.0f;
+                float second = interval % (1000 * 60) / 1000.0f / 60.0f;
                 float minute = interval / (1000.0f * 60) / 25.0f;
                 float innerAngle = second * 360;
                 float outerAngle = minute * 360;
@@ -117,16 +117,18 @@ public class TimerWidget extends Widget {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
                     builder.setTitle(this.context.getString(R.string.dialog_give_up_title));
                     builder.setMessage(this.context.getString(R.string.dialog_give_up_message));
-                    builder.setPositiveButton(this.context.getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(this.context.getString(R.string.action_cancel),
+                            new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            state = STATE_WAIT;
                             dialog.dismiss();
                         }
                     });
-                    builder.setNegativeButton(this.context.getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(this.context.getString(R.string.action_confirm),
+                            new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            state = STATE_WAIT;
                             dialog.dismiss();
                         }
                     });
@@ -158,19 +160,21 @@ public class TimerWidget extends Widget {
                     layout.addView(editText, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                     builder.setView(layout);
-                    builder.setPositiveButton(this.context.getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(this.context.getString(R.string.action_cancel),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.setPositiveButton(this.context.getString(R.string.action_confirm),
+                            new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             end = new Date();
                             state = STATE_WAIT;
                             note = editText.getText().toString();
                             addTomatoToDatabase();
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.setNegativeButton(this.context.getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
                     });
