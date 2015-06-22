@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 
 import java.util.Vector;
 
-public class WidgetContainer {
+public abstract class WidgetContainer {
 
     protected Vector<Widget> widgets = new Vector();
 
@@ -18,8 +18,17 @@ public class WidgetContainer {
 
     protected void drawChildren(Canvas canvas) {
         for (Widget widget : this.widgets) {
-            widget.onDraw(canvas);
+            if (widget.isVisible()) {
+                widget.onDraw(canvas);
+            }
         }
     }
+
+    public void onDraw(Canvas canvas) {
+        selfDraw(canvas);
+        drawChildren(canvas);
+    }
+
+    public abstract void selfDraw(Canvas canvas);
 
 }

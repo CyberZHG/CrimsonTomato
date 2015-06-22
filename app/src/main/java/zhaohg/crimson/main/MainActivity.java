@@ -12,14 +12,16 @@ import zhaohg.crimson.scene.Scene;
 
 public class MainActivity extends Activity {
 
+    private MainView mainView;
     private Scene scene;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.scene = new MainScene(this);
-        this.setContentView(new MainView(this));
+        this.mainView = new MainView(this);
+        this.scene = new MainScene(this, this.mainView);
+        this.setContentView(this.mainView);
     }
 
     public class MainView extends View {

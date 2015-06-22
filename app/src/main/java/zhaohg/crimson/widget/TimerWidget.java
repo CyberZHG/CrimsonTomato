@@ -13,7 +13,7 @@ public class TimerWidget extends Widget {
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
+    public void selfDraw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.rgb(244, 10, 6));
