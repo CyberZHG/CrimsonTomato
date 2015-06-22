@@ -61,7 +61,7 @@ public class TimerWidget extends Widget {
         RectF oval = new RectF(left, top, right, bottom);
         switch (state) {
             case STATE_WAIT:
-                paint.setStrokeWidth(5.0f);
+                paint.setStrokeWidth(7.0f);
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawArc(oval, 0, 360, false, paint);
                 paint.setColor(Color.WHITE);
@@ -74,7 +74,7 @@ public class TimerWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
                 break;
             case STATE_FINISHED:
-                paint.setStrokeWidth(5.0f);
+                paint.setStrokeWidth(7.0f);
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawArc(oval, 0, 360, false, paint);
                 paint.setColor(Color.WHITE);
@@ -85,14 +85,18 @@ public class TimerWidget extends Widget {
                 paint.setStrokeWidth(1.0f);
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawArc(oval, 0, 360, false, paint);
-                paint.setStrokeWidth(3.0f);
                 long interval = current.getTime() - begin.getTime();
                 float second = interval % (1000 * 60) / 1000.0f / 60.0f;
                 float minute = interval / (1000.0f * 60) / 25.0f;
                 float innerAngle = second * 360;
                 float outerAngle = minute * 360;
-                canvas.drawArc(new RectF(left + 1, top + 1, right - 1, bottom - 1), -90, innerAngle, false, paint);
-                canvas.drawArc(new RectF(left - 1, top - 1, right + 1, bottom + 1), -90, outerAngle, false, paint);
+                if ((interval / 1000 / 60) % 2 == 0) {
+                    canvas.drawArc(new RectF(left + 3, top + 3, right - 3, bottom - 3), -90, innerAngle, false, paint);
+                } else {
+                    canvas.drawArc(new RectF(left + 3, top + 3, right - 3, bottom - 1), -90, innerAngle - 360, false, paint);
+                }
+                paint.setStrokeWidth(5.0f);
+                canvas.drawArc(new RectF(left - 2, top - 2, right + 2, bottom + 2), -90, outerAngle, false, paint);
                 paint.setColor(Color.WHITE);
                 paint.setStyle(Paint.Style.FILL);
                 canvas.drawText(getRemainTimeString(), midX, textBaseY, paint);
@@ -102,13 +106,19 @@ public class TimerWidget extends Widget {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (event.getX() < getLeft() || getRight() < event.getX()) {
+            return false;
+        }
+        if (event.getY() < getTop() || getBottom() < event.getY()) {
+            return false;
+        }
         switch (this.state) {
             case STATE_WAIT:
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     this.begin = new Date();
                     this.current = new Date();
                     this.state = STATE_TRANS_TO_RUNNING;
-                    this.transStrokeWidth = 5.0f;
+                    this.transStrokeWidth = 7.0f;
                 }
                 break;
             case STATE_TRANS_TO_RUNNING:
@@ -129,6 +139,7 @@ public class TimerWidget extends Widget {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             state = STATE_WAIT;
+                            postInvalidate();
                             dialog.dismiss();
                         }
                     });
@@ -175,6 +186,7 @@ public class TimerWidget extends Widget {
                             state = STATE_WAIT;
                             note = editText.getText().toString();
                             addTomatoToDatabase();
+                            postInvalidate();
                             dialog.dismiss();
                         }
                     });
