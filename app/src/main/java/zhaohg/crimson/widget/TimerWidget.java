@@ -86,7 +86,7 @@ public class TimerWidget extends Widget {
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawArc(oval, 0, 360, false, paint);
                 paint.setStrokeWidth(3.0f);
-                long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
+                long interval = current.getTime() - begin.getTime();
                 float second = interval % (1000 * 60) / 60.0f;
                 float minute = interval / (1000.0f * 60) / 25.0f;
                 float innerAngle = second * 360;
@@ -130,7 +130,7 @@ public class TimerWidget extends Widget {
                             dialog.dismiss();
                         }
                     });
-                    builder.create();
+                    builder.show();
                 }
                 break;
             case STATE_FINISHED:
@@ -174,7 +174,7 @@ public class TimerWidget extends Widget {
                             dialog.dismiss();
                         }
                     });
-                    builder.create();
+                    builder.show();
                 }
                 break;
         }
