@@ -62,6 +62,10 @@ public class TomatoData {
                 ");"
         );
         db.close();
+        Setting setting = Setting.getInstance();
+        if (setting.isSyncToCalendar()) {
+            this.syncToCalendar();
+        }
     }
 
     public void clearTomato() {
@@ -110,6 +114,27 @@ public class TomatoData {
         Vector<Tomato> tomatoes = getTomatoesFromCursor(cur);
         db.close();
         return tomatoes;
+    }
+
+    public Vector<Tomato> getUnsyncedTomatoes() {
+        SQLiteDatabase db = getDatabase();
+        Cursor cur = db.rawQuery("SELECT * " +
+                                 "FROM tomato " +
+                                 "WHERE uploaded=0;", null);
+        Vector<Tomato> tomatoes = getTomatoesFromCursor(cur);
+        db.close();
+        return tomatoes;
+    }
+
+    public void syncToCalendar() {
+        Vector<Tomato> tomatoes = this.getUnsyncedTomatoes();
+        for (Tomato tomato : tomatoes) {
+            syncToCalendar(tomato);
+        }
+    }
+
+    public void syncToCalendar(Tomato tomato) {
+
     }
 
 }

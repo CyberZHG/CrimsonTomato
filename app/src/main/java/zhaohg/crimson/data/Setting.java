@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.google.api.services.calendar.CalendarScopes;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,21 +14,27 @@ public class Setting {
 
     private static final String PREFERENCE_NAME = "setting";
     private static final String KEY_PERIOD = "period";
+    private static final String KEY_LAST_PERIOD = "last_period";
     private static final String KEY_VIBRATE = "vibrate";
     private static final String KEY_LAST_BEGIN = "last_begin";
     private static final String KEY_DEFAULT_TITLE = "default_title";
-    private static final String KEY_SYNC_TO_GOOGLE_CALENDAR = "sync_to_google_calendar";
+    private static final String KEY_SYNC_TO_CALENDAR = "sync_to_calendar";
+    private static final String KEY_CALENDAR_ID = "calendar_id";
+    private static final String KEY_CALENDAR_NAME = "calendar_name";
 
     private static Setting setting;
     private Activity activity;
     private Context context;
 
     private int period;
+    private int lastPeriod;
     private boolean vibrate;
     private Date lastBegin;
 
     private String defaultTitle;
-    private boolean syncToGoogleCalendar;
+    private boolean syncToCalendar;
+    private String calendarId;
+    private String calendarName;
 
     private Setting() {
     }
@@ -56,6 +60,7 @@ public class Setting {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SharedPreferences settings = this.getSharedPreference();
         this.period = settings.getInt(KEY_PERIOD, 25);
+        this.lastPeriod = settings.getInt(KEY_LAST_PERIOD, 25);
         this.vibrate = settings.getBoolean(KEY_VIBRATE, true);
         try {
             this.lastBegin = format.parse(settings.getString(KEY_LAST_BEGIN, "###"));
@@ -64,7 +69,9 @@ public class Setting {
         }
 
         this.defaultTitle = settings.getString(KEY_DEFAULT_TITLE, context.getString(R.string.app_name));
-        this.syncToGoogleCalendar = settings.getBoolean(KEY_SYNC_TO_GOOGLE_CALENDAR, true);
+        this.syncToCalendar = settings.getBoolean(KEY_SYNC_TO_CALENDAR, true);
+        this.calendarId = settings.getString(KEY_CALENDAR_ID, "");
+        this.calendarName = settings.getString(KEY_CALENDAR_NAME, context.getString(R.string.setting_sync_current_calendar_none));
     }
 
     private SharedPreferences getSharedPreference() {
@@ -101,6 +108,15 @@ public class Setting {
         this.editValue(KEY_PERIOD, period);
     }
 
+    public int getLastPeriod() {
+        return this.lastPeriod;
+    }
+
+    public void setLastPeriod(int lastPeriod) {
+        this.lastPeriod = lastPeriod;
+        this.editValue(KEY_LAST_PERIOD, period);
+    }
+
     public boolean isVibrate() {
         return this.vibrate;
     }
@@ -133,12 +149,30 @@ public class Setting {
         editValue(KEY_DEFAULT_TITLE, defaultTitle);
     }
 
-    public boolean isSyncToGoogleCalendar() {
-        return this.syncToGoogleCalendar;
+    public boolean isSyncToCalendar() {
+        return this.syncToCalendar;
     }
 
-    public void setSyncToGoogleCalendar(boolean syncToGoogleCalendar) {
-        this.syncToGoogleCalendar = syncToGoogleCalendar;
-        editValue(KEY_SYNC_TO_GOOGLE_CALENDAR, syncToGoogleCalendar);
+    public void setSyncToCalendar(boolean syncToCalendar) {
+        this.syncToCalendar = syncToCalendar;
+        editValue(KEY_SYNC_TO_CALENDAR, syncToCalendar);
+    }
+
+    public String getCalendarId() {
+        return this.calendarId;
+    }
+
+    public void setCalendarId(String calendarId) {
+        this.calendarId = calendarId;
+        editValue(KEY_CALENDAR_ID, calendarId);
+    }
+
+    public String getCalendarName() {
+        return this.calendarName;
+    }
+
+    public void setCalendarName(String calendarName) {
+        this.calendarName = calendarName;
+        editValue(KEY_CALENDAR_NAME, calendarName);
     }
 }

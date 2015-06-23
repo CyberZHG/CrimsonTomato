@@ -1,12 +1,13 @@
 package zhaohg.crimson.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -15,15 +16,17 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.data.GoogleConnectActivity;
 import zhaohg.crimson.data.Setting;
 
-public class SettingActivity extends Activity {
+public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         final Setting setting = Setting.getInstance();
         setting.init(this);
@@ -84,23 +87,44 @@ public class SettingActivity extends Activity {
                 setting.setDefaultTitle(s.toString());
             }
         });
-        final CheckBox checkBoxSyncToGoogleCalendar = (CheckBox) this.findViewById(R.id.check_box_sync_to_google_calendar);
-        checkBoxSyncToGoogleCalendar.setChecked(setting.isSyncToGoogleCalendar());
+        final CheckBox checkBoxSyncToGoogleCalendar = (CheckBox) this.findViewById(R.id.check_box_sync_to_calendar);
+        checkBoxSyncToGoogleCalendar.setChecked(setting.isSyncToCalendar());
         checkBoxSyncToGoogleCalendar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setting.setSyncToGoogleCalendar(isChecked);
+                setting.setSyncToCalendar(isChecked);
             }
         });
 
-        final Button buttonConnectGoogle = (Button) findViewById(R.id.button_choose_google_acount);
-        buttonConnectGoogle.setOnClickListener(new View.OnClickListener() {
+        // Init calendar setting.
+        final Button buttonChooseCalendar = (Button) findViewById(R.id.button_choose_calendar);
+        buttonChooseCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(SettingActivity.this, GoogleConnectActivity.class);
+                intent.setClass(SettingActivity.this, ChooseCalendarActivity.class);
                 startActivity(intent);
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final Setting setting = Setting.getInstance();
+        setting.init(this);
+        final TextView textViewCurrentCalendar = (TextView) findViewById(R.id.text_view_current_calendar);
+        textViewCurrentCalendar.setText(setting.getCalendarName());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

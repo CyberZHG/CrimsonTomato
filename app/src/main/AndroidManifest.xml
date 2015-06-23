@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="zhaohg.crimson" >
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -29,11 +29,8 @@
             android:label="@string/title_activity_history" >
         </activity>
         <activity
-            android:name=".data.GoogleConnectActivity"
-            android:label="@string/title_activity_google_connect" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:name=".main.ChooseCalendarActivity"
+            android:label="@string/title_activity_choose_calendar" >
         </activity>
     </application>
 

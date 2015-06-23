@@ -39,10 +39,10 @@ public class TestSetting extends InstrumentationTestCase {
         assertEquals("Test Title", setting.getDefaultTitle());
         setting.setDefaultTitle(defaultTitle);
         assertEquals(defaultTitle, setting.getDefaultTitle());
-        setting.setSyncToGoogleCalendar(false);
-        assertFalse(setting.isSyncToGoogleCalendar());
-        setting.setSyncToGoogleCalendar(true);
-        assertTrue(setting.isSyncToGoogleCalendar());
+        setting.setSyncToCalendar(false);
+        assertFalse(setting.isSyncToCalendar());
+        setting.setSyncToCalendar(true);
+        assertTrue(setting.isSyncToCalendar());
     }
 
 }

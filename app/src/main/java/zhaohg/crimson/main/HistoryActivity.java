@@ -1,10 +1,12 @@
 package zhaohg.crimson.main;
 
-import android.app.Activity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import java.util.Vector;
 
@@ -13,7 +15,7 @@ import zhaohg.crimson.data.Tomato;
 import zhaohg.crimson.data.TomatoAdapter;
 import zhaohg.crimson.data.TomatoData;
 
-public class HistoryActivity extends Activity {
+public class HistoryActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager layoutManager;
@@ -27,6 +29,8 @@ public class HistoryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.recycleTomatoes = (RecyclerView) this.findViewById(R.id.recycle_history);
         this.layoutManager = new LinearLayoutManager(this);
@@ -50,6 +54,15 @@ public class HistoryActivity extends Activity {
         loadNextPage();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     public void loadNextPage() {
         TomatoData tomatoData = new TomatoData(this);

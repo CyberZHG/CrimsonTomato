@@ -1,16 +1,15 @@
 package zhaohg.crimson.main;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,7 +20,7 @@ import zhaohg.crimson.data.TomatoData;
 import zhaohg.crimson.scene.MainScene;
 import zhaohg.crimson.scene.Scene;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private MainView mainView;
     private Scene scene;
@@ -36,7 +35,6 @@ public class MainActivity extends Activity {
         TomatoData tomatoData = new TomatoData(this);
         tomatoData.initDatabase();
 
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.mainView = new MainView(this);
         this.scene = new MainScene(this, this.mainView);
         this.setContentView(this.mainView);
@@ -71,10 +69,17 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_item_setting:
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, SettingActivity.class);
-                startActivity(intent);
+            case R.id.menu_item_history: {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, HistoryActivity.class);
+                    startActivity(intent);
+                }
+                break;
+            case R.id.menu_item_setting: {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, SettingActivity.class);
+                    startActivity(intent);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

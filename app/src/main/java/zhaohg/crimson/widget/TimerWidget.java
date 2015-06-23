@@ -102,13 +102,14 @@ public class TimerWidget extends Widget {
                 float minute = interval / (1000.0f * 60) / period;
                 float innerAngle = second * 360;
                 float outerAngle = minute * 360;
+                paint.setStrokeWidth(2.0f);
                 if ((interval / 1000 / 60) % 2 == 0) {
-                    canvas.drawArc(new RectF(left + 6, top + 6, right - 6, bottom - 6), -90, innerAngle, false, paint);
+                    canvas.drawArc(new RectF(left + 9, top + 9, right - 9, bottom - 9), -90, innerAngle, false, paint);
                 } else {
-                    canvas.drawArc(new RectF(left + 6, top + 6, right - 6, bottom - 6), -90, innerAngle - 360, false, paint);
+                    canvas.drawArc(new RectF(left + 9, top + 9, right - 9, bottom - 9), -90, innerAngle - 360, false, paint);
                 }
-                paint.setStrokeWidth(5.0f);
-                canvas.drawArc(new RectF(left - 2, top - 2, right + 2, bottom + 2), -90, outerAngle, false, paint);
+                paint.setStrokeWidth(7.0f);
+                canvas.drawArc(new RectF(left - 3, top - 3, right + 3, bottom + 3), -90, outerAngle, false, paint);
                 paint.setColor(Color.WHITE);
                 paint.setStyle(Paint.Style.FILL);
                 paint.setAlpha((int) (255 * fontAlpha));
@@ -133,6 +134,7 @@ public class TimerWidget extends Widget {
                     this.begin = new Date();
                     this.current = new Date();
                     setting.setLastBegin(this.begin);
+                    setting.setLastPeriod(this.period);
                     this.state = STATE_TRANS_TO_RUNNING;
                     this.transStrokeWidth = 7.0f;
                     this.fontAlpha = 1.0f;
@@ -295,6 +297,7 @@ public class TimerWidget extends Widget {
         Setting setting = Setting.getInstance();
         if (setting.getLastBegin() != null) {
             this.begin = setting.getLastBegin();
+            this.period = setting.getLastPeriod();
             this.current = new Date();
             this.state = STATE_RUNNING;
         }
