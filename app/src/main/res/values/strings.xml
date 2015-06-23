@@ -35,4 +35,5 @@
     <string name="setting_feedback">Feedback</string>
     <string name="setting_privacy">Privacy</string>
     <string name="setting_privacy_desc">The app will gather no information and only write permission is used.</string>
+    <string name="title_activity_history">HistoryActivity</string>
 </resources>

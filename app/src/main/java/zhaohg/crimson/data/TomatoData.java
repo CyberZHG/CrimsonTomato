@@ -10,6 +10,8 @@ import java.util.Vector;
 
 public class TomatoData {
 
+    public static int PAGE_SIZE = 50;
+
     private Context context;
 
     public TomatoData(Context context) {
@@ -68,11 +70,9 @@ public class TomatoData {
         db.close();
     }
 
-    public Vector<Tomato> getAllTomatoes() {
-        SQLiteDatabase db = getDatabase();
+    public Vector<Tomato> getTomatoesFromCursor(Cursor cur) {
         Vector<Tomato> tomatoes = new Vector();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Cursor cur = db.rawQuery("SELECT * FROM tomato;", null);
         while (cur.moveToNext()) {
             Tomato tomato = new Tomato();
             tomato.setId(cur.getInt(cur.getColumnIndex("id")));
@@ -89,6 +89,25 @@ public class TomatoData {
             tomatoes.add(tomato);
         }
         cur.close();
+        return tomatoes;
+    }
+
+    public Vector<Tomato> getAllTomatoes() {
+        SQLiteDatabase db = getDatabase();
+        Cursor cur = db.rawQuery("SELECT * FROM tomato;", null);
+        Vector<Tomato> tomatoes = getTomatoesFromCursor(cur);
+        db.close();
+        return tomatoes;
+    }
+
+    public Vector<Tomato> getTomatoesOnPage(int pageNum) {
+        SQLiteDatabase db = getDatabase();
+        Cursor cur = db.rawQuery("SELECT * " +
+                                 "FROM tomato " +
+                                 "ORDER BY id DESC " +
+                                 "LIMIT " + PAGE_SIZE + " " +
+                                 "OFFSET " + (PAGE_SIZE * pageNum) + ";", null);
+        Vector<Tomato> tomatoes = getTomatoesFromCursor(cur);
         db.close();
         return tomatoes;
     }
