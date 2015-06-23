@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">绯红番茄</string>
 
+    <string name="title_activity_setting">设置</string>
+    <string name="title_activity_history">历史</string>
+    <string name="title_activity_google_connect">连接Google</string>
+
     <string name="action_settings">设置</string>
     <string name="action_confirm">确定</string>
     <string name="action_cancel">取消</string>
@@ -13,6 +17,8 @@
 
     <string name="timer_start">开始</string>
     <string name="timer_finished">结束</string>
+
+    <string name="device_offline">设备未联网</string>
 
     <string name="setting_schedule">计划</string>
     <string name="setting_period">周期</string>
@@ -27,6 +33,9 @@
     <string name="setting_sync">同步</string>
     <string name="setting_sync_default_title">默认标题</string>
     <string name="setting_sync_to_google_calenar">同步到Google日历</string>
+
+    <string name="setting_account">账户</string>
+    <string name="setting_choose_google_account">选择Google账户</string>
 
     <string name="setting_about">关于</string>
     <string name="setting_source">源代码</string>

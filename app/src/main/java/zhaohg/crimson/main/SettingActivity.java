@@ -1,10 +1,13 @@
 package zhaohg.crimson.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -12,6 +15,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import zhaohg.crimson.R;
+import zhaohg.crimson.data.GoogleConnectActivity;
 import zhaohg.crimson.data.Setting;
 
 public class SettingActivity extends Activity {
@@ -86,6 +90,16 @@ public class SettingActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 setting.setSyncToGoogleCalendar(isChecked);
+            }
+        });
+
+        final Button buttonConnectGoogle = (Button) findViewById(R.id.button_choose_google_acount);
+        buttonConnectGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(SettingActivity.this, GoogleConnectActivity.class);
+                startActivity(intent);
             }
         });
     }

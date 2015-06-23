@@ -186,7 +186,8 @@ public class TimerWidget extends Widget {
                     layout.addView(textView, textViewLayoutParams);
 
                     final EditText editText = new EditText(this.context);
-                    editText.setText(this.context.getString(R.string.app_name));
+                    Setting setting = Setting.getInstance();
+                    editText.setText(setting.getDefaultTitle());
                     editText.selectAll();
                     layout.addView(editText, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 

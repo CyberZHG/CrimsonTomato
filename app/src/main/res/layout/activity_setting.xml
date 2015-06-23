@@ -55,16 +55,11 @@
             android:text="@string/setting_period_normal"
             android:id="@+id/text_view_period_desc"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/setting_vibrate" />
-
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/setting_vibrate_desc"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/check_box_vibrate" />
 
         <View
@@ -95,6 +90,24 @@
             android:layout_height="wrap_content"
             android:text="@string/setting_sync_to_google_calenar"
             android:id="@+id/check_box_sync_to_google_calendar"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/setting_account" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_choose_google_account"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/button_choose_google_acount"/>
 
         <View
             android:layout_width="match_parent"

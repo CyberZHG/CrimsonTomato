@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.api.services.calendar.CalendarScopes;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +22,7 @@ public class Setting {
     private static final String KEY_SYNC_TO_GOOGLE_CALENDAR = "sync_to_google_calendar";
 
     private static Setting setting;
+    private Activity activity;
     private Context context;
 
     private int period;
@@ -37,6 +40,15 @@ public class Setting {
             setting = new Setting();
         }
         return setting;
+    }
+
+    public Activity getActivity() {
+        return this.activity;
+    }
+
+    public void init(Activity activity) {
+        this.activity = activity;
+        init((Context)activity);
     }
 
     public void init(Context context) {
