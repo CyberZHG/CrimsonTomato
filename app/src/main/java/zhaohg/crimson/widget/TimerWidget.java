@@ -1,6 +1,5 @@
 package zhaohg.crimson.widget;
 
-import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import java.util.Date;
 
 import zhaohg.crimson.R;
+import zhaohg.crimson.data.Setting;
 import zhaohg.crimson.data.Tomato;
 import zhaohg.crimson.data.TomatoData;
 
@@ -32,7 +32,7 @@ public class TimerWidget extends Widget {
     private static final int STATE_RUNNING = 2;
     private static final int STATE_FINISHED = 4;
 
-    private int period = 1;
+    private int period = 25;
 
     private int state = STATE_WAIT;
     private Date begin;
@@ -127,8 +127,11 @@ public class TimerWidget extends Widget {
         switch (this.state) {
             case STATE_WAIT:
                 if (event.getAction() == MotionEvent.ACTION_UP) {
+                    Setting setting = Setting.getInstance();
+                    this.period = setting.getPeriod();
                     this.begin = new Date();
                     this.current = new Date();
+                    setting.setLastBegin(this.begin);
                     this.state = STATE_TRANS_TO_RUNNING;
                     this.transStrokeWidth = 7.0f;
                     this.fontAlpha = 1.0f;
@@ -151,6 +154,8 @@ public class TimerWidget extends Widget {
                             new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Setting setting = Setting.getInstance();
+                            setting.setLastBegin(null);
                             state = STATE_WAIT;
                             postInvalidate();
                             dialog.dismiss();
@@ -195,6 +200,8 @@ public class TimerWidget extends Widget {
                             new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Setting setting = Setting.getInstance();
+                            setting.setLastBegin(null);
                             end = new Date();
                             state = STATE_WAIT;
                             note = editText.getText().toString();
@@ -241,9 +248,12 @@ public class TimerWidget extends Widget {
                 this.current = new Date();
                 long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
                 if (interval >= period) {
-                    Vibrator vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-                    long[] pattern = {100, 400, 100, 400};
-                    vibrator.vibrate(pattern, -1);
+                    Setting setting = Setting.getInstance();
+                    if (setting.isVibrate()) {
+                        Vibrator vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+                        long[] pattern = {100, 240, 100, 240};
+                        vibrator.vibrate(pattern, -1);
+                    }
                     this.state = STATE_FINISHED;
                 }
                 if (this.fontAlpha < 1.0f) {
