@@ -1,5 +1,6 @@
 package zhaohg.crimson.widget;
 
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -30,7 +32,7 @@ public class TimerWidget extends Widget {
     private static final int STATE_RUNNING = 2;
     private static final int STATE_FINISHED = 4;
 
-    private int period = 25;
+    private int period = 1;
 
     private int state = STATE_WAIT;
     private Date begin;
@@ -39,7 +41,7 @@ public class TimerWidget extends Widget {
     private String note;
 
     private float transStrokeWidth;
-    private float fontAlpha;
+    private float fontAlpha = 1.0f;
 
     public TimerWidget(Context context, View view) {
         super(context, view);
@@ -69,15 +71,16 @@ public class TimerWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
                 paint.setColor(Color.WHITE);
                 paint.setStyle(Paint.Style.FILL);
-                paint.setAlpha((int)(255 * fontAlpha));
+                paint.setAlpha((int) (255 * fontAlpha));
                 canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
                 break;
             case STATE_TRANS_TO_RUNNING:
                 paint.setStrokeWidth(this.transStrokeWidth);
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawArc(oval, 0, 360, false, paint);
+                paint.setColor(Color.WHITE);
                 paint.setStyle(Paint.Style.FILL);
-                paint.setAlpha((int)(255 * fontAlpha));
+                paint.setAlpha((int) (255 * fontAlpha));
                 canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
                 break;
             case STATE_FINISHED:
@@ -86,7 +89,7 @@ public class TimerWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
                 paint.setColor(Color.WHITE);
                 paint.setStyle(Paint.Style.FILL);
-                paint.setAlpha((int)(255 * fontAlpha));
+                paint.setAlpha((int) (255 * fontAlpha));
                 canvas.drawText(this.context.getString(R.string.timer_finished), midX, textBaseY, paint);
                 break;
             case STATE_RUNNING:
@@ -99,15 +102,15 @@ public class TimerWidget extends Widget {
                 float innerAngle = second * 360;
                 float outerAngle = minute * 360;
                 if ((interval / 1000 / 60) % 2 == 0) {
-                    canvas.drawArc(new RectF(left + 3, top + 3, right - 3, bottom - 3), -90, innerAngle, false, paint);
+                    canvas.drawArc(new RectF(left + 6, top + 6, right - 6, bottom - 6), -90, innerAngle, false, paint);
                 } else {
-                    canvas.drawArc(new RectF(left + 3, top + 3, right - 3, bottom - 1), -90, innerAngle - 360, false, paint);
+                    canvas.drawArc(new RectF(left + 6, top + 6, right - 6, bottom - 6), -90, innerAngle - 360, false, paint);
                 }
                 paint.setStrokeWidth(5.0f);
                 canvas.drawArc(new RectF(left - 2, top - 2, right + 2, bottom + 2), -90, outerAngle, false, paint);
                 paint.setColor(Color.WHITE);
                 paint.setStyle(Paint.Style.FILL);
-                paint.setAlpha((int)(255 * fontAlpha));
+                paint.setAlpha((int) (255 * fontAlpha));
                 canvas.drawText(getRemainTimeString(), midX, textBaseY, paint);
                 break;
         }
@@ -221,7 +224,7 @@ public class TimerWidget extends Widget {
     public void onTimeEvent() {
         switch (state) {
             case STATE_TRANS_TO_RUNNING:
-                if (this.transStrokeWidth > 0.0f) {
+                if (this.transStrokeWidth > 1.0f) {
                     this.transStrokeWidth -= 0.2f;
                 } else {
                     this.state = STATE_RUNNING;
@@ -238,6 +241,9 @@ public class TimerWidget extends Widget {
                 this.current = new Date();
                 long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
                 if (interval >= period) {
+                    Vibrator vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+                    long[] pattern = {100, 400, 100, 400};
+                    vibrator.vibrate(pattern, -1);
                     this.state = STATE_FINISHED;
                 }
                 if (this.fontAlpha < 1.0f) {
