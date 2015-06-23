@@ -2,6 +2,7 @@ package zhaohg.crimson.main;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
@@ -18,6 +19,7 @@ public class SettingActivity extends Activity {
         setContentView(R.layout.activity_setting);
 
         final Setting setting = Setting.getInstance();
+        setting.init(this);
 
         // Init period setting.
         final SeekBar seekBarPeriod = (SeekBar) this.findViewById(R.id.seek_bar_period);

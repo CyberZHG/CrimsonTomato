@@ -34,12 +34,12 @@ public class Setting {
 
     public void init(Context context) {
         this.context = context;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SharedPreferences settings = this.getSharedPreference();
         this.period = settings.getInt(KEY_PERIOD, 25);
         this.vibrate = settings.getBoolean(KEY_VIBRATE, true);
         try {
-            this.lastBegin = format.parse(settings.getString(KEY_LAST_BEGIN, ""));
+            this.lastBegin = format.parse(settings.getString(KEY_LAST_BEGIN, "###"));
         } catch (ParseException e) {
             this.lastBegin = null;
         }
@@ -95,9 +95,9 @@ public class Setting {
     public void setLastBegin(Date lastBegin) {
         this.lastBegin = lastBegin;
         if (lastBegin == null) {
-            this.editValue(KEY_LAST_BEGIN, "");
+            this.editValue(KEY_LAST_BEGIN, "###");
         } else {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             this.editValue(KEY_LAST_BEGIN, format.format(lastBegin));
         }
     }

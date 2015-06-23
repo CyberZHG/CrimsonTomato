@@ -34,12 +34,10 @@ public abstract class WidgetContainer {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
             if (this.lastTouchWidget != null) {
-                if (!this.lastTouchWidget.onTouchEvent(event)) {
-                    this.lastTouchWidget = null;
-                } else {
+                if (this.lastTouchWidget.onTouchEvent(event)) {
                     return true;
                 }
-
+                this.lastTouchWidget = null;
             }
         }
         int x = (int)event.getX();
@@ -60,6 +58,18 @@ public abstract class WidgetContainer {
     public void onTimeEvent() {
         for (Widget widget : this.widgets) {
             widget.onTimeEvent();
+        }
+    }
+
+    public void onResume() {
+        for (Widget widget : this.widgets) {
+            widget.onResume();
+        }
+    }
+
+    public void onPause() {
+        for (Widget widget : this.widgets) {
+            widget.onPause();
         }
     }
 

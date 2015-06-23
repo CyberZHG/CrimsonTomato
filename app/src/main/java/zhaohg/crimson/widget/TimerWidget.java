@@ -9,6 +9,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -285,5 +286,21 @@ public class TimerWidget extends Widget {
         }
         ret += second;
         return ret;
+    }
+
+    @Override
+    public void onResume() {
+        Setting setting = Setting.getInstance();
+        if (setting.getLastBegin() != null) {
+            Log.d("tomato", setting.getLastBegin().toLocaleString());
+            Log.d("tomato", new Date().toLocaleString());
+            this.begin = setting.getLastBegin();
+            this.current = new Date();
+            this.state = STATE_RUNNING;
+        }
+    }
+
+    @Override
+    public void onPause() {
     }
 }

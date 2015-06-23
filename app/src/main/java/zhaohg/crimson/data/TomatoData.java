@@ -49,7 +49,7 @@ public class TomatoData {
 
     public void addTomato(Tomato tomato) {
         SQLiteDatabase db = getDatabase();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         db.execSQL(
                 "INSERT INTO tomato (begin_time, end_time, note, location, uploaded) VALUES (" +
                 "    '" + format.format(tomato.getBegin()) + "', " +
@@ -71,7 +71,7 @@ public class TomatoData {
     public Vector<Tomato> getAllTomatoes() {
         SQLiteDatabase db = getDatabase();
         Vector<Tomato> tomatoes = new Vector();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Cursor cur = db.rawQuery("SELECT * FROM tomato;", null);
         while (cur.moveToNext()) {
             Tomato tomato = new Tomato();

@@ -27,7 +27,7 @@ public class TestTomatoData extends InstrumentationTestCase {
         tomatoData.initDatabase();
         tomatoData.clearTomato();
         Tomato tomato = new Tomato();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         tomato.setBegin(date);
         tomato.setEnd(date);

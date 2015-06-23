@@ -51,6 +51,18 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        scene.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        scene.onPause();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         new MenuInflater(this).inflate(R.menu.menu_main_activity, menu);
         return super.onCreateOptionsMenu(menu);
