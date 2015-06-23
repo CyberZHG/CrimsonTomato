@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Crimson</string>
+    <string name="app_name">Tomato Time</string>
     <string name="hello_world">Hello world!</string>
 
     <string name="title_activity_setting">Settings</string>
@@ -19,6 +19,9 @@
 
     <string name="timer_start">Start</string>
     <string name="timer_finished">Finished</string>
+
+    <string name="tomato_synced">Synced</string>
+    <string name="tomato_unsynced">Unsynced</string>
 
     <string name="device_offline">The device is off-line</string>
 

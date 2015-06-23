@@ -16,6 +16,7 @@ public class Setting {
     private static final String KEY_PERIOD = "period";
     private static final String KEY_LAST_PERIOD = "last_period";
     private static final String KEY_VIBRATE = "vibrate";
+    private static final String KEY_VIBRATED = "vibrated";
     private static final String KEY_LAST_BEGIN = "last_begin";
     private static final String KEY_DEFAULT_TITLE = "default_title";
     private static final String KEY_SYNC_TO_CALENDAR = "sync_to_calendar";
@@ -29,6 +30,7 @@ public class Setting {
     private int period;
     private int lastPeriod;
     private boolean vibrate;
+    private boolean vibrated;
     private Date lastBegin;
 
     private String defaultTitle;
@@ -62,6 +64,7 @@ public class Setting {
         this.period = settings.getInt(KEY_PERIOD, 25);
         this.lastPeriod = settings.getInt(KEY_LAST_PERIOD, 25);
         this.vibrate = settings.getBoolean(KEY_VIBRATE, true);
+        this.vibrated = settings.getBoolean(KEY_VIBRATED, false);
         try {
             this.lastBegin = format.parse(settings.getString(KEY_LAST_BEGIN, "###"));
         } catch (ParseException e) {
@@ -124,6 +127,15 @@ public class Setting {
     public void setVibrate(boolean vibrate) {
         this.vibrate = vibrate;
         this.editValue(KEY_VIBRATE, vibrate);
+    }
+
+    public boolean isVibrated() {
+        return this.vibrated;
+    }
+
+    public void setVibrated(boolean vibrated) {
+        this.vibrated = vibrated;
+        this.editValue(KEY_VIBRATED, vibrated);
     }
 
     public Date getLastBegin() {

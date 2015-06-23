@@ -38,6 +38,11 @@ public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder
         viewHolder.textViewTitle.setText(tomato.getTitle());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         viewHolder.textViewDate.setText(format.format(tomato.getBegin()) + " - " + format.format(tomato.getEnd()));
+        if (tomato.isUploaded()) {
+            viewHolder.textViewSync.setText(context.getString(R.string.tomato_synced));
+        } else {
+            viewHolder.textViewSync.setText(context.getString(R.string.tomato_unsynced));
+        }
     }
 
     @Override
@@ -80,11 +85,13 @@ public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder
 
         public TextView textViewTitle;
         public TextView textViewDate;
+        public TextView textViewSync;
 
         public ViewHolder(View view) {
             super(view);
             textViewTitle = (TextView) view.findViewById(R.id.text_view_title);
             textViewDate = (TextView) view.findViewById(R.id.text_view_date);
+            textViewSync = (TextView) view.findViewById(R.id.text_view_sync);
             view.setOnClickListener(new OnPostClickerListener());
         }
 

@@ -2,10 +2,10 @@ package zhaohg.crimson.scene;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.View;
 
+import zhaohg.crimson.R;
 import zhaohg.crimson.widget.TimerWidget;
 
 public class MainScene extends Scene {
@@ -29,7 +29,8 @@ public class MainScene extends Scene {
 
     @Override
     public void selfDraw(Canvas canvas) {
-        canvas.drawColor(Color.BLACK, PorterDuff.Mode.CLEAR);
+        int color = context.getResources().getColor(R.color.background_material_dark);
+        canvas.drawColor(color, PorterDuff.Mode.CLEAR);
     }
 
 }

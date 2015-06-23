@@ -35,6 +35,7 @@ public class ChooseCalendarActivity extends AppCompatActivity {
             CalendarItem item = new CalendarItem(this);
             item.setCalendarId(_id);
             item.setText(name);
+            item.setTextSize(24.0f);
             layout.addView(item);
         }
     }

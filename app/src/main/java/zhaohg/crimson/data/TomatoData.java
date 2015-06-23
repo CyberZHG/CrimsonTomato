@@ -1,12 +1,22 @@
 package zhaohg.crimson.data;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.net.Uri;
+import android.provider.CalendarContract;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.Vector;
+
+import zhaohg.crimson.R;
 
 public class TomatoData {
 
@@ -127,6 +137,10 @@ public class TomatoData {
     }
 
     public void syncToCalendar() {
+        Setting setting = Setting.getInstance();
+        if (setting.getCalendarId().equals("")) {
+            return;
+        }
         Vector<Tomato> tomatoes = this.getUnsyncedTomatoes();
         for (Tomato tomato : tomatoes) {
             syncToCalendar(tomato);
@@ -134,7 +148,34 @@ public class TomatoData {
     }
 
     public void syncToCalendar(Tomato tomato) {
+        Setting setting = Setting.getInstance();
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.setTime(tomato.getBegin());
+        long startMillis = beginTime.getTimeInMillis();
+        Calendar endTime = Calendar.getInstance();
+        endTime.setTime(tomato.getEnd());
+        long endMillis = endTime.getTimeInMillis();
 
+        ContentResolver cr = context.getContentResolver();
+        ContentValues values = new ContentValues();
+        TimeZone timeZone = TimeZone.getDefault();
+        values.put(CalendarContract.Events.CALENDAR_ID, setting.getCalendarId());
+        values.put(CalendarContract.Events.DTSTART, startMillis);
+        values.put(CalendarContract.Events.DTEND, endMillis);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+        values.put(CalendarContract.Events.TITLE, tomato.getTitle());
+        values.put(CalendarContract.Events.DESCRIPTION, context.getString(R.string.app_name));
+        values.put(CalendarContract.Events.EVENT_LOCATION, tomato.getLocation());
+        values.put(CalendarContract.Events.EVENT_COLOR, Color.rgb(212, 46, 24));
+        cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
+        SQLiteDatabase db = getDatabase();
+        db.execSQL(
+                "UPDATE tomato " +
+                "SET uploaded=1 " +
+                "WHERE id=" + tomato.getId() + "; "
+        );
+        db.close();
     }
 
 }

@@ -135,6 +135,7 @@ public class TimerWidget extends Widget {
                     this.current = new Date();
                     setting.setLastBegin(this.begin);
                     setting.setLastPeriod(this.period);
+                    setting.setVibrated(false);
                     this.state = STATE_TRANS_TO_RUNNING;
                     this.transStrokeWidth = 7.0f;
                     this.fontAlpha = 1.0f;
@@ -254,10 +255,11 @@ public class TimerWidget extends Widget {
                 long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
                 if (interval >= period) {
                     Setting setting = Setting.getInstance();
-                    if (setting.isVibrate()) {
+                    if (setting.isVibrate() && !setting.isVibrated()) {
                         Vibrator vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
                         long[] pattern = {100, 240, 100, 240};
                         vibrator.vibrate(pattern, -1);
+                        setting.setVibrated(true);
                     }
                     this.state = STATE_FINISHED;
                 }
