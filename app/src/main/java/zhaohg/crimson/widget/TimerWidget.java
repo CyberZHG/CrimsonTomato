@@ -30,6 +30,8 @@ public class TimerWidget extends Widget {
     private static final int STATE_RUNNING = 2;
     private static final int STATE_FINISHED = 4;
 
+    private int period = 25;
+
     private int state = STATE_WAIT;
     private Date begin;
     private Date current;
@@ -37,6 +39,7 @@ public class TimerWidget extends Widget {
     private String note;
 
     private float transStrokeWidth;
+    private float fontAlpha;
 
     public TimerWidget(Context context, View view) {
         super(context, view);
@@ -66,12 +69,16 @@ public class TimerWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
                 paint.setColor(Color.WHITE);
                 paint.setStyle(Paint.Style.FILL);
+                paint.setAlpha((int)(255 * fontAlpha));
                 canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
                 break;
             case STATE_TRANS_TO_RUNNING:
                 paint.setStrokeWidth(this.transStrokeWidth);
                 paint.setStyle(Paint.Style.STROKE);
                 canvas.drawArc(oval, 0, 360, false, paint);
+                paint.setStyle(Paint.Style.FILL);
+                paint.setAlpha((int)(255 * fontAlpha));
+                canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
                 break;
             case STATE_FINISHED:
                 paint.setStrokeWidth(7.0f);
@@ -79,6 +86,7 @@ public class TimerWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
                 paint.setColor(Color.WHITE);
                 paint.setStyle(Paint.Style.FILL);
+                paint.setAlpha((int)(255 * fontAlpha));
                 canvas.drawText(this.context.getString(R.string.timer_finished), midX, textBaseY, paint);
                 break;
             case STATE_RUNNING:
@@ -87,7 +95,7 @@ public class TimerWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
                 long interval = current.getTime() - begin.getTime();
                 float second = interval % (1000 * 60) / 1000.0f / 60.0f;
-                float minute = interval / (1000.0f * 60) / 25.0f;
+                float minute = interval / (1000.0f * 60) / period;
                 float innerAngle = second * 360;
                 float outerAngle = minute * 360;
                 if ((interval / 1000 / 60) % 2 == 0) {
@@ -99,6 +107,7 @@ public class TimerWidget extends Widget {
                 canvas.drawArc(new RectF(left - 2, top - 2, right + 2, bottom + 2), -90, outerAngle, false, paint);
                 paint.setColor(Color.WHITE);
                 paint.setStyle(Paint.Style.FILL);
+                paint.setAlpha((int)(255 * fontAlpha));
                 canvas.drawText(getRemainTimeString(), midX, textBaseY, paint);
                 break;
         }
@@ -119,6 +128,7 @@ public class TimerWidget extends Widget {
                     this.current = new Date();
                     this.state = STATE_TRANS_TO_RUNNING;
                     this.transStrokeWidth = 7.0f;
+                    this.fontAlpha = 1.0f;
                 }
                 break;
             case STATE_TRANS_TO_RUNNING:
@@ -211,18 +221,30 @@ public class TimerWidget extends Widget {
     public void onTimeEvent() {
         switch (state) {
             case STATE_TRANS_TO_RUNNING:
-                if (this.transStrokeWidth > 1.0f) {
+                if (this.transStrokeWidth > 0.0f) {
                     this.transStrokeWidth -= 0.2f;
                 } else {
                     this.state = STATE_RUNNING;
+                }
+                if (this.fontAlpha > 0.0f) {
+                    this.fontAlpha -= 0.04f;
+                    if (this.fontAlpha < 0.0f) {
+                        this.fontAlpha = 0.0f;
+                    }
                 }
                 this.postInvalidate();
                 break;
             case STATE_RUNNING:
                 this.current = new Date();
                 long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
-                if (interval > 25) {
+                if (interval >= period) {
                     this.state = STATE_FINISHED;
+                }
+                if (this.fontAlpha < 1.0f) {
+                    this.fontAlpha += 0.04f;
+                    if (this.fontAlpha > 1.0f) {
+                        this.fontAlpha = 1.0f;
+                    }
                 }
                 this.postInvalidate();
                 break;
@@ -231,7 +253,7 @@ public class TimerWidget extends Widget {
     }
 
     private String getRemainTimeString() {
-        long interval = 25 * 60 - (current.getTime() - begin.getTime()) / 1000;
+        long interval = period * 60 - (current.getTime() - begin.getTime()) / 1000;
         if (interval < 0) {
             interval = 0;
         }
