@@ -2,9 +2,12 @@ package zhaohg.crimson.main;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -59,6 +62,30 @@ public class SettingActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 setting.setVibrate(isChecked);
+            }
+        });
+
+        // Init Sync setting.
+        final EditText editTextDefaultTitle = (EditText) this.findViewById(R.id.edit_text_title);
+        editTextDefaultTitle.setText(setting.getDefaultTitle());
+        editTextDefaultTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                setting.setDefaultTitle(s.toString());
+            }
+        });
+        final CheckBox checkBoxSyncToGoogleCalendar = (CheckBox) this.findViewById(R.id.check_box_sync_to_google_calendar);
+        checkBoxSyncToGoogleCalendar.setChecked(setting.isSyncToGoogleCalendar());
+        checkBoxSyncToGoogleCalendar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setting.setSyncToGoogleCalendar(isChecked);
             }
         });
     }

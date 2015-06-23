@@ -12,7 +12,7 @@ public class TestSetting extends InstrumentationTestCase {
         super.setUp();
     }
 
-    public void testSetAndGet() {
+    public void testSetAndGetPeriods() {
         Context context = this.getInstrumentation().getTargetContext();
         Setting setting = Setting.getInstance();
         setting.init(context);
@@ -28,6 +28,21 @@ public class TestSetting extends InstrumentationTestCase {
         assertNotNull(setting.getLastBegin());
         setting.setLastBegin(null);
         assertNull(setting.getLastBegin());
+    }
+
+    public void testSetAndGetSyncs() {
+        Context context = this.getInstrumentation().getTargetContext();
+        Setting setting = Setting.getInstance();
+        setting.init(context);
+        String defaultTitle = setting.getDefaultTitle();
+        setting.setDefaultTitle("Test Title");
+        assertEquals("Test Title", setting.getDefaultTitle());
+        setting.setDefaultTitle(defaultTitle);
+        assertEquals(defaultTitle, setting.getDefaultTitle());
+        setting.setSyncToGoogleCalendar(false);
+        assertFalse(setting.isSyncToGoogleCalendar());
+        setting.setSyncToGoogleCalendar(true);
+        assertTrue(setting.isSyncToGoogleCalendar());
     }
 
 }

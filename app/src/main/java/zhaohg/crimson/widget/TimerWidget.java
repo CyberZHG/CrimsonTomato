@@ -9,7 +9,6 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,13 +38,14 @@ public class TimerWidget extends Widget {
     private Date begin;
     private Date current;
     private Date end;
-    private String note;
+    private String title;
 
     private float transStrokeWidth;
     private float fontAlpha = 1.0f;
 
     public TimerWidget(Context context, View view) {
         super(context, view);
+        this.onResume();
     }
 
     @Override
@@ -175,10 +175,11 @@ public class TimerWidget extends Widget {
                     layout.setOrientation(LinearLayout.VERTICAL);
                     layout.setLayoutParams(params);
                     layout.setGravity(Gravity.CLIP_VERTICAL);
-                    layout.setPadding(2, 2, 2, 2);
+                    layout.setPadding(15, 15, 15, 15);
 
                     LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    textViewLayoutParams.bottomMargin = 5;
+                    textViewLayoutParams.leftMargin = 5;
+                    textViewLayoutParams.bottomMargin = 15;
 
                     TextView textView = new TextView(this.context);
                     textView.setText(this.context.getString(R.string.dialog_comment_message));
@@ -205,7 +206,7 @@ public class TimerWidget extends Widget {
                             setting.setLastBegin(null);
                             end = new Date();
                             state = STATE_WAIT;
-                            note = editText.getText().toString();
+                            title = editText.getText().toString();
                             addTomatoToDatabase();
                             postInvalidate();
                             dialog.dismiss();
@@ -223,7 +224,7 @@ public class TimerWidget extends Widget {
         Tomato tomato = new Tomato();
         tomato.setBegin(this.begin);
         tomato.setEnd(this.end);
-        tomato.setNote(this.note);
+        tomato.setTitle(this.title);
         TomatoData tomatoData = new TomatoData(this.context);
         tomatoData.addTomato(tomato);
     }
@@ -292,8 +293,6 @@ public class TimerWidget extends Widget {
     public void onResume() {
         Setting setting = Setting.getInstance();
         if (setting.getLastBegin() != null) {
-            Log.d("tomato", setting.getLastBegin().toLocaleString());
-            Log.d("tomato", new Date().toLocaleString());
             this.begin = setting.getLastBegin();
             this.current = new Date();
             this.state = STATE_RUNNING;

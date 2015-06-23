@@ -31,7 +31,7 @@ public class TestTomatoData extends InstrumentationTestCase {
         Date date = new Date();
         tomato.setBegin(date);
         tomato.setEnd(date);
-        tomato.setNote("Note");
+        tomato.setTitle("Note");
         tomato.setLocation("Location");
         tomatoData.addTomato(tomato);
         Vector<Tomato> tomatoes = tomatoData.getAllTomatoes();
@@ -39,7 +39,7 @@ public class TestTomatoData extends InstrumentationTestCase {
         tomato = tomatoes.get(0);
         assertEquals(format.format(date), format.format(tomato.getBegin()));
         assertEquals(format.format(date), format.format(tomato.getEnd()));
-        assertEquals("Note", tomato.getNote());
+        assertEquals("Note", tomato.getTitle());
         assertEquals("Location", tomato.getLocation());
         assertFalse(tomato.isUploaded());
     }

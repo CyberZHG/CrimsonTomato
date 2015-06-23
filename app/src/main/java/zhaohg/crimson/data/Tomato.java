@@ -7,7 +7,7 @@ public class Tomato {
     private int id;
     private Date begin;
     private Date end;
-    private String note;
+    private String title;
     private String location;
     private boolean uploaded;
 
@@ -15,7 +15,7 @@ public class Tomato {
         this.id = 0;
         this.begin = new Date();
         this.end = new Date();
-        this.note = "";
+        this.title = "";
         this.location = "";
         this.uploaded = false;
     }
@@ -44,12 +44,12 @@ public class Tomato {
         this.end = end;
     }
 
-    public String getNote() {
-        return note;
+    public String getTitle() {
+        return title;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getLocation() {

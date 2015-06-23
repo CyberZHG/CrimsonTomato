@@ -23,4 +23,14 @@
     <string name="setting_period_too_long">All work and no play makes Jack a dull boy.</string>
     <string name="setting_vibrate">震动</string>
     <string name="setting_vibrate_desc">结束时震动提醒</string>
+
+    <string name="setting_sync">同步</string>
+    <string name="setting_sync_default_title">默认标题</string>
+    <string name="setting_sync_to_google_calenar">同步到Google日历</string>
+
+    <string name="setting_about">关于</string>
+    <string name="setting_source">源代码</string>
+    <string name="setting_feedback">意见与反馈</string>
+    <string name="setting_privacy">隐私策略</string>
+    <string name="setting_privacy_desc">应用不收集用户的任何信息，只利用写权限。</string>
 </resources>

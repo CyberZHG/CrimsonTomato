@@ -31,7 +31,7 @@ public class TomatoData {
                     "    id         INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "    begin_time VARCHAR(20), " +
                     "    end_time   VARCHAR(20), " +
-                    "    note       VARCHAR(140), " +
+                    "    title      VARCHAR(140), " +
                     "    location   VARCHAR(140), " +
                     "    uploaded   BOOLEAN" +
                     "); "
@@ -51,10 +51,10 @@ public class TomatoData {
         SQLiteDatabase db = getDatabase();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         db.execSQL(
-                "INSERT INTO tomato (begin_time, end_time, note, location, uploaded) VALUES (" +
+                "INSERT INTO tomato (begin_time, end_time, title, location, uploaded) VALUES (" +
                 "    '" + format.format(tomato.getBegin()) + "', " +
                 "    '" + format.format(tomato.getEnd()) + "', " +
-                "    '" + tomato.getNote() + "', " +
+                "    '" + tomato.getTitle() + "', " +
                 "    '" + tomato.getLocation() + "', " +
                 "    0" +
                 ");"
@@ -83,7 +83,7 @@ public class TomatoData {
                 e.printStackTrace();
                 continue;
             }
-            tomato.setNote(cur.getString(cur.getColumnIndex("note")));
+            tomato.setTitle(cur.getString(cur.getColumnIndex("title")));
             tomato.setLocation(cur.getString(cur.getColumnIndex("location")));
             tomato.setUploaded(cur.getInt(cur.getColumnIndex("uploaded")) > 0);
             tomatoes.add(tomato);

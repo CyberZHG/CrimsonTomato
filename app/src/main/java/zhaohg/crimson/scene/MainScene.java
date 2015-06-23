@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.View;
 
+import zhaohg.crimson.widget.IconHistory;
 import zhaohg.crimson.widget.IconSetting;
 import zhaohg.crimson.widget.TimerWidget;
 
@@ -33,6 +34,11 @@ public class MainScene extends Scene {
         IconSetting iconSetting = new IconSetting(context, view);
         iconSetting.setGeometry(left, top, iconSize, iconSize);
         this.addChild(iconSetting);
+
+        left -= iconSize * 1.7;
+        IconHistory iconHistory = new IconHistory(context, view);
+        iconHistory.setGeometry(left, top, iconSize, iconSize);
+        this.addChild(iconHistory);
     }
 
     @Override

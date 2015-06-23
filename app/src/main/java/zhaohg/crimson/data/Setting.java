@@ -8,12 +8,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import zhaohg.crimson.R;
+
 public class Setting {
 
     private static final String PREFERENCE_NAME = "setting";
     private static final String KEY_PERIOD = "period";
     private static final String KEY_VIBRATE = "vibrate";
     private static final String KEY_LAST_BEGIN = "last_begin";
+    private static final String KEY_DEFAULT_TITLE = "default_title";
+    private static final String KEY_SYNC_TO_GOOGLE_CALENDAR = "sync_to_google_calendar";
 
     private static Setting setting;
     private Context context;
@@ -21,6 +25,9 @@ public class Setting {
     private int period;
     private boolean vibrate;
     private Date lastBegin;
+
+    private String defaultTitle;
+    private boolean syncToGoogleCalendar;
 
     private Setting() {
     }
@@ -43,6 +50,9 @@ public class Setting {
         } catch (ParseException e) {
             this.lastBegin = null;
         }
+
+        this.defaultTitle = settings.getString(KEY_DEFAULT_TITLE, context.getString(R.string.app_name));
+        this.syncToGoogleCalendar = settings.getBoolean(KEY_SYNC_TO_GOOGLE_CALENDAR, true);
     }
 
     private SharedPreferences getSharedPreference() {
@@ -100,5 +110,23 @@ public class Setting {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             this.editValue(KEY_LAST_BEGIN, format.format(lastBegin));
         }
+    }
+
+    public String getDefaultTitle() {
+        return this.defaultTitle;
+    }
+
+    public void setDefaultTitle(String defaultTitle) {
+        this.defaultTitle = defaultTitle;
+        editValue(KEY_DEFAULT_TITLE, defaultTitle);
+    }
+
+    public boolean isSyncToGoogleCalendar() {
+        return this.syncToGoogleCalendar;
+    }
+
+    public void setSyncToGoogleCalendar(boolean syncToGoogleCalendar) {
+        this.syncToGoogleCalendar = syncToGoogleCalendar;
+        editValue(KEY_SYNC_TO_GOOGLE_CALENDAR, syncToGoogleCalendar);
     }
 }
