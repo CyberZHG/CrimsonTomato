@@ -90,11 +90,19 @@ public class TomatoData {
                 "    0" +
                 ");"
         );
-        db.close();
         Setting setting = Setting.getInstance();
         if (setting.isSyncToCalendar()) {
-            this.syncToCalendar(tomato);
+            Cursor cur = db.rawQuery("SELECT * " +
+                                     "FROM tomato " +
+                                     "ORDER BY id DESC " +
+                                     "LIMIT " + PAGE_SIZE + " " +
+                                     "OFFSET " + (PAGE_SIZE * pageNum) + ";", null);
+            Vector<Tomato> tomatoes = getTomatoesFromCursor(cur);
+            if (tomatoes.size() > 0) {
+                this.syncToCalendar(tomatoes.get(0));
+            }
         }
+        db.close();
     }
 
     public void clearTomato() {
