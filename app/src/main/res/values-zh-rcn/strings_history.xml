@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_history">历史</string>
+
+    <string name="action_history">历史</string>
+    <string name="action_sync_all">同步</string>
+    <string name="action_export_csv">导出</string>
+    <string name="action_clear_history">清空</string>
+
+    <string name="dialog_clear_history_title">清空历史</string>
+    <string name="dialog_clear_history_message">确定要删除所有记录吗？</string>
+
+    <string name="dialog_sync_all_title">全部同步</string>
+    <string name="dialog_sync_all_message">确定要同步所有的记录吗？</string>
+
+    <string name="toast_export_to">导出到：</string>
+    <string name="toast_export_external_unavailable">失败：外部存储不可用。</string>
+    <string name="toast_export_cannot_create_folder">失败：无法创建文件夹。</string>
+    <string name="toast_export_cannot_write_to_file">失败：无法写入文件。</string>
+
+    <string name="tomato_synced">已同步</string>
+    <string name="tomato_unsynced">未同步</string>
+</resources>

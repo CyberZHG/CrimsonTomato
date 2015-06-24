@@ -91,7 +91,7 @@ public class TomatoData {
         db.close();
         Setting setting = Setting.getInstance();
         if (setting.isSyncToCalendar()) {
-            this.syncToCalendar();
+            this.syncToCalendar(tomato);
         }
     }
 
@@ -166,6 +166,9 @@ public class TomatoData {
 
     public void syncToCalendar(Tomato tomato) {
         Setting setting = Setting.getInstance();
+        if (setting.getCalendarId().equals("")) {
+            return;
+        }
         Calendar beginTime = Calendar.getInstance();
         beginTime.setTime(tomato.getBegin());
         long startMillis = beginTime.getTimeInMillis();

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_history">History</string>
+
+    <string name="action_history">History</string>
+    <string name="action_sync_all">Sync</string>
+    <string name="action_export_csv">Export</string>
+    <string name="action_clear_history">Clear</string>
+
+    <string name="dialog_clear_history_title">Clear History</string>
+    <string name="dialog_clear_history_message">Are you sure to clear ALL history?</string>
+
+    <string name="dialog_sync_all_title">Sync All</string>
+    <string name="dialog_sync_all_message">Are you sure to sync ALL records?</string>
+
+    <string name="toast_export_to">Exported to: </string>
+    <string name="toast_export_external_unavailable">Failed: The external storage is unavailable.</string>
+    <string name="toast_export_cannot_create_folder">Failed: Cannot create folder.</string>
+    <string name="toast_export_cannot_write_to_file">Failed: Cannot write to file.</string>
+
+    <string name="tomato_synced">Synced</string>
+    <string name="tomato_unsynced">Unsynced</string>
+</resources>

@@ -77,6 +77,9 @@ public class HistoryActivity extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 break;
+            case R.id.menu_item_sync_all:
+                this.trySyncAll();
+                break;
             case R.id.menu_item_clear_history:
                 this.tryClearHistory();
                 break;
@@ -85,6 +88,29 @@ public class HistoryActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void trySyncAll() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.dialog_sync_all_title));
+        builder.setMessage(getString(R.string.dialog_sync_all_message));
+        builder.setNegativeButton(getString(R.string.action_cancel),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.setPositiveButton(getString(R.string.action_confirm),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        TomatoData tomatoData = new TomatoData(getApplicationContext());
+                        tomatoData.syncToCalendar();
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
     }
 
     private void tryClearHistory() {

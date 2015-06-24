@@ -1,60 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">番茄计时</string>
     <string name="hello_world">你好，世界！</string>
 
-    <string name="title_activity_setting">设置</string>
-    <string name="title_activity_history">历史</string>
-    <string name="title_activity_choose_calendar">选择日历</string>
-
-    <string name="action_settings">设置</string>
-    <string name="action_history">历史</string>
     <string name="action_confirm">确定</string>
     <string name="action_cancel">取消</string>
-    <string name="action_export_csv">导出</string>
-    <string name="action_clear_history">清空</string>
 
     <string name="dialog_give_up_title">放弃</string>
     <string name="dialog_give_up_message">确定要放弃这轮吗？</string>
 
-    <string name="dialog_clear_history_title">清空历史</string>
-    <string name="dialog_clear_history_message">确定要删除所有记录吗？</string>
-
     <string name="dialog_comment_title">总结</string>
     <string name="dialog_comment_message">你做了什么：</string>
 
-    <string name="toast_export_to">导出到：</string>
-    <string name="toast_export_external_unavailable">失败：外部存储不可用。</string>
-    <string name="toast_export_cannot_create_folder">失败：无法创建文件夹。</string>
-    <string name="toast_export_cannot_write_to_file">失败：无法写入文件。</string>
-
     <string name="timer_start">开始</string>
     <string name="timer_finished">结束</string>
-
-    <string name="tomato_synced">已同步</string>
-    <string name="tomato_unsynced">未同步</string>
-
-    <string name="device_offline">设备未联网</string>
-
-    <string name="setting_schedule">计划</string>
-    <string name="setting_period">周期</string>
-    <string name="setting_period_num">25分钟</string>
-    <string name="setting_period_num_suffix">分钟</string>
-    <string name="setting_period_too_short">你在逗我?</string>
-    <string name="setting_period_normal">默认配置是25分钟。</string>
-    <string name="setting_period_too_long">All work and no play makes Jack a dull boy.</string>
-    <string name="setting_vibrate">震动</string>
-    <string name="setting_vibrate_desc">结束时震动提醒</string>
-
-    <string name="setting_sync">同步</string>
-    <string name="setting_sync_default_title">默认标题</string>
-    <string name="setting_sync_to_calendar">同步到日历</string>
-    <string name="setting_sync_current_calendar">当前日历：</string>
-    <string name="setting_sync_current_calendar_none">无</string>
-    <string name="setting_sync_choose_calendar">选择日历</string>
-
-    <string name="setting_about">关于</string>
-    <string name="setting_source">源代码</string>
-    <string name="setting_feedback">意见与反馈</string>
-    <string name="setting_privacy">隐私策略</string>
-    <string name="setting_privacy_desc">应用不收集用户的任何信息，只利用写权限。</string>
 </resources>

@@ -8,6 +8,7 @@ The time management application based on [Pomodoro Technique](https://en.wikiped
 Feature:
 
 * Record results to calendar.
+* Export records to CSV file.
 * Vibrate when finished.
 * Change the period.
 

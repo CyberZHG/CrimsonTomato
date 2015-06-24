@@ -2,9 +2,6 @@ package zhaohg.crimson.scene;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.view.View;
 
 import zhaohg.crimson.R;
@@ -31,10 +28,7 @@ public class MainScene extends Scene {
 
     @Override
     public void selfDraw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(context.getResources().getColor(R.color.background_material_dark));
-        canvas.drawRect(0.0f, 0.0f, this.width, this.height, paint);
+        canvas.drawColor(context.getResources().getColor(R.color.background_material_dark));
     }
 
 }
