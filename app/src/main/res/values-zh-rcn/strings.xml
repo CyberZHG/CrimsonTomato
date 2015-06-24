@@ -10,9 +10,13 @@
     <string name="action_history">历史</string>
     <string name="action_confirm">确定</string>
     <string name="action_cancel">取消</string>
+    <string name="action_clear_history">清空</string>
 
     <string name="dialog_give_up_title">放弃</string>
     <string name="dialog_give_up_message">确定要放弃这轮吗？</string>
+
+    <string name="dialog_clear_history_title">清空历史</string>
+    <string name="dialog_clear_history_message">确定要删除所有记录吗？</string>
 
     <string name="dialog_comment_title">总结</string>
     <string name="dialog_comment_message">你做了什么：</string>

@@ -10,9 +10,13 @@
     <string name="action_history">History</string>
     <string name="action_confirm">Confirm</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_clear_history">Clear</string>
 
     <string name="dialog_give_up_title">Give Up</string>
     <string name="dialog_give_up_message">Are you wish to give up?</string>
+
+    <string name="dialog_clear_history_title">Clear History</string>
+    <string name="dialog_clear_history_message">Are you sure to clear ALL history?</string>
 
     <string name="dialog_comment_title">Comment</string>
     <string name="dialog_comment_message">What have you done:</string>
