@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sync"
-            android:gravity="right"
+            android:gravity="end"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_marginTop="5dp"/>
 

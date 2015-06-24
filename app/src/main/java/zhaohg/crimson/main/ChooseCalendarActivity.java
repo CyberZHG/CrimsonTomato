@@ -29,14 +29,17 @@ public class ChooseCalendarActivity extends AppCompatActivity {
         Cursor cursor = contentResolver.query(Uri.parse("content://com.android.calendar/calendars"),
                 (new String[] { "_id", "name"}), null, null, null);
         LinearLayout layout = (LinearLayout) findViewById(R.id.linear_layout);
-        while (cursor.moveToNext()) {
-            String _id = cursor.getString(0);
-            String name = cursor.getString(1);
-            CalendarItem item = new CalendarItem(this);
-            item.setCalendarId(_id);
-            item.setText(name);
-            item.setTextSize(24.0f);
-            layout.addView(item);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String _id = cursor.getString(0);
+                String name = cursor.getString(1);
+                CalendarItem item = new CalendarItem(this);
+                item.setCalendarId(_id);
+                item.setText(name);
+                item.setTextSize(24.0f);
+                layout.addView(item);
+            }
+            cursor.close();
         }
     }
 

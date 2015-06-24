@@ -16,9 +16,9 @@ import zhaohg.crimson.R;
 
 public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder> {
 
-    private List<Tomato> tomatoes;
+    private final List<Tomato> tomatoes;
 
-    private Context context;
+    private final Context context;
 
     public TomatoAdapter(Context context) {
         this.context = context;
@@ -76,7 +76,7 @@ public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder
         notifyItemRemoved(position);
     }
 
-    public void append(Tomato tomato) {
+    void append(Tomato tomato) {
         if (!isExisted(tomato)) {
             int pos = tomatoes.size();
             tomatoes.add(tomato);
@@ -95,9 +95,9 @@ public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder
 
         private int id;
 
-        public TextView textViewTitle;
-        public TextView textViewDate;
-        public TextView textViewSync;
+        public final TextView textViewTitle;
+        public final TextView textViewDate;
+        public final TextView textViewSync;
 
         public ViewHolder(View view) {
             super(view);

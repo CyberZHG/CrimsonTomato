@@ -25,7 +25,7 @@ import zhaohg.crimson.data.TomatoData;
 
 public class TimerWidget extends Widget {
 
-    private static int PADDING = 5;
+    private static final int PADDING = 5;
 
     private static final int STATE_WAIT = 0;
     private static final int STATE_TRANS_TO_RUNNING = 1;

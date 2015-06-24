@@ -188,26 +188,19 @@ public class HistoryActivity extends AppCompatActivity {
         }
         String fileName = "export_" + (new Date()).getTime() + ".csv";
         File file = new File(dir, fileName);
-        if (file == null) {
-            Toast.makeText(this, getString(R.string.toast_export_cannot_write_to_file), Toast.LENGTH_LONG).show();
-            return;
-        }
         try {
             FileOutputStream output = new FileOutputStream(file);
             TomatoData tomatoData = new TomatoData(this);
             tomatoData.exportToCsv(output);
             output.close();
             Toast.makeText(this, getString(R.string.toast_export_to) + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Toast.makeText(this, getString(R.string.toast_export_cannot_write_to_file), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, getString(R.string.toast_export_cannot_write_to_file), Toast.LENGTH_LONG).show();
         }
     }
 
-    public void loadNextPage() {
+    void loadNextPage() {
         TomatoData tomatoData = new TomatoData(this);
         Vector<Tomato> tomatoes = tomatoData.getTomatoesOnPage(this.pageNum);
         TomatoAdapter adapter = (TomatoAdapter) recycleTomatoes.getAdapter();

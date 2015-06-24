@@ -81,25 +81,25 @@ public class Setting {
         return this.context.getSharedPreferences(PREFERENCE_NAME, Activity.MODE_PRIVATE);
     }
 
-    public void editValue(String key, int value) {
+    void editValue(String key, int value) {
         SharedPreferences settings = this.getSharedPreference();
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
-        editor.commit();
+        editor.apply();
     }
 
-    public void editValue(String key, boolean value) {
+    void editValue(String key, boolean value) {
         SharedPreferences settings = this.getSharedPreference();
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(key, value);
-        editor.commit();
+        editor.apply();
     }
 
-    public void editValue(String key, String value) {
+    void editValue(String key, String value) {
         SharedPreferences settings = this.getSharedPreference();
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
-        editor.commit();
+        editor.apply();
     }
 
     public int getPeriod() {

@@ -84,6 +84,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="140"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/edit_text_title"/>
 
@@ -109,7 +111,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/setting_sync_current_calendar_none"
                 android:id="@+id/text_view_current_calendar"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"/>
 
         </LinearLayout>
 

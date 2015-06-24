@@ -8,13 +8,13 @@ import zhaohg.crimson.widget.WidgetContainer;
 
 public abstract class Scene extends WidgetContainer {
 
-    protected Context context;
-    protected View view;
+    final Context context;
+    final View view;
     private boolean initialized = false;
-    protected int width;
-    protected int height;
+    int width;
+    int height;
 
-    public Scene(Context context, View view) {
+    Scene(Context context, View view) {
         this.context = context;
         this.view = view;
     }
@@ -30,6 +30,6 @@ public abstract class Scene extends WidgetContainer {
         super.onDraw(canvas);
     }
 
-    public abstract void initScene();
+    protected abstract void initScene();
 
 }

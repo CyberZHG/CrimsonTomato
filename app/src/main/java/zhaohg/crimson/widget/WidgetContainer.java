@@ -7,8 +7,8 @@ import java.util.Vector;
 
 public abstract class WidgetContainer {
 
-    protected Vector<Widget> widgets = new Vector();
-    protected Widget lastTouchWidget;
+    private final Vector<Widget> widgets = new Vector();
+    private Widget lastTouchWidget;
 
     protected void addChild(Widget widget) {
         this.widgets.add(widget);
@@ -18,7 +18,7 @@ public abstract class WidgetContainer {
         this.widgets.remove(widget);
     }
 
-    protected void drawChildren(Canvas canvas) {
+    void drawChildren(Canvas canvas) {
         for (Widget widget : this.widgets) {
             if (widget.isVisible()) {
                 widget.onDraw(canvas);
@@ -26,7 +26,7 @@ public abstract class WidgetContainer {
         }
     }
 
-    public void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas) {
         selfDraw(canvas);
         drawChildren(canvas);
     }
@@ -73,6 +73,6 @@ public abstract class WidgetContainer {
         }
     }
 
-    public abstract void selfDraw(Canvas canvas);
+    protected abstract void selfDraw(Canvas canvas);
 
 }

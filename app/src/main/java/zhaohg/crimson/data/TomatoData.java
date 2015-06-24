@@ -21,9 +21,9 @@ import zhaohg.crimson.R;
 
 public class TomatoData {
 
-    public static int PAGE_SIZE = 50;
+    public static final int PAGE_SIZE = 50;
 
-    private Context context;
+    private final Context context;
 
     public TomatoData(Context context) {
         this.context = context;
@@ -50,7 +50,9 @@ public class TomatoData {
                     "); "
             );
         }
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         db.close();
     }
 
@@ -60,7 +62,7 @@ public class TomatoData {
         db.close();
     }
 
-    public static String sqliteEscape(String keyWord){
+    private static String sqliteEscape(String keyWord){
         keyWord = keyWord.replace("/", "//");
         keyWord = keyWord.replace("'", "''");
         keyWord = keyWord.replace("[", "/[");
@@ -108,7 +110,7 @@ public class TomatoData {
         db.close();
     }
 
-    public Vector<Tomato> getTomatoesFromCursor(Cursor cur) {
+    Vector<Tomato> getTomatoesFromCursor(Cursor cur) {
         Vector<Tomato> tomatoes = new Vector();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         while (cur.moveToNext()) {
@@ -150,7 +152,7 @@ public class TomatoData {
         return tomatoes;
     }
 
-    public Vector<Tomato> getUnsyncedTomatoes() {
+    Vector<Tomato> getUnsyncedTomatoes() {
         SQLiteDatabase db = getDatabase();
         Cursor cur = db.rawQuery("SELECT * " +
                                  "FROM tomato " +
@@ -171,7 +173,7 @@ public class TomatoData {
         }
     }
 
-    public void syncToCalendar(Tomato tomato) {
+    void syncToCalendar(Tomato tomato) {
         Setting setting = Setting.getInstance();
         if (setting.getCalendarId().equals("")) {
             return;
@@ -205,7 +207,7 @@ public class TomatoData {
         db.close();
     }
 
-    public String addCsvEscape(String s) {
+    String addCsvEscape(String s) {
         String ret = "\"";
         for (int i = 0; i < s.length(); ++i) {
             if (s.charAt(i) == '"' || s.charAt(i) == '\\') {
