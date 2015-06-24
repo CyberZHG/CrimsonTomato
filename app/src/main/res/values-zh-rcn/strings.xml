@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">番茄时间</string>
+    <string name="app_name">番茄计时</string>
     <string name="hello_world">你好，世界！</string>
 
     <string name="title_activity_setting">设置</string>

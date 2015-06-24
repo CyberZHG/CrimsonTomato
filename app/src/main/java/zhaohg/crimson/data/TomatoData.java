@@ -59,6 +59,19 @@ public class TomatoData {
         db.close();
     }
 
+    public static String sqliteEscape(String keyWord){
+        keyWord = keyWord.replace("/", "//");
+        keyWord = keyWord.replace("'", "''");
+        keyWord = keyWord.replace("[", "/[");
+        keyWord = keyWord.replace("]", "/]");
+        keyWord = keyWord.replace("%", "/%");
+        keyWord = keyWord.replace("&","/&");
+        keyWord = keyWord.replace("_", "/_");
+        keyWord = keyWord.replace("(", "/(");
+        keyWord = keyWord.replace(")", "/)");
+        return keyWord;
+    }
+
     public void addTomato(Tomato tomato) {
         SQLiteDatabase db = getDatabase();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -66,8 +79,8 @@ public class TomatoData {
                 "INSERT INTO tomato (begin_time, end_time, title, location, uploaded) VALUES (" +
                 "    '" + format.format(tomato.getBegin()) + "', " +
                 "    '" + format.format(tomato.getEnd()) + "', " +
-                "    '" + tomato.getTitle() + "', " +
-                "    '" + tomato.getLocation() + "', " +
+                "    '" + sqliteEscape(tomato.getTitle()) + "', " +
+                "    '" + sqliteEscape(tomato.getLocation()) + "', " +
                 "    0" +
                 ");"
         );

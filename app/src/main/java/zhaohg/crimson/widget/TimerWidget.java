@@ -64,56 +64,72 @@ public class TimerWidget extends Widget {
         int right = x + w - PADDING;
         int bottom = y + h - PADDING;
         int midX = (left + right) / 2;
+        float strokeThickWidth = 7.0f * w / 480;
+        float strokeThinWidth = Math.max(1.0f, 1.0f * w / 480);
         RectF oval = new RectF(left, top, right, bottom);
         switch (state) {
-            case STATE_WAIT:
-                paint.setStrokeWidth(7.0f);
-                paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(oval, 0, 360, false, paint);
-                paint.setColor(Color.WHITE);
-                paint.setStyle(Paint.Style.FILL);
-                paint.setAlpha((int) (255 * fontAlpha));
-                canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
-                break;
-            case STATE_TRANS_TO_RUNNING:
-                paint.setStrokeWidth(this.transStrokeWidth);
-                paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(oval, 0, 360, false, paint);
-                paint.setColor(Color.WHITE);
-                paint.setStyle(Paint.Style.FILL);
-                paint.setAlpha((int) (255 * fontAlpha));
-                canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
-                break;
-            case STATE_FINISHED:
-                paint.setStrokeWidth(7.0f);
-                paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(oval, 0, 360, false, paint);
-                paint.setColor(Color.WHITE);
-                paint.setStyle(Paint.Style.FILL);
-                paint.setAlpha((int) (255 * fontAlpha));
-                canvas.drawText(this.context.getString(R.string.timer_finished), midX, textBaseY, paint);
-                break;
-            case STATE_RUNNING:
-                paint.setStrokeWidth(1.0f);
-                paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(oval, 0, 360, false, paint);
-                long interval = current.getTime() - begin.getTime();
-                float second = interval % (1000 * 60) / 1000.0f / 60.0f;
-                float minute = interval / (1000.0f * 60) / period;
-                float innerAngle = second * 360;
-                float outerAngle = minute * 360;
-                paint.setStrokeWidth(2.0f);
-                if ((interval / 1000 / 60) % 2 == 0) {
-                    canvas.drawArc(new RectF(left + 9, top + 9, right - 9, bottom - 9), -90, innerAngle, false, paint);
-                } else {
-                    canvas.drawArc(new RectF(left + 9, top + 9, right - 9, bottom - 9), -90, innerAngle - 360, false, paint);
+            case STATE_WAIT: {
+                    paint.setStrokeWidth(strokeThickWidth);
+                    paint.setStyle(Paint.Style.STROKE);
+                    canvas.drawArc(oval, 0, 360, false, paint);
+                    paint.setColor(Color.WHITE);
+                    paint.setStyle(Paint.Style.FILL);
+                    paint.setAlpha((int) (255 * fontAlpha));
+                    canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
                 }
-                paint.setStrokeWidth(7.0f);
-                canvas.drawArc(new RectF(left - 3, top - 3, right + 3, bottom + 3), -90, outerAngle, false, paint);
-                paint.setColor(Color.WHITE);
-                paint.setStyle(Paint.Style.FILL);
-                paint.setAlpha((int) (255 * fontAlpha));
-                canvas.drawText(getRemainTimeString(), midX, textBaseY, paint);
+                break;
+            case STATE_TRANS_TO_RUNNING: {
+                    paint.setStrokeWidth(this.transStrokeWidth);
+                    paint.setStyle(Paint.Style.STROKE);
+                    canvas.drawArc(oval, 0, 360, false, paint);
+                    paint.setColor(Color.WHITE);
+                    paint.setStyle(Paint.Style.FILL);
+                    paint.setAlpha((int) (255 * fontAlpha));
+                    canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
+                }
+                break;
+            case STATE_FINISHED: {
+                    paint.setStrokeWidth(strokeThickWidth);
+                    paint.setStyle(Paint.Style.STROKE);
+                    canvas.drawArc(oval, 0, 360, false, paint);
+                    paint.setColor(Color.WHITE);
+                    paint.setStyle(Paint.Style.FILL);
+                    paint.setAlpha((int) (255 * fontAlpha));
+                    canvas.drawText(this.context.getString(R.string.timer_finished), midX, textBaseY, paint);
+                }
+                break;
+            case STATE_RUNNING: {
+                    paint.setStrokeWidth(strokeThinWidth);
+                    paint.setStyle(Paint.Style.STROKE);
+                    canvas.drawArc(oval, 0, 360, false, paint);
+                    long interval = current.getTime() - begin.getTime();
+                    float second = interval % (1000 * 60) / 1000.0f / 60.0f;
+                    float minute = interval / (1000.0f * 60) / period;
+                    float innerAngle = second * 360;
+                    float outerAngle = minute * 360;
+                    paint.setStrokeWidth(strokeThinWidth * 2);
+                    float margin = 9.0f * w / 480;
+                    if ((interval / 1000 / 60) % 2 == 0) {
+                        canvas.drawArc(new RectF(left + margin,
+                                top + margin,
+                                right - margin,
+                                bottom - margin), -90, innerAngle, false, paint);
+                    } else {
+                        canvas.drawArc(new RectF(left + margin,
+                                top + margin,
+                                right - margin,
+                                bottom - margin), -90, innerAngle - 360, false, paint);
+                    }
+                    paint.setStrokeWidth(strokeThickWidth);
+                    canvas.drawArc(new RectF(left - strokeThickWidth / 2,
+                            top - strokeThickWidth / 2,
+                            right + strokeThickWidth / 2,
+                            bottom + strokeThickWidth / 2), -90, outerAngle, false, paint);
+                    paint.setColor(Color.WHITE);
+                    paint.setStyle(Paint.Style.FILL);
+                    paint.setAlpha((int) (255 * fontAlpha));
+                    canvas.drawText(getRemainTimeString(), midX, textBaseY, paint);
+                }
                 break;
         }
     }
