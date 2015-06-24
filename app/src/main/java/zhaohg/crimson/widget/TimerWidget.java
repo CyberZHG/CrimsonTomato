@@ -215,23 +215,29 @@ public class TimerWidget extends Widget {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    Setting setting = Setting.getInstance();
+                                    setting.setLastBegin(null);
+                                    end = new Date();
+                                    state = STATE_WAIT;
+                                    title = editText.getText().toString();
+                                    postInvalidate();
                                     dialog.dismiss();
                                 }
                             });
                     builder.setPositiveButton(this.context.getString(R.string.action_confirm),
                             new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Setting setting = Setting.getInstance();
-                            setting.setLastBegin(null);
-                            end = new Date();
-                            state = STATE_WAIT;
-                            title = editText.getText().toString();
-                            addTomatoToDatabase();
-                            postInvalidate();
-                            dialog.dismiss();
-                        }
-                    });
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Setting setting = Setting.getInstance();
+                                    setting.setLastBegin(null);
+                                    end = new Date();
+                                    state = STATE_WAIT;
+                                    title = editText.getText().toString();
+                                    addTomatoToDatabase();
+                                    postInvalidate();
+                                    dialog.dismiss();
+                                }
+                            });
                     builder.show();
                 }
                 break;

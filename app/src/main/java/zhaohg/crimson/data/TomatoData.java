@@ -101,6 +101,13 @@ public class TomatoData {
         db.close();
     }
 
+    public void deleteTomato(int id) {
+        SQLiteDatabase db = getDatabase();
+        db.execSQL("DELETE FROM tomato " +
+                   "WHERE id=" + id + ";");
+        db.close();
+    }
+
     public Vector<Tomato> getTomatoesFromCursor(Cursor cur) {
         Vector<Tomato> tomatoes = new Vector();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

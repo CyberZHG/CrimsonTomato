@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -61,6 +63,40 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             }
         });
+
+        SwipeableRecyclerViewTouchListener swipeableRecyclerViewTouchListener =
+                new SwipeableRecyclerViewTouchListener(recycleTomatoes,
+                        new SwipeableRecyclerViewTouchListener.SwipeListener() {
+
+                            @Override
+                            public boolean canSwipe(int i) {
+                                return true;
+                            }
+
+                            private void onDismissed(int[] positions) {
+                                TomatoAdapter adapter = (TomatoAdapter) recycleTomatoes.getAdapter();
+                                for (int position : positions) {
+                                    Tomato tomato = adapter.getAt(position);
+                                    if (tomato != null) {
+                                        TomatoData tomatoData = new TomatoData(getApplicationContext());
+                                        tomatoData.deleteTomato(tomato.getId());
+                                    }
+                                    adapter.removeAt(position);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] positions) {
+                                onDismissed(positions);
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] positions) {
+                                onDismissed(positions);
+                            }
+                        });
+        recycleTomatoes.addOnItemTouchListener(swipeableRecyclerViewTouchListener);
 
         loadNextPage();
     }

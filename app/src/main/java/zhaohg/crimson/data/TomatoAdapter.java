@@ -64,6 +64,18 @@ public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    public Tomato getAt(int position) {
+        if (0 <= position && position < tomatoes.size()) {
+            return tomatoes.get(position);
+        }
+        return null;
+    }
+
+    public void removeAt(int position) {
+        tomatoes.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public void append(Tomato tomato) {
         if (!isExisted(tomato)) {
             int pos = tomatoes.size();
