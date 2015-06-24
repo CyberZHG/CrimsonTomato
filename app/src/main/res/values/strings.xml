@@ -10,6 +10,7 @@
     <string name="action_history">History</string>
     <string name="action_confirm">Confirm</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_export_csv">Export</string>
     <string name="action_clear_history">Clear</string>
 
     <string name="dialog_give_up_title">Give Up</string>
@@ -20,6 +21,11 @@
 
     <string name="dialog_comment_title">Comment</string>
     <string name="dialog_comment_message">What have you done:</string>
+
+    <string name="toast_export_to">Exported to: </string>
+    <string name="toast_export_external_unavailable">Failed: The external storage is unavailable.</string>
+    <string name="toast_export_cannot_create_folder">Failed: Cannot create folder.</string>
+    <string name="toast_export_cannot_write_to_file">Failed: Cannot write to file.</string>
 
     <string name="timer_start">Start</string>
     <string name="timer_finished">Finished</string>

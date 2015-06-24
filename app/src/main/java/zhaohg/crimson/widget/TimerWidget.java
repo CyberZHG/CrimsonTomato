@@ -64,7 +64,7 @@ public class TimerWidget extends Widget {
         int right = x + w - PADDING;
         int bottom = y + h - PADDING;
         int midX = (left + right) / 2;
-        float strokeThickWidth = 7.0f * w / 480;
+        float strokeThickWidth = 10.0f * w / 480;
         float strokeThinWidth = Math.max(1.0f, 1.0f * w / 480);
         RectF oval = new RectF(left, top, right, bottom);
         switch (state) {
@@ -108,7 +108,7 @@ public class TimerWidget extends Widget {
                     float innerAngle = second * 360;
                     float outerAngle = minute * 360;
                     paint.setStrokeWidth(strokeThinWidth * 2);
-                    float margin = 9.0f * w / 480;
+                    float margin = 12.0f * w / 480;
                     if ((interval / 1000 / 60) % 2 == 0) {
                         canvas.drawArc(new RectF(left + margin,
                                 top + margin,
@@ -153,7 +153,7 @@ public class TimerWidget extends Widget {
                     setting.setLastPeriod(this.period);
                     setting.setVibrated(false);
                     this.state = STATE_TRANS_TO_RUNNING;
-                    this.transStrokeWidth = 7.0f;
+                    this.transStrokeWidth = 10.0f * w / 480;
                     this.fontAlpha = 1.0f;
                 }
                 break;

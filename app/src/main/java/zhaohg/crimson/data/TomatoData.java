@@ -6,13 +6,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.net.Uri;
 import android.provider.CalendarContract;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
 
@@ -75,6 +76,9 @@ public class TomatoData {
     public void addTomato(Tomato tomato) {
         SQLiteDatabase db = getDatabase();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (tomato.getTitle().isEmpty()) {
+            tomato.setTitle(context.getString(R.string.app_name));
+        }
         db.execSQL(
                 "INSERT INTO tomato (begin_time, end_time, title, location, uploaded) VALUES (" +
                 "    '" + format.format(tomato.getBegin()) + "', " +
@@ -189,6 +193,43 @@ public class TomatoData {
                 "WHERE id=" + tomato.getId() + "; "
         );
         db.close();
+    }
+
+    public String addCsvEscape(String s) {
+        String ret = "\"";
+        for (int i = 0; i < s.length(); ++i) {
+            if (s.charAt(i) == '"' || s.charAt(i) == '\\') {
+                ret += "\\";
+            }
+            ret += s.charAt(i);
+        }
+        ret += "\"";
+        return ret;
+    }
+
+    public void exportToCsv(FileOutputStream output) throws IOException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss aa");
+        OutputStreamWriter writer = new OutputStreamWriter(output);
+        writer.write("Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private" + "\n");
+        for (int pageNum = 0; ; ++pageNum) {
+            Vector<Tomato> tomatoes = this.getTomatoesOnPage(pageNum);
+            if (tomatoes.size() == 0) {
+                break;
+            }
+            for (Tomato tomato : tomatoes) {
+                writer.write(addCsvEscape(tomato.getTitle()) + ",");
+                writer.write(dateFormat.format(tomato.getBegin()) + ",");
+                writer.write(timeFormat.format(tomato.getBegin()) + ",");
+                writer.write(dateFormat.format(tomato.getEnd()) + ",");
+                writer.write(timeFormat.format(tomato.getEnd()) + ",");
+                writer.write("False,");
+                writer.write(addCsvEscape(context.getString(R.string.app_name)) + ",");
+                writer.write(addCsvEscape(tomato.getLocation()) + ",");
+                writer.write("True\n");
+            }
+        }
+        writer.close();
     }
 
 }

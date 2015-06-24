@@ -10,6 +10,7 @@
     <string name="action_history">历史</string>
     <string name="action_confirm">确定</string>
     <string name="action_cancel">取消</string>
+    <string name="action_export_csv">导出</string>
     <string name="action_clear_history">清空</string>
 
     <string name="dialog_give_up_title">放弃</string>
@@ -20,6 +21,11 @@
 
     <string name="dialog_comment_title">总结</string>
     <string name="dialog_comment_message">你做了什么：</string>
+
+    <string name="toast_export_to">导出到：</string>
+    <string name="toast_export_external_unavailable">失败：外部存储不可用。</string>
+    <string name="toast_export_cannot_create_folder">失败：无法创建文件夹。</string>
+    <string name="toast_export_cannot_write_to_file">失败：无法写入文件。</string>
 
     <string name="timer_start">开始</string>
     <string name="timer_finished">结束</string>

@@ -1,6 +1,7 @@
 package zhaohg.crimson.main;
 
 import android.content.DialogInterface;
+import android.os.Environment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -11,11 +12,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
 import java.util.Vector;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.data.Setting;
 import zhaohg.crimson.data.Tomato;
 import zhaohg.crimson.data.TomatoAdapter;
 import zhaohg.crimson.data.TomatoData;
@@ -74,6 +80,9 @@ public class HistoryActivity extends AppCompatActivity {
             case R.id.menu_item_clear_history:
                 this.tryClearHistory();
                 break;
+            case R.id.menu_item_export_csv:
+                this.exportToCsv();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -102,6 +111,38 @@ public class HistoryActivity extends AppCompatActivity {
                     }
                 });
         builder.show();
+    }
+
+    private void exportToCsv() {
+        File sdCard = Environment.getExternalStorageDirectory();
+        if (sdCard == null) {
+            Toast.makeText(this, getString(R.string.toast_export_external_unavailable), Toast.LENGTH_LONG).show();
+            return;
+        }
+        File dir = new File(sdCard.getAbsolutePath() + "/data/zhaohg.crimson/");
+        if (!dir.exists() && !dir.mkdirs()) {
+            Toast.makeText(this, getString(R.string.toast_export_cannot_create_folder), Toast.LENGTH_LONG).show();
+            return;
+        }
+        String fileName = "export_" + (new Date()).getTime() + ".csv";
+        File file = new File(dir, fileName);
+        if (file == null) {
+            Toast.makeText(this, getString(R.string.toast_export_cannot_write_to_file), Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            FileOutputStream output = new FileOutputStream(file);
+            TomatoData tomatoData = new TomatoData(this);
+            tomatoData.exportToCsv(output);
+            output.close();
+            Toast.makeText(this, getString(R.string.toast_export_to) + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.toast_export_cannot_write_to_file), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.toast_export_cannot_write_to_file), Toast.LENGTH_LONG).show();
+        }
     }
 
     public void loadNextPage() {

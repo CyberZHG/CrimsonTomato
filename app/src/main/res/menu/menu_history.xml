@@ -4,6 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_item_export_csv"
+        android:title="@string/action_export_csv"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/menu_item_clear_history"
         android:title="@string/action_clear_history"
         app:showAsAction="never"/>
