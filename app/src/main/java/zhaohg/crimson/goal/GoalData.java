@@ -76,6 +76,17 @@ public class GoalData {
         );
     }
 
+    public Goal getGoal(int id) {
+        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+        Cursor cur = DatabaseUtil.selectById(db, TABLE_NAME, id);
+        Vector<Goal> goals = getGoalsFromCursor(cur);
+        db.close();
+        if (goals.size() > 0) {
+            return goals.get(0);
+        }
+        return null;
+    }
+
     public void clearGoal() {
         DatabaseUtil.deleteAll(context, TABLE_NAME);
     }
@@ -125,6 +136,36 @@ public class GoalData {
         Vector<Goal> goals = getGoalsFromCursor(cur);
         db.close();
         return goals;
+    }
+
+    public void addTomato(Goal goal) {
+        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+        goal.setTomatoSpent(goal.getTomatoSpent() + 1);
+        db.rawQuery(
+                "UPDATE " + TABLE_NAME + " " +
+                "SET " + COLUMN_TOMATO_SPENT + "=" + goal.getTomatoSpent() + " " +
+                "WHERE " + COLUMN_ID + "=" + goal.getId() + ";", null
+        );
+    }
+
+    public void addMinute(Goal goal, int minute) {
+        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+        goal.setMinuteSpent(goal.getMinuteSpent() + minute);
+        db.rawQuery(
+                "UPDATE " + TABLE_NAME + " " +
+                "SET " + COLUMN_MINUTE_SPENT + "=" + goal.getMinuteSpent() + " " +
+                "WHERE " + COLUMN_ID + "=" + goal.getId() + ";", null
+        );
+    }
+
+    public void updateTitle(Goal goal, String title) {
+        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+        goal.setTitle(title);
+        db.rawQuery(
+                "UPDATE " + TABLE_NAME + " " +
+                "SET " + COLUMN_TITLE + "='" + DatabaseUtil.sqliteEscape(title) + "' " +
+                "WHERE " + COLUMN_ID + "=" + goal.getId() + ";", null
+        );
     }
 
 }

@@ -1,6 +1,8 @@
 package zhaohg.crimson.goal;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,6 +115,10 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
         private class OnPostClickerListener implements View.OnClickListener {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, GoalActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(GoalActivity.KEY_GOAL_ID, id);
+                context.startActivity(intent);
             }
         }
     }

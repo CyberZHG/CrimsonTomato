@@ -1,63 +1,88 @@
 package zhaohg.crimson.goal;
 
-import java.util.Locale;
-
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.tomato.HistoryActivity;
+import zhaohg.crimson.main.MainActivity;
+import zhaohg.crimson.setting.Setting;
+import zhaohg.crimson.setting.SettingActivity;
 
-public class GoalActivity extends AppCompatActivity implements ActionBar.TabListener {
+public class GoalActivity extends AppCompatActivity {
 
-    SectionsPagerAdapter sectionsPagerAdapter;
+    public static final String KEY_GOAL_ID = "goal_id";
 
-    ViewPager viewPager;
+    private Goal goal;
+
+    private Button buttonStartNow;
+    private EditText editTextTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
 
+        final int goalId = getIntent().getIntExtra(KEY_GOAL_ID, -1);
+        final GoalData goalData = new GoalData(this);
+        goal = goalData.getGoal(goalId);
+        if (goal == null) {
+            this.finish();
+            return;
+        }
+
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        final Setting setting = Setting.getInstance();
 
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        buttonStartNow = (Button) findViewById(R.id.button_start_now);
+        if (setting.getLastBegin() != null) {
+            buttonStartNow.setVisibility(View.INVISIBLE);
+        }
+        buttonStartNow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+            public void onClick(View v) {
+                Setting setting = Setting.getInstance();
+                setting.setLastGoalId(goal.getId());
+                Intent intent = new Intent();
+                intent.setClass(GoalActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
-        for (int i = 0; i < sectionsPagerAdapter.getCount(); i++) {
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(sectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
-        }
-    }
+        editTextTitle = (EditText) findViewById(R.id.edit_text_title);
+        editTextTitle.setText(goal.getTitle());
+        editTextTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                goalData.updateTitle(goal, editTextTitle.getText().toString());
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_goal, menu);
+        inflater.inflate(R.menu.menu_goals, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -67,66 +92,7 @@ public class GoalActivity extends AppCompatActivity implements ActionBar.TabList
             case android.R.id.home:
                 this.finish();
                 break;
-            case R.id.menu_item_new_goal: {
-                    Intent intent = new Intent();
-                    intent.setClass(GoalActivity.this, NewGoalActivity.class);
-                    startActivity(intent);
-                }
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return GoalFragment.newInstance(GoalFragment.SHOW_UNFINISHED);
-                case 1:
-                    return GoalFragment.newInstance(GoalFragment.SHOW_FINISHED);
-                case 2:
-                    return GoalFragment.newInstance(GoalFragment.SHOW_ALL);
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.goal_show_type_unfinished).toUpperCase(l);
-                case 1:
-                    return getString(R.string.goal_show_type_finished).toUpperCase(l);
-                case 2:
-                    return getString(R.string.goal_show_type_all).toUpperCase(l);
-            }
-            return null;
-        }
-    }
-
 }

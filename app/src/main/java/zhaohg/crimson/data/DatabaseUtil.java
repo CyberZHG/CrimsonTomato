@@ -51,7 +51,14 @@ public class DatabaseUtil {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return new Date();
+        return null;
+    }
+
+    public static Cursor selectById(SQLiteDatabase db, String tableName, int id) {
+        return db.rawQuery(
+                "SELECT * " +
+                "FROM " + tableName + " " +
+                "WHERE id=" + id + ";", null);
     }
 
     public static Cursor getPageSortedByKey(SQLiteDatabase db, String tableName, String keyColumn, int pageNum) {

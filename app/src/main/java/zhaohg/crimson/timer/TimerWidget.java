@@ -19,6 +19,8 @@ import android.widget.TextView;
 import java.util.Date;
 
 import zhaohg.crimson.R;
+import zhaohg.crimson.goal.Goal;
+import zhaohg.crimson.goal.GoalData;
 import zhaohg.crimson.setting.Setting;
 import zhaohg.crimson.tomato.Tomato;
 import zhaohg.crimson.tomato.TomatoData;
@@ -177,6 +179,7 @@ public class TimerWidget extends Widget {
                         public void onClick(DialogInterface dialog, int which) {
                             Setting setting = Setting.getInstance();
                             setting.setLastBegin(null);
+                            setting.setLastGoalId(-1);
                             state = STATE_WAIT;
                             postInvalidate();
                             dialog.dismiss();
@@ -189,6 +192,11 @@ public class TimerWidget extends Widget {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
                     builder.setTitle(this.context.getString(R.string.dialog_comment_title));
+
+                    final Setting setting = Setting.getInstance();
+                    final int lastGoalId = setting.getLastGoalId();
+                    final GoalData goalData = new GoalData(context);
+                    final Goal goal = goalData.getGoal(lastGoalId);
 
                     LinearLayout layout = new LinearLayout(this.context);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -206,8 +214,10 @@ public class TimerWidget extends Widget {
                     layout.addView(textView, textViewLayoutParams);
 
                     final EditText editText = new EditText(this.context);
-                    Setting setting = Setting.getInstance();
                     editText.setText(setting.getDefaultTitle());
+                    if (goal != null) {
+                        editText.setText(goal.getTitle());
+                    }
                     editText.selectAll();
                     layout.addView(editText, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
@@ -216,7 +226,6 @@ public class TimerWidget extends Widget {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Setting setting = Setting.getInstance();
                                     setting.setLastBegin(null);
                                     end = new Date();
                                     state = STATE_WAIT;
@@ -229,12 +238,16 @@ public class TimerWidget extends Widget {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Setting setting = Setting.getInstance();
                                     setting.setLastBegin(null);
                                     end = new Date();
                                     state = STATE_WAIT;
                                     title = editText.getText().toString();
                                     addTomatoToDatabase();
+                                    if (goal != null) {
+                                        goalData.addTomato(goal);
+                                        goalData.addMinute(goal, (int)((begin.getTime() - end.getTime()) / 1000 / 60));
+                                        setting.setLastGoalId(-1);
+                                    }
                                     postInvalidate();
                                     dialog.dismiss();
                                 }
@@ -325,6 +338,12 @@ public class TimerWidget extends Widget {
             this.period = setting.getLastPeriod();
             this.current = new Date();
             this.state = STATE_RUNNING;
+        }
+        int lastGoalId = setting.getLastGoalId();
+        GoalData goalData = new GoalData(context);
+        Goal goal = goalData.getGoal(lastGoalId);
+        if (goal != null) {
+            this.period = goal.getPeriod();
         }
     }
 

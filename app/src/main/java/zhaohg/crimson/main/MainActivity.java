@@ -15,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.goal.GoalActivity;
+import zhaohg.crimson.goal.GoalsActivity;
 import zhaohg.crimson.goal.GoalData;
 import zhaohg.crimson.setting.Setting;
 import zhaohg.crimson.setting.SettingActivity;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_item_goal: {
                     Intent intent = new Intent();
-                    intent.setClass(MainActivity.this, GoalActivity.class);
+                    intent.setClass(MainActivity.this, GoalsActivity.class);
                     startActivity(intent);
                 }
                 break;

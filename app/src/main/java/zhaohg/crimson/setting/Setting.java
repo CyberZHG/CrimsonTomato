@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import zhaohg.crimson.R;
+import zhaohg.crimson.data.DatabaseUtil;
 
 public class Setting {
 
@@ -18,6 +19,7 @@ public class Setting {
     private static final String KEY_VIBRATE = "vibrate";
     private static final String KEY_VIBRATED = "vibrated";
     private static final String KEY_LAST_BEGIN = "last_begin";
+    private static final String KEY_LAST_GOAL_ID = "last_goal_id";
     private static final String KEY_DEFAULT_TITLE = "default_title";
     private static final String KEY_SYNC_TO_CALENDAR = "sync_to_calendar";
     private static final String KEY_CALENDAR_ID = "calendar_id";
@@ -32,6 +34,7 @@ public class Setting {
     private boolean vibrate;
     private boolean vibrated;
     private Date lastBegin;
+    private int lastGoalId;
 
     private String defaultTitle;
     private boolean syncToCalendar;
@@ -65,12 +68,8 @@ public class Setting {
         this.lastPeriod = settings.getInt(KEY_LAST_PERIOD, 25);
         this.vibrate = settings.getBoolean(KEY_VIBRATE, true);
         this.vibrated = settings.getBoolean(KEY_VIBRATED, false);
-        try {
-            this.lastBegin = format.parse(settings.getString(KEY_LAST_BEGIN, "###"));
-        } catch (ParseException e) {
-            this.lastBegin = null;
-        }
-
+        this.lastBegin = DatabaseUtil.parseDate(settings.getString(KEY_LAST_BEGIN, "###"));
+        this.lastGoalId = settings.getInt(KEY_LAST_GOAL_ID, -1);
         this.defaultTitle = settings.getString(KEY_DEFAULT_TITLE, context.getString(R.string.app_name));
         this.syncToCalendar = settings.getBoolean(KEY_SYNC_TO_CALENDAR, true);
         this.calendarId = settings.getString(KEY_CALENDAR_ID, "");
@@ -150,6 +149,15 @@ public class Setting {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             this.editValue(KEY_LAST_BEGIN, format.format(lastBegin));
         }
+    }
+
+    public int getLastGoalId() {
+        return this.lastGoalId;
+    }
+
+    public void setLastGoalId(int lastGoalId) {
+        this.lastGoalId = lastGoalId;
+        editValue(KEY_LAST_GOAL_ID, lastGoalId);
     }
 
     public String getDefaultTitle() {

@@ -4,10 +4,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="zhaohg.crimson.goal.GoalActivity">
 
-    <item
-        android:id="@+id/menu_item_new_goal"
-        android:title="@string/action_new_goal"
-        android:icon="@drawable/new_goal"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
 </menu>

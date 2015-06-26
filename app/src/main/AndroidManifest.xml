@@ -36,12 +36,16 @@
             android:label="@string/title_activity_choose_calendar" >
         </activity>
         <activity
-            android:name=".goal.GoalActivity"
-            android:label="@string/title_activity_goal" >
+            android:name=".goal.GoalsActivity"
+            android:label="@string/title_activity_goals" >
         </activity>
         <activity
             android:name=".goal.NewGoalActivity"
             android:label="@string/title_activity_new_goal" >
+        </activity>
+        <activity
+            android:name=".goal.GoalActivity"
+            android:label="@string/title_activity_goal" >
         </activity>
     </application>
 

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_activity_goal">计划</string>
+    <string name="title_activity_goals">计划</string>
     <string name="title_activity_new_goal">添加新计划</string>
 
     <string name="action_goal">计划</string>
     <string name="action_new_goal">添加新计划</string>
+
+    <string name="button_start_now">现在开始</string>
 
     <string name="goal_show_type_unfinished">未完成</string>
     <string name="goal_show_type_finished">已完成</string>
