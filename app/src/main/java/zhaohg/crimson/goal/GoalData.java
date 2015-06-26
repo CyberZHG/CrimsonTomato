@@ -1,4 +1,4 @@
-package zhaohg.crimson.data.goal;
+package zhaohg.crimson.goal;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -56,23 +56,23 @@ public class GoalData {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
         db.execSQL(
                 "INSERT INTO " + TABLE_NAME + " (" +
-                COLUMN_TITLE + ", " +
-                COLUMN_PRIORITY + ", " +
-                COLUMN_PERIOD + ", " +
-                COLUMN_FINISHED + ", " +
-                COLUMN_CREATE_DATE + ", " +
-                COLUMN_FINISHED_DATE + ", " +
-                COLUMN_TOMATO_SPENT + ", " +
-                COLUMN_MINUTE_SPENT + ") VALUES (" +
-                "    '" + DatabaseUtil.sqliteEscape(goal.getTitle()) + "', " +
-                "    " + goal.getPriority() + ", " +
-                "    " + goal.getPeriod() + ", " +
-                "    0, " +
-                "    '" + DatabaseUtil.formatDate(goal.getCreateDate()) + "', " +
-                "    '" + DatabaseUtil.formatDate(goal.getFinishedDate()) + "', " +
-                "    " + goal.getTomatoSpent() + ", " +
-                "    " + goal.getMinuteSpent() + "" +
-                ");"
+                        COLUMN_TITLE + ", " +
+                        COLUMN_PRIORITY + ", " +
+                        COLUMN_PERIOD + ", " +
+                        COLUMN_FINISHED + ", " +
+                        COLUMN_CREATE_DATE + ", " +
+                        COLUMN_FINISHED_DATE + ", " +
+                        COLUMN_TOMATO_SPENT + ", " +
+                        COLUMN_MINUTE_SPENT + ") VALUES (" +
+                        "    '" + DatabaseUtil.sqliteEscape(goal.getTitle()) + "', " +
+                        "    " + goal.getPriority() + ", " +
+                        "    " + goal.getPeriod() + ", " +
+                        "    0, " +
+                        "    '" + DatabaseUtil.formatDate(goal.getCreateDate()) + "', " +
+                        "    '" + DatabaseUtil.formatDate(goal.getFinishedDate()) + "', " +
+                        "    " + goal.getTomatoSpent() + ", " +
+                        "    " + goal.getMinuteSpent() + "" +
+                        ");"
         );
     }
 
@@ -103,37 +103,23 @@ public class GoalData {
         return goals;
     }
 
-    private Vector<Goal> getAllGoals() {
+    public Vector<Goal> getUnfinishedGoalsOnPage(int pageNum) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        Cursor cur = db.rawQuery("SELECT * FROM " + TABLE_NAME + ";", null);
+        Cursor cur = DatabaseUtil.getPageSortedByIdWithCondition(db, TABLE_NAME, COLUMN_FINISHED + "=0", pageNum);
         Vector<Goal> goals = getGoalsFromCursor(cur);
         db.close();
         return goals;
     }
 
-    private Vector<Goal> getUnfinishedGoals() {
+    public Vector<Goal> getFinishedGoalsOnPage(int pageNum) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        Cursor cur = db.rawQuery(
-                "SELECT * " +
-                "FROM " + TABLE_NAME + "" +
-                "WHERE " + COLUMN_FINISHED + "=0;", null);
+        Cursor cur = DatabaseUtil.getPageSortedByIdWithCondition(db, TABLE_NAME, COLUMN_FINISHED + "=1", pageNum);
         Vector<Goal> goals = getGoalsFromCursor(cur);
         db.close();
         return goals;
     }
 
-    private Vector<Goal> getFinishedGoals() {
-        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        Cursor cur = db.rawQuery(
-                "SELECT * " +
-                "FROM " + TABLE_NAME + "" +
-                "WHERE " + COLUMN_FINISHED + "=0;", null);
-        Vector<Goal> goals = getGoalsFromCursor(cur);
-        db.close();
-        return goals;
-    }
-
-    public Vector<Goal> getTomatoesOnPage(int pageNum) {
+    public Vector<Goal> getGoalsOnPage(int pageNum) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
         Cursor cur = DatabaseUtil.getPageSortedById(db, TABLE_NAME, pageNum);
         Vector<Goal> goals = getGoalsFromCursor(cur);

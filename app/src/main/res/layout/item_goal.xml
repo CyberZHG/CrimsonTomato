@@ -22,23 +22,22 @@
             android:id="@+id/text_view_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tomato_item_text_title"
+            android:text="@string/goal_item_text_title"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <TextView
-            android:id="@+id/text_view_date"
+            android:id="@+id/text_view_tomato_spent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tomato_item_text_date"
+            android:text="@string/goal_item_text_tomato_spent"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_marginTop="5dp"/>
 
         <TextView
-            android:id="@+id/text_view_sync"
+            android:id="@+id/text_view_minute_spent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tomato_item_text_sync"
-            android:gravity="end"
+            android:text="@string/goal_item_text_minute_spent"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_marginTop="5dp"/>
 

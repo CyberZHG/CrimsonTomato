@@ -1,4 +1,4 @@
-package zhaohg.crimson.main;
+package zhaohg.crimson.setting;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.data.Setting;
 
 public class ChooseCalendarActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package zhaohg.crimson.data.tomato;
+package zhaohg.crimson.tomato;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -18,7 +18,7 @@ import java.util.Vector;
 
 import zhaohg.crimson.R;
 import zhaohg.crimson.data.DatabaseUtil;
-import zhaohg.crimson.data.Setting;
+import zhaohg.crimson.setting.Setting;
 
 public class TomatoData {
 
@@ -65,17 +65,17 @@ public class TomatoData {
         }
         db.execSQL(
                 "INSERT INTO " + TABLE_NAME + " (" +
-                COLUMN_BEGIN_DATE + ", " +
-                COLUMN_END_DATE + ", " +
-                COLUMN_TITLE + ", " +
-                COLUMN_LOCATION + ", " +
-                COLUMN_SYNCED + ") VALUES (" +
-                "    '" + DatabaseUtil.formatDate(tomato.getBegin()) + "', " +
-                "    '" + DatabaseUtil.formatDate(tomato.getEnd()) + "', " +
-                "    '" + DatabaseUtil.sqliteEscape(tomato.getTitle()) + "', " +
-                "    '" + DatabaseUtil.sqliteEscape(tomato.getLocation()) + "', " +
-                "    0" +
-                ");"
+                        COLUMN_BEGIN_DATE + ", " +
+                        COLUMN_END_DATE + ", " +
+                        COLUMN_TITLE + ", " +
+                        COLUMN_LOCATION + ", " +
+                        COLUMN_SYNCED + ") VALUES (" +
+                        "    '" + DatabaseUtil.formatDate(tomato.getBegin()) + "', " +
+                        "    '" + DatabaseUtil.formatDate(tomato.getEnd()) + "', " +
+                        "    '" + DatabaseUtil.sqliteEscape(tomato.getTitle()) + "', " +
+                        "    '" + DatabaseUtil.sqliteEscape(tomato.getLocation()) + "', " +
+                        "    0" +
+                        ");"
         );
         Setting setting = Setting.getInstance();
         if (setting.isSyncToCalendar()) {
@@ -112,14 +112,6 @@ public class TomatoData {
             tomatoes.add(tomato);
         }
         cur.close();
-        return tomatoes;
-    }
-
-    private Vector<Tomato> getAllTomatoes() {
-        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        Cursor cur = db.rawQuery("SELECT * FROM " + TABLE_NAME + ";", null);
-        Vector<Tomato> tomatoes = getTomatoesFromCursor(cur);
-        db.close();
         return tomatoes;
     }
 

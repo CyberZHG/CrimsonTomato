@@ -1,4 +1,4 @@
-package zhaohg.crimson.data.goal;
+package zhaohg.crimson.goal;
 
 import java.util.Date;
 

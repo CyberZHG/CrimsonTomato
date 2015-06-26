@@ -20,4 +20,8 @@
 
     <string name="tomato_synced">已同步</string>
     <string name="tomato_unsynced">未同步</string>
+
+    <string name="tomato_item_text_title">标题</string>
+    <string name="tomato_item_text_date">日期</string>
+    <string name="tomato_item_text_sync">同步</string>
 </resources>

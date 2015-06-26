@@ -18,7 +18,7 @@ public abstract class WidgetContainer {
         this.widgets.remove(widget);
     }
 
-    void drawChildren(Canvas canvas) {
+    public void drawChildren(Canvas canvas) {
         for (Widget widget : this.widgets) {
             if (widget.isVisible()) {
                 widget.onDraw(canvas);

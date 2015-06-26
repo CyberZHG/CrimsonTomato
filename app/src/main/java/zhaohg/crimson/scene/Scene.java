@@ -8,13 +8,13 @@ import zhaohg.crimson.widget.WidgetContainer;
 
 public abstract class Scene extends WidgetContainer {
 
-    final Context context;
-    final View view;
-    private boolean initialized = false;
-    int width;
-    int height;
+    protected final Context context;
+    protected final View view;
+    protected boolean initialized = false;
+    protected int width;
+    protected int height;
 
-    Scene(Context context, View view) {
+    public Scene(Context context, View view) {
         this.context = context;
         this.view = view;
     }

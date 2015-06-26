@@ -20,4 +20,8 @@
 
     <string name="tomato_synced">Synced</string>
     <string name="tomato_unsynced">Unsynced</string>
+
+    <string name="tomato_item_text_title">Title</string>
+    <string name="tomato_item_text_date">Date</string>
+    <string name="tomato_item_text_sync">Sync</string>
 </resources>

@@ -1,11 +1,11 @@
-package zhaohg.crimson.scene;
+package zhaohg.crimson.timer;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.View;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.widget.TimerWidget;
+import zhaohg.crimson.scene.Scene;
 
 public class TimerScene extends Scene {
 

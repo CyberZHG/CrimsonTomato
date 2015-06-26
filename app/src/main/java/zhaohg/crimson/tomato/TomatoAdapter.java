@@ -1,4 +1,4 @@
-package zhaohg.crimson.data.tomato;
+package zhaohg.crimson.tomato;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import zhaohg.crimson.R;
+import zhaohg.crimson.data.DatabaseUtil;
 
 
 public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder> {
@@ -36,8 +36,9 @@ public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder
         Tomato tomato = tomatoes.get(i);
         viewHolder.setId(tomato.getId());
         viewHolder.textViewTitle.setText(tomato.getTitle());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        viewHolder.textViewDate.setText(format.format(tomato.getBegin()) + " - " + format.format(tomato.getEnd()));
+        viewHolder.textViewDate.setText(DatabaseUtil.formatDate(tomato.getBegin()) +
+                " / " +
+                DatabaseUtil.formatDate(tomato.getEnd()));
         if (tomato.isUploaded()) {
             viewHolder.textViewSync.setText(context.getString(R.string.tomato_synced));
         } else {
@@ -121,4 +122,5 @@ public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder
             }
         }
     }
+
 }

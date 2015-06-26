@@ -1,4 +1,4 @@
-package zhaohg.crimson.data;
+package zhaohg.crimson.setting;
 
 import android.app.Activity;
 import android.content.Context;

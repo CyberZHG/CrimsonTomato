@@ -5,16 +5,16 @@ import android.view.View;
 
 public abstract class Widget extends WidgetContainer {
 
-    final Context context;
-    private final View view;
+    protected final Context context;
+    protected final View view;
 
-    int x;
-    int y;
-    int w;
-    int h;
-    private boolean visible = true;
+    protected int x;
+    protected int y;
+    protected int w;
+    protected int h;
+    protected boolean visible = true;
 
-    Widget(Context context, View view) {
+    public Widget(Context context, View view) {
         this.context = context;
         this.view = view;
     }
@@ -50,7 +50,7 @@ public abstract class Widget extends WidgetContainer {
         this.w = w;
     }
 
-    int getH() {
+    public int getH() {
         return h;
     }
 
@@ -82,7 +82,7 @@ public abstract class Widget extends WidgetContainer {
         this.visible = visible;
     }
 
-    void postInvalidate() {
+    protected void postInvalidate() {
         this.view.postInvalidate(this.getLeft(), this.getTop(), this.getRight(), this.getBottom());
     }
 }

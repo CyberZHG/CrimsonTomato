@@ -1,4 +1,4 @@
-package zhaohg.crimson.widget;
+package zhaohg.crimson.timer;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,9 +19,10 @@ import android.widget.TextView;
 import java.util.Date;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.data.Setting;
-import zhaohg.crimson.data.tomato.Tomato;
-import zhaohg.crimson.data.tomato.TomatoData;
+import zhaohg.crimson.setting.Setting;
+import zhaohg.crimson.tomato.Tomato;
+import zhaohg.crimson.tomato.TomatoData;
+import zhaohg.crimson.widget.Widget;
 
 public class TimerWidget extends Widget {
 

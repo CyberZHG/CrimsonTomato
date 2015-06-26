@@ -1,4 +1,4 @@
-package zhaohg.crimson.data.tomato;
+package zhaohg.crimson.tomato;
 
 import java.util.Date;
 

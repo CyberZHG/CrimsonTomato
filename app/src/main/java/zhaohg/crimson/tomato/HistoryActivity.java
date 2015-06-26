@@ -1,4 +1,4 @@
-package zhaohg.crimson.main;
+package zhaohg.crimson.tomato;
 
 import android.content.DialogInterface;
 import android.os.Environment;
@@ -24,9 +24,6 @@ import java.util.Vector;
 
 import zhaohg.crimson.R;
 import zhaohg.crimson.data.DatabaseUtil;
-import zhaohg.crimson.data.tomato.Tomato;
-import zhaohg.crimson.data.tomato.TomatoAdapter;
-import zhaohg.crimson.data.tomato.TomatoData;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -103,7 +100,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.menu_history, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_history, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

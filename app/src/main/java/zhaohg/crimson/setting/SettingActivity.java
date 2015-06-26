@@ -1,4 +1,4 @@
-package zhaohg.crimson.main;
+package zhaohg.crimson.setting;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.data.Setting;
 
 public class SettingActivity extends AppCompatActivity {
 

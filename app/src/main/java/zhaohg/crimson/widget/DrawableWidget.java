@@ -7,7 +7,7 @@ import android.view.View;
 
 public class DrawableWidget extends Widget {
 
-    private Drawable drawable;
+    protected Drawable drawable;
 
     public DrawableWidget(Context context, View view) {
         super(context, view);
