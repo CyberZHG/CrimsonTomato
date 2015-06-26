@@ -3,8 +3,6 @@
     <string name="title_activity_setting">设置</string>
     <string name="title_activity_choose_calendar">选择日历</string>
 
-    <string name="action_settings">设置</string>
-
     <string name="device_offline">设备未联网</string>
 
     <string name="setting_schedule">计划</string>

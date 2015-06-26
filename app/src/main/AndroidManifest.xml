@@ -39,6 +39,10 @@
             android:name=".goal.GoalActivity"
             android:label="@string/title_activity_goal" >
         </activity>
+        <activity
+            android:name=".goal.NewGoalActivity"
+            android:label="@string/title_activity_new_goal" >
+        </activity>
     </application>
 
 </manifest>

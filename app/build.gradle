@@ -31,4 +31,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.github.brnunes:swipeablerecyclerview:1.0.1'
+    compile 'com.wrapp.floatlabelededittext:library:0.0.6'
 }

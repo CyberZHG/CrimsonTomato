@@ -2,6 +2,7 @@ package zhaohg.crimson.goal;
 
 import java.util.Locale;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import zhaohg.crimson.R;
+import zhaohg.crimson.tomato.HistoryActivity;
 
 public class GoalActivity extends AppCompatActivity implements ActionBar.TabListener {
 
@@ -65,7 +67,11 @@ public class GoalActivity extends AppCompatActivity implements ActionBar.TabList
             case android.R.id.home:
                 this.finish();
                 break;
-            case R.id.menu_item_new_goal:
+            case R.id.menu_item_new_goal: {
+                    Intent intent = new Intent();
+                    intent.setClass(GoalActivity.this, NewGoalActivity.class);
+                    startActivity(intent);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

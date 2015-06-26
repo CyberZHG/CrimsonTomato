@@ -80,19 +80,20 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/setting_sync" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/setting_sync_default_title" />
-
-        <EditText
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:maxLength="140"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/edit_text_title"/>
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="140"
+                android:hint="@string/setting_sync_default_title"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/edit_text_title"/>
+
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
         <CheckBox
             android:layout_width="match_parent"

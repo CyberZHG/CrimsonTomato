@@ -34,8 +34,8 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
         Goal goal = goals.get(i);
         viewHolder.setId(goal.getId());
         viewHolder.textViewTitle.setText(goal.getTitle());
-        viewHolder.textViewTomatoSpent.setText(context.getText(R.string.goal_item_text_tomato_spent).toString() + goal.getTomatoSpent());
-        viewHolder.textViewMinuteSpent.setText(context.getText(R.string.goal_item_text_minute_spent).toString() + goal.getMinuteSpent());
+        viewHolder.textViewTomatoSpent.setText(context.getText(R.string.goal_item_text_tomato_spent).toString() + " " + goal.getTomatoSpent());
+        viewHolder.textViewMinuteSpent.setText(context.getText(R.string.goal_item_text_minute_spent).toString() + " " + goal.getMinuteSpent());
     }
 
     @Override
@@ -67,6 +67,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
     public void removeAt(int position) {
         goals.remove(position);
         notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
     void append(Goal goal) {
@@ -75,6 +76,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
             goals.add(goal);
             notifyItemInserted(pos);
             notifyItemRangeChanged(pos, 1);
+            notifyDataSetChanged();
         }
     }
 

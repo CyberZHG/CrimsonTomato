@@ -5,6 +5,7 @@
 
     <string name="action_confirm">确定</string>
     <string name="action_cancel">取消</string>
+    <string name="action_settings">设置</string>
 
     <string name="dialog_give_up_title">放弃</string>
     <string name="dialog_give_up_message">确定要放弃这轮吗？</string>
