@@ -16,8 +16,8 @@ import java.util.TimerTask;
 
 import zhaohg.crimson.R;
 import zhaohg.crimson.data.Setting;
-import zhaohg.crimson.data.TomatoData;
-import zhaohg.crimson.scene.MainScene;
+import zhaohg.crimson.data.tomato.TomatoData;
+import zhaohg.crimson.scene.TimerScene;
 import zhaohg.crimson.scene.Scene;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         tomatoData.initDatabase();
 
         this.mainView = new MainView(this);
-        this.scene = new MainScene(this, this.mainView);
+        this.scene = new TimerScene(this, this.mainView);
         this.setContentView(this.mainView);
 
         Timer timer = new Timer();

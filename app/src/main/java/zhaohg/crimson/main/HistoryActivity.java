@@ -17,16 +17,16 @@ import android.widget.Toast;
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Vector;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.data.Tomato;
-import zhaohg.crimson.data.TomatoAdapter;
-import zhaohg.crimson.data.TomatoData;
+import zhaohg.crimson.data.DatabaseUtil;
+import zhaohg.crimson.data.tomato.Tomato;
+import zhaohg.crimson.data.tomato.TomatoAdapter;
+import zhaohg.crimson.data.tomato.TomatoData;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -210,7 +210,7 @@ public class HistoryActivity extends AppCompatActivity {
             adapter.clear();
         }
         adapter.append(tomatoes);
-        if (tomatoes.size() == TomatoData.PAGE_SIZE) {
+        if (tomatoes.size() == DatabaseUtil.PAGE_SIZE) {
             ++pageNum;
         }
     }

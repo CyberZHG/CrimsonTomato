@@ -7,11 +7,11 @@ import android.view.View;
 import zhaohg.crimson.R;
 import zhaohg.crimson.widget.TimerWidget;
 
-public class MainScene extends Scene {
+public class TimerScene extends Scene {
 
     private TimerWidget timerWidget;
 
-    public MainScene(Context context, View view) {
+    public TimerScene(Context context, View view) {
         super(context, view);
     }
 

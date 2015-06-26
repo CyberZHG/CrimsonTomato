@@ -20,8 +20,8 @@ import java.util.Date;
 
 import zhaohg.crimson.R;
 import zhaohg.crimson.data.Setting;
-import zhaohg.crimson.data.Tomato;
-import zhaohg.crimson.data.TomatoData;
+import zhaohg.crimson.data.tomato.Tomato;
+import zhaohg.crimson.data.tomato.TomatoData;
 
 public class TimerWidget extends Widget {
 

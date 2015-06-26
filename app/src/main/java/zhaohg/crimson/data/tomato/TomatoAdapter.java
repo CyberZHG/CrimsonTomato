@@ -1,4 +1,4 @@
-package zhaohg.crimson.data;
+package zhaohg.crimson.data.tomato;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
