@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import zhaohg.crimson.R;
@@ -19,6 +17,7 @@ public class Setting {
     private static final String KEY_VIBRATE = "vibrate";
     private static final String KEY_VIBRATED = "vibrated";
     private static final String KEY_LAST_BEGIN = "last_begin";
+    private static final String KEY_LAST_FINISHED = "last_finished";
     private static final String KEY_LAST_GOAL_ID = "last_goal_id";
     private static final String KEY_DEFAULT_TITLE = "default_title";
     private static final String KEY_SYNC_TO_CALENDAR = "sync_to_calendar";
@@ -34,6 +33,7 @@ public class Setting {
     private boolean vibrate;
     private boolean vibrated;
     private Date lastBegin;
+    private Date lastFinished;
     private int lastGoalId;
 
     private String defaultTitle;
@@ -62,13 +62,16 @@ public class Setting {
 
     public void init(Context context) {
         this.context = context;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SharedPreferences settings = this.getSharedPreference();
         this.period = settings.getInt(KEY_PERIOD, 25);
         this.lastPeriod = settings.getInt(KEY_LAST_PERIOD, 25);
         this.vibrate = settings.getBoolean(KEY_VIBRATE, true);
         this.vibrated = settings.getBoolean(KEY_VIBRATED, false);
         this.lastBegin = DatabaseUtil.parseDate(settings.getString(KEY_LAST_BEGIN, "###"));
+        this.lastFinished = DatabaseUtil.parseDate(settings.getString(KEY_LAST_FINISHED, "###"));
+        if (this.lastFinished == null) {
+            this.lastFinished = new Date();
+        }
         this.lastGoalId = settings.getInt(KEY_LAST_GOAL_ID, -1);
         this.defaultTitle = settings.getString(KEY_DEFAULT_TITLE, context.getString(R.string.app_name));
         this.syncToCalendar = settings.getBoolean(KEY_SYNC_TO_CALENDAR, true);
@@ -146,9 +149,17 @@ public class Setting {
         if (lastBegin == null) {
             this.editValue(KEY_LAST_BEGIN, "###");
         } else {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            this.editValue(KEY_LAST_BEGIN, format.format(lastBegin));
+            this.editValue(KEY_LAST_BEGIN, DatabaseUtil.formatDate(lastBegin));
         }
+    }
+
+    public Date getLastFinished() {
+        return lastFinished;
+    }
+
+    public void setLastFinished() {
+        lastFinished = new Date();
+        this.editValue(KEY_LAST_BEGIN, DatabaseUtil.formatDate(lastFinished));
     }
 
     public int getLastGoalId() {

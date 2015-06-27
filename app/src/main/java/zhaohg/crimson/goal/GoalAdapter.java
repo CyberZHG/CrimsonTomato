@@ -10,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +38,8 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         Goal goal = goals.get(i);
         viewHolder.setGoal(goal);
-        viewHolder.checkBoxTitle.setText(goal.getTitle());
-        viewHolder.checkBoxTitle.setChecked(goal.isFinished());
+        viewHolder.checkBoxFinished.setChecked(goal.isFinished());
+        viewHolder.textViewTitle.setText(goal.getTitle());
         viewHolder.textViewTomatoSpent.setText(context.getString(R.string.goal_item_text_tomato_spent) + " " + goal.getTomatoSpent());
         viewHolder.textViewTimeSpent.setText(context.getString(R.string.goal_item_text_time_spent) + " " + goal.getFormatedMinuteSpent(context));
     }
@@ -94,20 +96,22 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
 
         private Goal goal;
 
-        public final CheckBox checkBoxTitle;
+        public final CheckBox checkBoxFinished;
+        public final TextView textViewTitle;
         public final TextView textViewTomatoSpent;
         public final TextView textViewTimeSpent;
 
         public ViewHolder(View view) {
             super(view);
-            checkBoxTitle = (CheckBox) view.findViewById(R.id.text_view_title);
-            checkBoxTitle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            checkBoxFinished = (CheckBox) view.findViewById(R.id.check_box_finished);
+            checkBoxFinished.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     GoalData goalData = new GoalData(context);
                     goalData.updateFinished(goal, isChecked);
                 }
             });
+            textViewTitle = (TextView) view.findViewById(R.id.text_view_title);
             textViewTomatoSpent = (TextView) view.findViewById(R.id.text_view_tomato_spent);
             textViewTimeSpent = (TextView) view.findViewById(R.id.text_view_time_spent);
             view.setOnClickListener(new OnPostClickerListener());

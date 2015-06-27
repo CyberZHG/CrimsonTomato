@@ -18,12 +18,25 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp">
 
-        <CheckBox
-            android:id="@+id/text_view_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/goal_item_text_title"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/check_box_finished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <TextView
+                android:id="@+id/text_view_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/goal_item_text_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_view_tomato_spent"

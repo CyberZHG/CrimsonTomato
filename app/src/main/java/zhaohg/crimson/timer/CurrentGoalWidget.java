@@ -55,6 +55,11 @@ public class CurrentGoalWidget extends Widget {
         float textBaseY = getBottom() - (getH() - fontHeight) / 2 - fontMetrics.bottom;
         int midX = (getLeft() + getRight()) / 2;
         String text = context.getString(R.string.goal_current_prefix) + " " + goal.getTitle();
+        float textWidth = paint.measureText(text);
+        while (textWidth > getW() * 0.85) {
+            text = text.substring(0, text.length() - 4) + "...";
+            textWidth = paint.measureText(text);
+        }
         canvas.drawText(text, midX, textBaseY, paint);
     }
 
@@ -165,6 +170,12 @@ public class CurrentGoalWidget extends Widget {
 
     public boolean touchEventWhenHide(MotionEvent event) {
         return false;
+    }
+
+    @Override
+    public void onResume() {
+        goal = goalData.getGoal(setting.getLastGoalId());
+        this.postInvalidate();
     }
 
 }

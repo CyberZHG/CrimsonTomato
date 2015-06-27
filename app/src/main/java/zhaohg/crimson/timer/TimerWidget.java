@@ -33,11 +33,13 @@ public class TimerWidget extends Widget {
     private static final int STATE_WAIT = 0;
     private static final int STATE_TRANS_TO_RUNNING = 1;
     private static final int STATE_RUNNING = 2;
+    private static final int STATE_TRANS_TO_FINISHED = 3;
     private static final int STATE_FINISHED = 4;
 
-    private int period = 25;
+    private Setting setting = Setting.getInstance();
 
     private int state = STATE_WAIT;
+    private int period = 25;
     private Date begin;
     private Date current;
     private Date end;
@@ -53,88 +55,184 @@ public class TimerWidget extends Widget {
 
     @Override
     public void selfDraw(Canvas canvas) {
+        switch (state) {
+            case STATE_WAIT:
+                this.drawWhenWait(canvas);
+                break;
+            case STATE_TRANS_TO_RUNNING:
+                this.drawWhenTransToRunning(canvas);
+                break;
+            case STATE_RUNNING:
+                this.drawWhenRunning(canvas);
+                break;
+            case STATE_TRANS_TO_FINISHED:
+                this.drawWhenTransToFinished(canvas);
+                break;
+            case STATE_FINISHED:
+                this.drawWhenFinished(canvas);
+                break;
+        }
+    }
+
+    private Paint getDrawPaint() {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.rgb(212, 46, 24));
         paint.setTypeface(Typeface.SANS_SERIF);
         paint.setTextSize((int)(h * 0.2));
         paint.setTextAlign(Paint.Align.CENTER);
+        return paint;
+    }
+
+    private float getTextMidX() {
+        return (getLeft() + getRight()) * 0.5f;
+    }
+
+    private float getTextBaseY(Paint paint) {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float fontHeight = fontMetrics.bottom - fontMetrics.top;
-        float textBaseY = y + getH() - (getH() - fontHeight) / 2 - fontMetrics.bottom;
+        return getBottom() - (getH() - fontHeight) / 2 - fontMetrics.bottom;
+    }
+
+    private int getSubTextSize() {
+        return (int)(h * 0.06);
+    }
+
+    private float getStrokeThick() {
+        return 10.0f * w / 480;
+    }
+
+    private float getStrokeThin() {
+        return Math.max(1.0f, 1.0f * w / 480);
+    }
+
+    private RectF getOval() {
         int left = x + PADDING;
         int top = y + PADDING;
         int right = x + w - PADDING;
         int bottom = y + h - PADDING;
-        int midX = (left + right) / 2;
-        float strokeThickWidth = 10.0f * w / 480;
-        float strokeThinWidth = Math.max(1.0f, 1.0f * w / 480);
-        RectF oval = new RectF(left, top, right, bottom);
-        switch (state) {
-            case STATE_WAIT: {
-                    paint.setStrokeWidth(strokeThickWidth);
-                    paint.setStyle(Paint.Style.STROKE);
-                    canvas.drawArc(oval, 0, 360, false, paint);
-                    paint.setColor(Color.WHITE);
-                    paint.setStyle(Paint.Style.FILL);
-                    paint.setAlpha((int) (255 * fontAlpha));
-                    canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
-                }
-                break;
-            case STATE_TRANS_TO_RUNNING: {
-                    paint.setStrokeWidth(this.transStrokeWidth);
-                    paint.setStyle(Paint.Style.STROKE);
-                    canvas.drawArc(oval, 0, 360, false, paint);
-                    paint.setColor(Color.WHITE);
-                    paint.setStyle(Paint.Style.FILL);
-                    paint.setAlpha((int) (255 * fontAlpha));
-                    canvas.drawText(this.context.getString(R.string.timer_start), midX, textBaseY, paint);
-                }
-                break;
-            case STATE_FINISHED: {
-                    paint.setStrokeWidth(strokeThickWidth);
-                    paint.setStyle(Paint.Style.STROKE);
-                    canvas.drawArc(oval, 0, 360, false, paint);
-                    paint.setColor(Color.WHITE);
-                    paint.setStyle(Paint.Style.FILL);
-                    paint.setAlpha((int) (255 * fontAlpha));
-                    canvas.drawText(this.context.getString(R.string.timer_finished), midX, textBaseY, paint);
-                }
-                break;
-            case STATE_RUNNING: {
-                    paint.setStrokeWidth(strokeThinWidth);
-                    paint.setStyle(Paint.Style.STROKE);
-                    canvas.drawArc(oval, 0, 360, false, paint);
-                    long interval = current.getTime() - begin.getTime();
-                    float second = interval % (1000 * 60) / 1000.0f / 60.0f;
-                    float minute = interval / (1000.0f * 60) / period;
-                    float innerAngle = second * 360;
-                    float outerAngle = minute * 360;
-                    paint.setStrokeWidth(strokeThinWidth * 2);
-                    float margin = 12.0f * w / 480;
-                    if ((interval / 1000 / 60) % 2 == 0) {
-                        canvas.drawArc(new RectF(left + margin,
-                                top + margin,
-                                right - margin,
-                                bottom - margin), -90, innerAngle, false, paint);
-                    } else {
-                        canvas.drawArc(new RectF(left + margin,
-                                top + margin,
-                                right - margin,
-                                bottom - margin), -90, innerAngle - 360, false, paint);
-                    }
-                    paint.setStrokeWidth(strokeThickWidth);
-                    canvas.drawArc(new RectF(left - strokeThickWidth / 2,
-                            top - strokeThickWidth / 2,
-                            right + strokeThickWidth / 2,
-                            bottom + strokeThickWidth / 2), -90, outerAngle, false, paint);
-                    paint.setColor(Color.WHITE);
-                    paint.setStyle(Paint.Style.FILL);
-                    paint.setAlpha((int) (255 * fontAlpha));
-                    canvas.drawText(getRemainTimeString(), midX, textBaseY, paint);
-                }
-                break;
+        return new RectF(left, top, right, bottom);
+    }
+
+    private void drawWhenWait(Canvas canvas) {
+        Paint paint = getDrawPaint();
+        paint.setColor(Color.rgb(0, 162, 232));
+        paint.setStrokeWidth(getStrokeThick());
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawArc(getOval(), 0, 360, false, paint);
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAlpha((int) (255 * fontAlpha));
+        canvas.drawText(context.getString(R.string.timer_start), getTextMidX(), (int)(getTextBaseY(paint) - h * 0.03), paint);
+        paint.setTextSize(getSubTextSize());
+        canvas.drawText(getRestTimeString(), getTextMidX(), (int)(y + h * 0.70), paint);
+    }
+
+    private void drawWhenTransToRunning(Canvas canvas) {
+        Paint paint = getDrawPaint();
+        paint.setColor(Color.rgb(0, 162, 232));
+        paint.setStrokeWidth(this.transStrokeWidth);
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawArc(getOval(), 0, 360, false, paint);
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAlpha((int) (255 * fontAlpha));
+        canvas.drawText(context.getString(R.string.timer_start), getTextMidX(), (int)(getTextBaseY(paint) - h * 0.03), paint);
+        paint.setTextSize(getSubTextSize());
+        canvas.drawText(getRestTimeString(), getTextMidX(), (int)(y + h * 0.70), paint);
+    }
+
+    private void drawWhenRunning(Canvas canvas) {
+        Paint paint = getDrawPaint();
+        paint.setStrokeWidth(getStrokeThin());
+        paint.setStyle(Paint.Style.STROKE);
+        RectF oval = getOval();
+        canvas.drawArc(oval, 0, 360, false, paint);
+        long interval = current.getTime() - begin.getTime();
+        float second = interval % (1000 * 60) / 1000.0f / 60.0f;
+        float minute = interval / (1000.0f * 60) / period;
+        float innerAngle = second * 360;
+        float outerAngle = minute * 360;
+        paint.setStrokeWidth(getStrokeThin() * 2);
+        float margin = 12.0f * w / 480;
+        if ((interval / 1000 / 60) % 2 == 0) {
+            canvas.drawArc(new RectF(oval.left + margin,
+                    oval.top + margin,
+                    oval.right - margin,
+                    oval.bottom - margin), -90, innerAngle, false, paint);
+        } else {
+            canvas.drawArc(new RectF(oval.left + margin,
+                    oval.top + margin,
+                    oval.right - margin,
+                    oval.bottom - margin), -90, innerAngle - 360, false, paint);
         }
+        paint.setStrokeWidth(getStrokeThick());
+        canvas.drawArc(new RectF(oval.left - getStrokeThick() / 2,
+                oval.top - getStrokeThick() / 2,
+                oval.right + getStrokeThick() / 2,
+                oval.bottom + getStrokeThick() / 2), -90, outerAngle, false, paint);
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAlpha((int) (255 * fontAlpha));
+        canvas.drawText(getRemainTimeString(), getTextMidX(), getTextBaseY(paint), paint);
+    }
+
+    private void drawWhenTransToFinished(Canvas canvas) {Paint paint = getDrawPaint();
+        paint.setStrokeWidth(getStrokeThin());
+        paint.setStyle(Paint.Style.STROKE);
+        RectF oval = getOval();
+        canvas.drawArc(oval, 0, 360, false, paint);
+        long interval = current.getTime() - begin.getTime();
+        float second = interval % (1000 * 60) / 1000.0f / 60.0f;
+        float minute = interval / (1000.0f * 60) / period;
+        float innerAngle = second * 360;
+        float outerAngle = minute * 360;
+        paint.setStrokeWidth(getStrokeThin() * 2);
+        float margin = 12.0f * w / 480;
+        if ((interval / 1000 / 60) % 2 == 0) {
+            canvas.drawArc(new RectF(oval.left + margin,
+                    oval.top + margin,
+                    oval.right - margin,
+                    oval.bottom - margin), -90, innerAngle, false, paint);
+        } else {
+            canvas.drawArc(new RectF(oval.left + margin,
+                    oval.top + margin,
+                    oval.right - margin,
+                    oval.bottom - margin), -90, innerAngle - 360, false, paint);
+        }
+        paint.setStrokeWidth(getStrokeThick());
+        canvas.drawArc(new RectF(oval.left - getStrokeThick() / 2,
+                oval.top - getStrokeThick() / 2,
+                oval.right + getStrokeThick() / 2,
+                oval.bottom + getStrokeThick() / 2), -90, outerAngle, false, paint);
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAlpha((int) (255 * fontAlpha));
+        canvas.drawText(getRemainTimeString(), getTextMidX(), getTextBaseY(paint), paint);
+    }
+
+    private void drawWhenFinished(Canvas canvas) {
+        Paint paint = getDrawPaint();
+        paint.setStrokeWidth(getStrokeThick());
+        paint.setStyle(Paint.Style.STROKE);
+        RectF oval = getOval();
+        float margin = 12.0f * w / 480;
+        paint.setStrokeWidth(getStrokeThin() * 2);
+        canvas.drawArc(new RectF(oval.left + margin,
+                oval.top + margin,
+                oval.right - margin,
+                oval.bottom - margin), 0, 360, false, paint);
+        paint.setStrokeWidth(getStrokeThick());
+        canvas.drawArc(new RectF(oval.left - getStrokeThick() / 2,
+                oval.top - getStrokeThick() / 2,
+                oval.right + getStrokeThick() / 2,
+                oval.bottom + getStrokeThick() / 2), 0, 360, false, paint);
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAlpha((int) (255 * fontAlpha));
+        canvas.drawText(this.context.getString(R.string.timer_finished), getTextMidX(), (int)(getTextBaseY(paint) - h * 0.03), paint);
+        paint.setTextSize(getSubTextSize());
+        canvas.drawText(getPassedTimeString(), getTextMidX(), (int)(y + h * 0.70), paint);
     }
 
     @Override
@@ -147,34 +245,48 @@ public class TimerWidget extends Widget {
         }
         switch (this.state) {
             case STATE_WAIT:
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Setting setting = Setting.getInstance();
-                    this.period = setting.getPeriod();
-                    this.begin = new Date();
-                    this.current = new Date();
-                    setting.setLastBegin(this.begin);
-                    setting.setLastPeriod(this.period);
-                    setting.setVibrated(false);
-                    this.state = STATE_TRANS_TO_RUNNING;
-                    this.transStrokeWidth = 10.0f * w / 480;
-                    this.fontAlpha = 1.0f;
-                }
-                break;
+                return this.touchEventWhenWait(event);
             case STATE_TRANS_TO_RUNNING:
             case STATE_RUNNING:
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
-                    builder.setTitle(this.context.getString(R.string.dialog_give_up_title));
-                    builder.setMessage(this.context.getString(R.string.dialog_give_up_message));
-                    builder.setNegativeButton(this.context.getString(R.string.action_cancel),
-                            new DialogInterface.OnClickListener() {
+                return this.touchEventWhenRunning(event);
+            case STATE_TRANS_TO_FINISHED:
+            case STATE_FINISHED:
+                return touchEventWhenFinished(event);
+        }
+        this.postInvalidate();
+        return true;
+    }
+
+    private boolean touchEventWhenWait(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            this.period = setting.getPeriod();
+            this.begin = new Date();
+            this.current = new Date();
+            setting.setLastBegin(this.begin);
+            setting.setLastPeriod(this.period);
+            setting.setVibrated(false);
+            this.state = STATE_TRANS_TO_RUNNING;
+            this.transStrokeWidth = 10.0f * w / 480;
+            this.fontAlpha = 1.0f;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean touchEventWhenRunning(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
+            builder.setTitle(this.context.getString(R.string.dialog_give_up_title));
+            builder.setMessage(this.context.getString(R.string.dialog_give_up_message));
+            builder.setNegativeButton(this.context.getString(R.string.action_cancel),
+                    new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
                     });
-                    builder.setPositiveButton(this.context.getString(R.string.action_confirm),
-                            new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(this.context.getString(R.string.action_confirm),
+                    new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Setting setting = Setting.getInstance();
@@ -185,79 +297,82 @@ public class TimerWidget extends Widget {
                             dialog.dismiss();
                         }
                     });
-                    builder.show();
-                }
-                break;
-            case STATE_FINISHED:
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
-                    builder.setTitle(this.context.getString(R.string.dialog_comment_title));
-
-                    final Setting setting = Setting.getInstance();
-                    final int lastGoalId = setting.getLastGoalId();
-                    final GoalData goalData = new GoalData(context);
-                    final Goal goal = goalData.getGoal(lastGoalId);
-
-                    LinearLayout layout = new LinearLayout(this.context);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    layout.setOrientation(LinearLayout.VERTICAL);
-                    layout.setLayoutParams(params);
-                    layout.setGravity(Gravity.CLIP_VERTICAL);
-                    layout.setPadding(15, 15, 15, 15);
-
-                    LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    textViewLayoutParams.leftMargin = 5;
-                    textViewLayoutParams.bottomMargin = 15;
-
-                    TextView textView = new TextView(this.context);
-                    textView.setText(this.context.getString(R.string.dialog_comment_message));
-                    layout.addView(textView, textViewLayoutParams);
-
-                    final EditText editText = new EditText(this.context);
-                    editText.setText(setting.getDefaultTitle());
-                    if (goal != null) {
-                        editText.setText(goal.getTitle());
-                    }
-                    editText.selectAll();
-                    layout.addView(editText, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                    builder.setView(layout);
-                    builder.setNegativeButton(this.context.getString(R.string.action_cancel),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    setting.setLastBegin(null);
-                                    setting.setLastGoalId(-1);
-                                    end = new Date();
-                                    state = STATE_WAIT;
-                                    title = editText.getText().toString();
-                                    postInvalidate();
-                                    dialog.dismiss();
-                                }
-                            });
-                    builder.setPositiveButton(this.context.getString(R.string.action_confirm),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    setting.setLastBegin(null);
-                                    end = new Date();
-                                    state = STATE_WAIT;
-                                    title = editText.getText().toString();
-                                    addTomatoToDatabase();
-                                    if (goal != null) {
-                                        goalData.addTomatoAndMinute(goal, (int) ((end.getTime() - begin.getTime()) / 1000 / 60));
-                                        setting.setLastGoalId(-1);
-                                    }
-                                    postInvalidate();
-                                    dialog.dismiss();
-                                }
-                            });
-                    builder.show();
-                }
-                break;
+            builder.show();
+            return true;
         }
-        this.postInvalidate();
-        return true;
+        return false;
+    }
+
+    private boolean touchEventWhenFinished(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
+            builder.setTitle(this.context.getString(R.string.dialog_comment_title));
+
+            final Setting setting = Setting.getInstance();
+            final int lastGoalId = setting.getLastGoalId();
+            final GoalData goalData = new GoalData(context);
+            final Goal goal = goalData.getGoal(lastGoalId);
+
+            LinearLayout layout = new LinearLayout(this.context);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setLayoutParams(params);
+            layout.setGravity(Gravity.CLIP_VERTICAL);
+            layout.setPadding(15, 15, 15, 15);
+
+            LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            textViewLayoutParams.leftMargin = 5;
+            textViewLayoutParams.bottomMargin = 15;
+
+            TextView textView = new TextView(this.context);
+            textView.setText(this.context.getString(R.string.dialog_comment_message));
+            layout.addView(textView, textViewLayoutParams);
+
+            final EditText editText = new EditText(this.context);
+            editText.setText(setting.getDefaultTitle());
+            if (goal != null) {
+                editText.setText(goal.getTitle());
+            }
+            editText.selectAll();
+            layout.addView(editText, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            builder.setView(layout);
+            builder.setNegativeButton(this.context.getString(R.string.action_cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            setting.setLastBegin(null);
+                            setting.setLastGoalId(-1);
+                            setting.setLastFinished();
+                            end = new Date();
+                            state = STATE_WAIT;
+                            title = editText.getText().toString();
+                            postInvalidate();
+                            dialog.dismiss();
+                        }
+                    });
+            builder.setPositiveButton(this.context.getString(R.string.action_confirm),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            setting.setLastBegin(null);
+                            setting.setLastFinished();
+                            end = new Date();
+                            state = STATE_WAIT;
+                            title = editText.getText().toString();
+                            addTomatoToDatabase();
+                            if (goal != null) {
+                                goalData.addTomatoAndMinute(goal, (int) ((end.getTime() - begin.getTime()) / 1000 / 60));
+                                setting.setLastGoalId(-1);
+                            }
+                            postInvalidate();
+                            dialog.dismiss();
+                        }
+                    });
+            builder.show();
+            return true;
+        }
+        return false;
     }
 
     private void addTomatoToDatabase() {
@@ -273,46 +388,76 @@ public class TimerWidget extends Widget {
     public void onTimerEvent() {
         switch (state) {
             case STATE_TRANS_TO_RUNNING:
-                if (this.transStrokeWidth > 1.0f) {
-                    this.transStrokeWidth -= 0.2f;
-                } else {
-                    this.state = STATE_RUNNING;
-                }
-                if (this.fontAlpha > 0.0f) {
-                    this.fontAlpha -= 0.04f;
-                    if (this.fontAlpha < 0.0f) {
-                        this.fontAlpha = 0.0f;
-                    }
-                }
-                this.postInvalidate();
+                this.timerEventWhenTransToRunning();
                 break;
             case STATE_RUNNING:
-                this.current = new Date();
-                long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
-                if (interval >= period) {
-                    Setting setting = Setting.getInstance();
-                    if (setting.isVibrate() && !setting.isVibrated()) {
-                        Vibrator vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-                        long[] pattern = {100, 240, 100, 240};
-                        vibrator.vibrate(pattern, -1);
-                        setting.setVibrated(true);
-                    }
-                    this.state = STATE_FINISHED;
-                }
-                if (this.fontAlpha < 1.0f) {
-                    this.fontAlpha += 0.04f;
-                    if (this.fontAlpha > 1.0f) {
-                        this.fontAlpha = 1.0f;
-                    }
-                }
-                this.postInvalidate();
+                this.timerEventWhenRunning();
+                break;
+            case STATE_TRANS_TO_FINISHED:
+                this.timerEventWhenTransToFinished();
+                break;
+            case STATE_FINISHED:
+                this.timerEventWhenFinished();
                 break;
         }
+        this.postInvalidate();
         super.onTimerEvent();
     }
 
-    private String getRemainTimeString() {
-        long interval = period * 60 - (current.getTime() - begin.getTime()) / 1000;
+    private void timerEventWhenTransToRunning() {
+        if (this.transStrokeWidth > 1.0f) {
+            this.transStrokeWidth -= 0.2f;
+        } else {
+            this.state = STATE_RUNNING;
+        }
+        if (this.fontAlpha > 0.0f) {
+            this.fontAlpha -= 0.04f;
+            if (this.fontAlpha < 0.0f) {
+                this.fontAlpha = 0.0f;
+            }
+        }
+    }
+
+    private void timerEventWhenRunning() {
+        this.current = new Date();
+        long interval = (current.getTime() - begin.getTime()) / 1000 / 60;
+        if (interval >= period) {
+            if (setting.isVibrate() && !setting.isVibrated()) {
+                Vibrator vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+                long[] pattern = {100, 240, 100, 240};
+                vibrator.vibrate(pattern, -1);
+                setting.setVibrated(true);
+            }
+            this.state = STATE_TRANS_TO_FINISHED;
+        }
+        if (this.fontAlpha < 1.0f) {
+            this.fontAlpha += 0.04f;
+            if (this.fontAlpha > 1.0f) {
+                this.fontAlpha = 1.0f;
+            }
+        }
+    }
+
+    private void timerEventWhenTransToFinished() {
+        if (this.fontAlpha > 0.0f) {
+            this.fontAlpha -= 0.04f;
+            if (this.fontAlpha < 0.0f) {
+                this.fontAlpha = 0.0f;
+                this.state = STATE_FINISHED;
+            }
+        }
+    }
+
+    private void timerEventWhenFinished() {
+        if (this.fontAlpha < 1.0f) {
+            this.fontAlpha += 0.04f;
+            if (this.fontAlpha > 1.0f) {
+                this.fontAlpha = 1.0f;
+            }
+        }
+    }
+
+    private String getFormattedTimeString(long interval) {
         if (interval < 0) {
             interval = 0;
         }
@@ -330,14 +475,28 @@ public class TimerWidget extends Widget {
         return ret;
     }
 
+    private String getRestTimeString() {
+        return getFormattedTimeString((new Date().getTime() - setting.getLastFinished().getTime()) / 1000);
+    }
+
+    private String getRemainTimeString() {
+        return getFormattedTimeString(period * 60 - (current.getTime() - begin.getTime()) / 1000);
+    }
+
+    private String getPassedTimeString() {
+        return getFormattedTimeString((new Date().getTime() - begin.getTime()) / 1000);
+    }
+
     @Override
     public void onResume() {
-        Setting setting = Setting.getInstance();
         if (setting.getLastBegin() != null) {
             this.begin = setting.getLastBegin();
             this.period = setting.getLastPeriod();
             this.current = new Date();
             this.state = STATE_RUNNING;
+            if ((current.getTime() - begin.getTime()) / 1000 / 60 >= period) {
+                this.state = STATE_FINISHED;
+            }
         }
         int lastGoalId = setting.getLastGoalId();
         GoalData goalData = new GoalData(context);
