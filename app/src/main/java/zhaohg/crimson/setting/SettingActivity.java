@@ -40,7 +40,6 @@ public class SettingActivity extends AppCompatActivity {
                 if (progress == 0) {
                     progress = 1;
                 }
-                setting.setPeriod(progress);
                 textViewPeriodNum.setText(progress + getString(R.string.setting_period_num_suffix));
                 if (progress < 20) {
                     textViewPeriodDesc.setText(getString(R.string.setting_period_too_short));
@@ -57,6 +56,11 @@ public class SettingActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                if (progress == 0) {
+                    progress = 1;
+                }
+                setting.setPeriod(progress);
             }
         });
         seekBarPeriod.setProgress(setting.getPeriod());

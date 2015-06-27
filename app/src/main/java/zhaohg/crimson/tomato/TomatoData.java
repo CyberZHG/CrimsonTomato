@@ -63,22 +63,15 @@ public class TomatoData {
         if (tomato.getTitle().isEmpty()) {
             tomato.setTitle(context.getString(R.string.app_name));
         }
-        db.execSQL(
-                "INSERT INTO " + TABLE_NAME + " (" +
-                        COLUMN_BEGIN_DATE + ", " +
-                        COLUMN_END_DATE + ", " +
-                        COLUMN_TITLE + ", " +
-                        COLUMN_LOCATION + ", " +
-                        COLUMN_SYNCED + ") VALUES (" +
-                        "    '" + DatabaseUtil.formatDate(tomato.getBegin()) + "', " +
-                        "    '" + DatabaseUtil.formatDate(tomato.getEnd()) + "', " +
-                        "    '" + DatabaseUtil.sqliteEscape(tomato.getTitle()) + "', " +
-                        "    '" + DatabaseUtil.sqliteEscape(tomato.getLocation()) + "', " +
-                        "    0" +
-                        ");"
-        );
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_BEGIN_DATE, DatabaseUtil.formatDate(tomato.getBegin()));
+        contentValues.put(COLUMN_END_DATE, DatabaseUtil.formatDate(tomato.getEnd()));
+        contentValues.put(COLUMN_TITLE, DatabaseUtil.sqliteEscape(tomato.getTitle()));
+        contentValues.put(COLUMN_LOCATION, DatabaseUtil.sqliteEscape(tomato.getLocation()));
+        contentValues.put(COLUMN_SYNCED, tomato.isSynced());
+        db.insert(TABLE_NAME, null, contentValues);
         Setting setting = Setting.getInstance();
-        if (setting.isSyncToCalendar()) {
+        if (setting.isSyncToCalendar() && !tomato.isSynced()) {
             Cursor cur = db.rawQuery("SELECT * " +
                                      "FROM " + TABLE_NAME + " " +
                                      "ORDER BY id DESC " +
@@ -125,9 +118,7 @@ public class TomatoData {
 
     Vector<Tomato> getUnsyncedTomatoes() {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        Cursor cur = db.rawQuery("SELECT * " +
-                                 "FROM " + TABLE_NAME + " " +
-                                 "WHERE " + COLUMN_SYNCED + "=0;", null);
+        Cursor cur = db.query(false, TABLE_NAME, null, COLUMN_SYNCED + "=0", null, null, null, null, null);
         Vector<Tomato> tomatoes = getTomatoesFromCursor(cur);
         db.close();
         return tomatoes;
@@ -170,11 +161,9 @@ public class TomatoData {
         cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        db.execSQL(
-                "UPDATE " + TABLE_NAME + " " +
-                "SET " + COLUMN_SYNCED + "=1 " +
-                "WHERE id=" + tomato.getId() + "; "
-        );
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_SYNCED, 1);
+        db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + tomato.getId(), null);
         db.close();
     }
 

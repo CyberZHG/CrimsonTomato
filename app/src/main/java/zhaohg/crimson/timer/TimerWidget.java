@@ -227,6 +227,7 @@ public class TimerWidget extends Widget {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     setting.setLastBegin(null);
+                                    setting.setLastGoalId(-1);
                                     end = new Date();
                                     state = STATE_WAIT;
                                     title = editText.getText().toString();
@@ -244,8 +245,7 @@ public class TimerWidget extends Widget {
                                     title = editText.getText().toString();
                                     addTomatoToDatabase();
                                     if (goal != null) {
-                                        goalData.addTomato(goal);
-                                        goalData.addMinute(goal, (int)((begin.getTime() - end.getTime()) / 1000 / 60));
+                                        goalData.addTomatoAndMinute(goal, (int)((end.getTime() - begin.getTime()) / 1000 / 60));
                                         setting.setLastGoalId(-1);
                                     }
                                     postInvalidate();

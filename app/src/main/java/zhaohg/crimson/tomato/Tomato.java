@@ -60,7 +60,7 @@ public class Tomato {
         this.location = location;
     }
 
-    public boolean isUploaded() {
+    public boolean isSynced() {
         return uploaded;
     }
 

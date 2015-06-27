@@ -1,5 +1,6 @@
 package zhaohg.crimson.goal;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -54,26 +55,17 @@ public class GoalData {
 
     public void addGoal(Goal goal) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        db.execSQL(
-                "INSERT INTO " + TABLE_NAME + " (" +
-                        COLUMN_TITLE + ", " +
-                        COLUMN_PRIORITY + ", " +
-                        COLUMN_PERIOD + ", " +
-                        COLUMN_FINISHED + ", " +
-                        COLUMN_CREATE_DATE + ", " +
-                        COLUMN_FINISHED_DATE + ", " +
-                        COLUMN_TOMATO_SPENT + ", " +
-                        COLUMN_MINUTE_SPENT + ") VALUES (" +
-                        "    '" + DatabaseUtil.sqliteEscape(goal.getTitle()) + "', " +
-                        "    " + goal.getPriority() + ", " +
-                        "    " + goal.getPeriod() + ", " +
-                        "    0, " +
-                        "    '" + DatabaseUtil.formatDate(goal.getCreateDate()) + "', " +
-                        "    '" + DatabaseUtil.formatDate(goal.getFinishedDate()) + "', " +
-                        "    " + goal.getTomatoSpent() + ", " +
-                        "    " + goal.getMinuteSpent() + "" +
-                        ");"
-        );
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_TITLE, DatabaseUtil.sqliteEscape(goal.getTitle()));
+        contentValues.put(COLUMN_PRIORITY, goal.getPriority());
+        contentValues.put(COLUMN_PERIOD, goal.getPeriod());
+        contentValues.put(COLUMN_FINISHED, goal.isFinished() ? 1 : 0);
+        contentValues.put(COLUMN_CREATE_DATE, DatabaseUtil.formatDate(goal.getCreateDate()));
+        contentValues.put(COLUMN_FINISHED_DATE, DatabaseUtil.formatDate(goal.getFinishedDate()));
+        contentValues.put(COLUMN_TOMATO_SPENT, goal.getTomatoSpent());
+        contentValues.put(COLUMN_MINUTE_SPENT, goal.getMinuteSpent());
+        db.insert(TABLE_NAME, null, contentValues);
+        db.close();
     }
 
     public Goal getGoal(int id) {
@@ -138,34 +130,33 @@ public class GoalData {
         return goals;
     }
 
-    public void addTomato(Goal goal) {
-        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        goal.setTomatoSpent(goal.getTomatoSpent() + 1);
-        db.rawQuery(
-                "UPDATE " + TABLE_NAME + " " +
-                "SET " + COLUMN_TOMATO_SPENT + "=" + goal.getTomatoSpent() + " " +
-                "WHERE " + COLUMN_ID + "=" + goal.getId() + ";", null
-        );
-    }
-
-    public void addMinute(Goal goal, int minute) {
-        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        goal.setMinuteSpent(goal.getMinuteSpent() + minute);
-        db.rawQuery(
-                "UPDATE " + TABLE_NAME + " " +
-                "SET " + COLUMN_MINUTE_SPENT + "=" + goal.getMinuteSpent() + " " +
-                "WHERE " + COLUMN_ID + "=" + goal.getId() + ";", null
-        );
-    }
-
     public void updateTitle(Goal goal, String title) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
         goal.setTitle(title);
-        db.rawQuery(
-                "UPDATE " + TABLE_NAME + " " +
-                "SET " + COLUMN_TITLE + "='" + DatabaseUtil.sqliteEscape(title) + "' " +
-                "WHERE " + COLUMN_ID + "=" + goal.getId() + ";", null
-        );
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_TITLE, DatabaseUtil.sqliteEscape(title));
+        db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + goal.getId(), null);
+        db.close();
+    }
+
+    public void updatePeriod(Goal goal, int period) {
+        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+        goal.setPeriod(period);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PERIOD, period);
+        db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + goal.getId(), null);
+        db.close();
+    }
+
+    public void addTomatoAndMinute(Goal goal, int minute) {
+        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+        goal.setTomatoSpent(goal.getTomatoSpent() + 1);
+        goal.setMinuteSpent(goal.getMinuteSpent() + minute);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_TOMATO_SPENT, goal.getTomatoSpent());
+        contentValues.put(COLUMN_MINUTE_SPENT, goal.getMinuteSpent());
+        db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + goal.getId(), null);
+        db.close();
     }
 
 }

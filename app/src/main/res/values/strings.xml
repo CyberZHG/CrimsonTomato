@@ -15,5 +15,4 @@
 
     <string name="timer_start">Start</string>
     <string name="timer_finished">Finished</string>
-    <string name="title_activity_goal">GoalActivity</string>
 </resources>

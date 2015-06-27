@@ -39,7 +39,7 @@ public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder
         viewHolder.textViewDate.setText(DatabaseUtil.formatDate(tomato.getBegin()) +
                 " / " +
                 DatabaseUtil.formatDate(tomato.getEnd()));
-        if (tomato.isUploaded()) {
+        if (tomato.isSynced()) {
             viewHolder.textViewSync.setText(context.getString(R.string.tomato_synced));
         } else {
             viewHolder.textViewSync.setText(context.getString(R.string.tomato_unsynced));

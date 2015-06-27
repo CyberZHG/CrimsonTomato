@@ -9,6 +9,7 @@ Feature:
 
 * Record results to calendar.
 * Export records to CSV file.
+* Task management.
 * Vibrate when finished.
 * Change the period.
 

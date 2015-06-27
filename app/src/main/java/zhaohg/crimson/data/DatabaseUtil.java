@@ -20,10 +20,7 @@ public class DatabaseUtil {
 
     public static boolean isTableExisted(Context context, String tableName) {
         SQLiteDatabase db = getDatabase(context);
-        Cursor cursor = db.rawQuery(
-                "SELECT tbl_name " +
-                "FROM   sqlite_master " +
-                "WHERE  tbl_name='" + tableName + "';", null);
+        Cursor cursor = db.query(false, "sqlite_master", null, "tbl_name='" + tableName + "'", null, null, null, null, null);
         boolean existed = false;
         if (cursor != null && cursor.getCount() > 0) {
             existed = true;
@@ -55,10 +52,7 @@ public class DatabaseUtil {
     }
 
     public static Cursor selectById(SQLiteDatabase db, String tableName, int id) {
-        return db.rawQuery(
-                "SELECT * " +
-                "FROM " + tableName + " " +
-                "WHERE id=" + id + ";", null);
+        return db.query(false, tableName, null, "id=" + id, null, null, null, null, null);
     }
 
     public static Cursor getPageSortedByKey(SQLiteDatabase db, String tableName, String keyColumn, int pageNum) {
@@ -91,15 +85,13 @@ public class DatabaseUtil {
 
     public static void deleteAll(Context context, String tableName) {
         SQLiteDatabase db = getDatabase(context);
-        db.execSQL("DELETE FROM " + tableName + ";");
+        db.delete(tableName, null, null);
         db.close();
     }
 
     public static void deleteById(Context context, String tableName, int id) {
         SQLiteDatabase db = getDatabase(context);
-        db.execSQL(
-                "DELETE FROM " + tableName + " " +
-                "WHERE id=" + id + ";");
+        db.delete(tableName, "id=" + id, null);
         db.close();
     }
 

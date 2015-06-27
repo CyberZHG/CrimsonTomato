@@ -27,6 +27,36 @@
 
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_gravity="center_vertical"
+                android:text="@string/setting_period" />
+
+            <SeekBar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="120"
+                android:id="@+id/seek_bar_period"
+                android:progress="25" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_gravity="center_vertical"
+                android:text="@string/setting_period_num"
+                android:id="@+id/text_view_period_num"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>

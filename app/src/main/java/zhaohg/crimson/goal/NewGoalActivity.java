@@ -7,12 +7,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import zhaohg.crimson.R;
 
 public class NewGoalActivity extends AppCompatActivity {
 
     private EditText editTextTitle;
+    private SeekBar seekBarPeriod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,26 @@ public class NewGoalActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         editTextTitle = (EditText) this.findViewById(R.id.edit_text_title);
+
+        seekBarPeriod = (SeekBar) this.findViewById(R.id.seek_bar_period);
+        final TextView textViewPeriodNum = (TextView) findViewById(R.id.text_view_period_num);
+        seekBarPeriod.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 0) {
+                    progress = 1;
+                }
+                textViewPeriodNum.setText(progress + getString(R.string.setting_period_num_suffix));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
     }
 
 
@@ -50,6 +73,7 @@ public class NewGoalActivity extends AppCompatActivity {
     private void createNewGoal() {
         Goal goal = new Goal();
         goal.setTitle(editTextTitle.getText().toString());
+        goal.setPeriod(seekBarPeriod.getProgress() > 0 ? seekBarPeriod.getProgress() : 1);
         GoalData goalData = new GoalData(this);
         goalData.addGoal(goal);
     }
