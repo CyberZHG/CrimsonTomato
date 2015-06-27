@@ -245,7 +245,7 @@ public class TimerWidget extends Widget {
                                     title = editText.getText().toString();
                                     addTomatoToDatabase();
                                     if (goal != null) {
-                                        goalData.addTomatoAndMinute(goal, (int)((end.getTime() - begin.getTime()) / 1000 / 60));
+                                        goalData.addTomatoAndMinute(goal, (int) ((end.getTime() - begin.getTime()) / 1000 / 60));
                                         setting.setLastGoalId(-1);
                                     }
                                     postInvalidate();
@@ -270,7 +270,7 @@ public class TimerWidget extends Widget {
     }
 
     @Override
-    public void onTimeEvent() {
+    public void onTimerEvent() {
         switch (state) {
             case STATE_TRANS_TO_RUNNING:
                 if (this.transStrokeWidth > 1.0f) {
@@ -308,7 +308,7 @@ public class TimerWidget extends Widget {
                 this.postInvalidate();
                 break;
         }
-        super.onTimeEvent();
+        super.onTimerEvent();
     }
 
     private String getRemainTimeString() {

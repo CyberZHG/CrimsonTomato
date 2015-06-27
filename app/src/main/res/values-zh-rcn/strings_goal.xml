@@ -9,6 +9,15 @@
 
     <string name="button_start_now">现在开始</string>
 
+    <string name="goal_format_hour">小时</string>
+    <string name="goal_format_hours">小时</string>
+    <string name="goal_format_minute">分钟</string>
+    <string name="goal_format_minutes">分钟</string>
+
+    <string name="goal_current_prefix">当前：</string>
+    <string name="dialog_remove_current_goal_title">移除</string>
+    <string name="dialog_remove_current_goal_message">清除当前任务？</string>
+
     <string name="goal_show_type_unfinished">未完成</string>
     <string name="goal_show_type_finished">已完成</string>
     <string name="goal_show_type_all">所有</string>
@@ -17,5 +26,5 @@
     <string name="goal_item_text_priority">优先级</string>
     <string name="goal_item_text_period">周期</string>
     <string name="goal_item_text_tomato_spent">番茄数目：</string>
-    <string name="goal_item_text_minute_spent">消耗分钟：</string>
+    <string name="goal_item_text_time_spent">消耗时间：</string>
 </resources>

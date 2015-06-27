@@ -64,12 +64,36 @@
         </LinearLayout>
 
 
+        <TextView
+            android:id="@+id/text_view_tomato_spent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/goal_item_text_tomato_spent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/text_view_time_spent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/goal_item_text_time_spent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="5dp"/>
+
         <Button
             android:id="@+id/button_start_now"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/button_start_now" />
+
+        <Button
+            android:id="@+id/button_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#d6695b"
+            android:text="@string/action_delete" />
 
     </LinearLayout>
 

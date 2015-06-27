@@ -1,6 +1,10 @@
 package zhaohg.crimson.goal;
 
+import android.content.Context;
+
 import java.util.Date;
+
+import zhaohg.crimson.R;
 
 public class Goal {
 
@@ -88,6 +92,13 @@ public class Goal {
 
     public void setTomatoSpent(int tomatoSpent) {
         this.tomatoSpent = tomatoSpent;
+    }
+
+    public String getFormatedMinuteSpent(Context context) {
+        if (minuteSpent > 60) {
+            return String.format("%.2f", minuteSpent / 60.0f) + " " + context.getString(R.string.goal_format_hours);
+        }
+        return minuteSpent + " " + context.getString(R.string.goal_format_minutes);
     }
 
     public int getMinuteSpent() {

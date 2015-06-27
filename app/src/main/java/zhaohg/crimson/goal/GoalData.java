@@ -148,6 +148,15 @@ public class GoalData {
         db.close();
     }
 
+    public void updateFinished(Goal goal, boolean finished) {
+        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+        goal.setFinished(finished);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_FINISHED, finished ? 1 : 0);
+        db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + goal.getId(), null);
+        db.close();
+    }
+
     public void addTomatoAndMinute(Goal goal, int minute) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
         goal.setTomatoSpent(goal.getTomatoSpent() + 1);

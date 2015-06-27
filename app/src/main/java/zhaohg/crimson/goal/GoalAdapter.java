@@ -2,11 +2,12 @@ package zhaohg.crimson.goal;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,10 +35,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         Goal goal = goals.get(i);
-        viewHolder.setId(goal.getId());
-        viewHolder.textViewTitle.setText(goal.getTitle());
-        viewHolder.textViewTomatoSpent.setText(context.getText(R.string.goal_item_text_tomato_spent).toString() + " " + goal.getTomatoSpent());
-        viewHolder.textViewMinuteSpent.setText(context.getText(R.string.goal_item_text_minute_spent).toString() + " " + goal.getMinuteSpent());
+        viewHolder.setGoal(goal);
+        viewHolder.checkBoxTitle.setText(goal.getTitle());
+        viewHolder.checkBoxTitle.setChecked(goal.isFinished());
+        viewHolder.textViewTomatoSpent.setText(context.getString(R.string.goal_item_text_tomato_spent) + " " + goal.getTomatoSpent());
+        viewHolder.textViewTimeSpent.setText(context.getString(R.string.goal_item_text_time_spent) + " " + goal.getFormatedMinuteSpent(context));
     }
 
     @Override
@@ -90,26 +92,33 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private int id;
+        private Goal goal;
 
-        public final TextView textViewTitle;
+        public final CheckBox checkBoxTitle;
         public final TextView textViewTomatoSpent;
-        public final TextView textViewMinuteSpent;
+        public final TextView textViewTimeSpent;
 
         public ViewHolder(View view) {
             super(view);
-            textViewTitle = (TextView) view.findViewById(R.id.text_view_title);
+            checkBoxTitle = (CheckBox) view.findViewById(R.id.text_view_title);
+            checkBoxTitle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    GoalData goalData = new GoalData(context);
+                    goalData.updateFinished(goal, isChecked);
+                }
+            });
             textViewTomatoSpent = (TextView) view.findViewById(R.id.text_view_tomato_spent);
-            textViewMinuteSpent = (TextView) view.findViewById(R.id.text_view_minute_spent);
+            textViewTimeSpent = (TextView) view.findViewById(R.id.text_view_time_spent);
             view.setOnClickListener(new OnPostClickerListener());
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public Goal getGoal() {
+            return goal;
         }
 
-        public int getId() {
-            return this.id;
+        public void setGoal(Goal goal) {
+            this.goal = goal;
         }
 
         private class OnPostClickerListener implements View.OnClickListener {
@@ -117,7 +126,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
             public void onClick(View v) {
                 Intent intent = new Intent(context, GoalActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(GoalActivity.KEY_GOAL_ID, id);
+                intent.putExtra(GoalActivity.KEY_GOAL_ID, goal.getId());
                 context.startActivity(intent);
             }
         }

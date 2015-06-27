@@ -1,8 +1,11 @@
 package zhaohg.crimson.goal;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -45,7 +48,9 @@ public class GoalActivity extends AppCompatActivity {
 
         this.initTitle();
         this.initPeriod();
+        this.initSpent();
         this.initStartNow();
+        this.initDelete();
     }
 
     private void initTitle() {
@@ -95,10 +100,17 @@ public class GoalActivity extends AppCompatActivity {
         seekBarPeriod.setProgress(goal.getPeriod());
     }
 
+    private void initSpent() {
+        final TextView textViewTomatoSpent = (TextView) findViewById(R.id.text_view_tomato_spent);
+        final TextView textViewTimeSpent = (TextView) findViewById(R.id.text_view_time_spent);
+        textViewTomatoSpent.setText(getString(R.string.goal_item_text_tomato_spent) + " " + goal.getTomatoSpent());
+        textViewTimeSpent.setText(getString(R.string.goal_item_text_time_spent) + " " + goal.getFormatedMinuteSpent(this));
+    }
+
     private void initStartNow() {
         final Button buttonStartNow = (Button) findViewById(R.id.button_start_now);
         if (setting.getLastBegin() != null) {
-            buttonStartNow.setVisibility(View.INVISIBLE);
+            buttonStartNow.setVisibility(View.GONE);
         }
         buttonStartNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +121,39 @@ public class GoalActivity extends AppCompatActivity {
                 intent.setClass(GoalActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+    }
+
+    private void initDelete() {
+        final Button buttonDelete = (Button) findViewById(R.id.button_delete);
+        if (setting.getLastGoalId() == goal.getId()) {
+            buttonDelete.setVisibility(View.GONE);
+        }
+        final Activity activity = this;
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setTitle(getString(R.string.dialog_delete_title));
+                builder.setMessage(getString(R.string.dialog_delete_message));
+                builder.setNegativeButton(getString(R.string.action_cancel),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                builder.setPositiveButton(getString(R.string.action_confirm),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                goalData.deleteGoal(goal.getId());
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                builder.show();
             }
         });
     }

@@ -9,21 +9,24 @@ import zhaohg.crimson.scene.Scene;
 
 public class TimerScene extends Scene {
 
-    private TimerWidget timerWidget;
-
     public TimerScene(Context context, View view) {
         super(context, view);
     }
 
     @Override
     public void initScene() {
-        int cx = this.width / 2;
-        int cy = this.height / 2;
+        int cx = width / 2;
+        int cy = height / 2 - (int)(height * 0.06);
         int radius = (int)(Math.min(cx, cy) * 0.8);
         int diameter = radius * 2;
-        this.timerWidget = new TimerWidget(context, view);
-        this.timerWidget.setGeometry(cx - radius, cy - radius, diameter, diameter);
-        this.addChild(this.timerWidget);
+
+        TimerWidget timerWidget = new TimerWidget(context, view);
+        timerWidget.setGeometry(cx - radius, cy - radius, diameter, diameter);
+        this.addChild(timerWidget);
+
+        CurrentGoalWidget currentGoalWidget = new CurrentGoalWidget(context, view);
+        currentGoalWidget.setGeometry(0, (int)(height * 0.94), width, (int)(height * 0.03));
+        this.addChild(currentGoalWidget);
     }
 
     @Override

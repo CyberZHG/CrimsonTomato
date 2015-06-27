@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                scene.onTimeEvent();
+                scene.onTimerEvent();
             }
         }, 0, 50);
     }

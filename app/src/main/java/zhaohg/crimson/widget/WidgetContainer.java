@@ -55,9 +55,9 @@ public abstract class WidgetContainer {
         return false;
     }
 
-    public void onTimeEvent() {
+    public void onTimerEvent() {
         for (Widget widget : this.widgets) {
-            widget.onTimeEvent();
+            widget.onTimerEvent();
         }
     }
 

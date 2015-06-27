@@ -2,6 +2,7 @@ package zhaohg.crimson.scene;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.View;
 
 import zhaohg.crimson.widget.WidgetContainer;
@@ -28,6 +29,12 @@ public abstract class Scene extends WidgetContainer {
             this.initialized = true;
         }
         super.onDraw(canvas);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
+        return true;
     }
 
     protected abstract void initScene();
