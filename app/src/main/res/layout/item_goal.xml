@@ -63,6 +63,15 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/text_view_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/goal_item_text_interval"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"/>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

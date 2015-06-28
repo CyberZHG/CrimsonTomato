@@ -10,12 +10,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import zhaohg.crimson.R;
+import zhaohg.crimson.data.DatabaseUtil;
 
 public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
 
@@ -41,7 +40,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
         viewHolder.checkBoxFinished.setChecked(goal.isFinished());
         viewHolder.textViewTitle.setText(goal.getTitle());
         viewHolder.textViewTomatoSpent.setText(context.getString(R.string.goal_item_text_tomato_spent) + goal.getTomatoSpent());
-        viewHolder.textViewTimeSpent.setText(context.getString(R.string.goal_item_text_time_spent) + goal.getFormatedMinuteSpent(context));
+        viewHolder.textViewTimeSpent.setText(context.getString(R.string.goal_item_text_time_spent) + goal.getFormattedMinuteSpent(context));
+        if (goal.isFinished()) {
+            viewHolder.textViewInterval.setVisibility(View.VISIBLE);
+            viewHolder.textViewInterval.setText(context.getString(R.string.goal_item_text_interval) + DatabaseUtil.formatDate(goal.getCreateDate()) + " - " + DatabaseUtil.formatDate(goal.getFinishedDate()));
+        }
     }
 
     @Override
@@ -100,6 +103,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
         public final TextView textViewTitle;
         public final TextView textViewTomatoSpent;
         public final TextView textViewTimeSpent;
+        public final TextView textViewInterval;
 
         public ViewHolder(View view) {
             super(view);
@@ -109,11 +113,13 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     GoalData goalData = new GoalData(context);
                     goalData.updateFinished(goal, isChecked);
+                    goalData.updateFinishedDate(goal);
                 }
             });
             textViewTitle = (TextView) view.findViewById(R.id.text_view_title);
             textViewTomatoSpent = (TextView) view.findViewById(R.id.text_view_tomato_spent);
             textViewTimeSpent = (TextView) view.findViewById(R.id.text_view_time_spent);
+            textViewInterval = (TextView) view.findViewById(R.id.text_view_interval);
             view.setOnClickListener(new OnPostClickerListener());
         }
 

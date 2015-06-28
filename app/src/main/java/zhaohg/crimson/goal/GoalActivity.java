@@ -104,7 +104,7 @@ public class GoalActivity extends AppCompatActivity {
         final TextView textViewTomatoSpent = (TextView) findViewById(R.id.text_view_tomato_spent);
         final TextView textViewTimeSpent = (TextView) findViewById(R.id.text_view_time_spent);
         textViewTomatoSpent.setText(getString(R.string.goal_item_text_tomato_spent) + " " + goal.getTomatoSpent());
-        textViewTimeSpent.setText(getString(R.string.goal_item_text_time_spent) + " " + goal.getFormatedMinuteSpent(this));
+        textViewTimeSpent.setText(getString(R.string.goal_item_text_time_spent) + " " + goal.getFormattedMinuteSpent(this));
     }
 
     private void initStartNow() {

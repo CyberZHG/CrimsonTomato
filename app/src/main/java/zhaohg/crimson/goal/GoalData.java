@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.Date;
 import java.util.Vector;
 
 import zhaohg.crimson.data.DatabaseUtil;
@@ -152,7 +153,16 @@ public class GoalData {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
         goal.setFinished(finished);
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_FINISHED, finished ? 1 : 0);
+        contentValues.put(COLUMN_FINISHED, finished);
+        db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + goal.getId(), null);
+        db.close();
+    }
+
+    public void updateFinishedDate(Goal goal) {
+        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+        goal.setFinishedDate(new Date());
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_FINISHED_DATE, DatabaseUtil.formatDate(goal.getCreateDate()));
         db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + goal.getId(), null);
         db.close();
     }

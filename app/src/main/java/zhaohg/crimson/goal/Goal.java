@@ -94,7 +94,7 @@ public class Goal {
         this.tomatoSpent = tomatoSpent;
     }
 
-    public String getFormatedMinuteSpent(Context context) {
+    public String getFormattedMinuteSpent(Context context) {
         if (minuteSpent > 60) {
             return String.format("%.2f", minuteSpent / 60.0f) + " " + context.getString(R.string.goal_format_hours);
         }

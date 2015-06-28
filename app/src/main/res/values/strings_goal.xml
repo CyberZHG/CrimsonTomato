@@ -27,4 +27,5 @@
     <string name="goal_item_text_period">Period</string>
     <string name="goal_item_text_tomato_spent">Tomatoes: </string>
     <string name="goal_item_text_time_spent">Time: </string>
+    <string name="goal_item_text_interval">Interval: </string>
 </resources>
