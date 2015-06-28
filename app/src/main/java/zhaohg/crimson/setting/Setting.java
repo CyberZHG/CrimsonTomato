@@ -71,6 +71,7 @@ public class Setting {
         this.lastFinished = DatabaseUtil.parseDate(settings.getString(KEY_LAST_FINISHED, "###"));
         if (this.lastFinished == null) {
             this.lastFinished = new Date();
+            this.setLastFinished();
         }
         this.lastGoalId = settings.getInt(KEY_LAST_GOAL_ID, -1);
         this.defaultTitle = settings.getString(KEY_DEFAULT_TITLE, context.getString(R.string.app_name));
@@ -159,7 +160,7 @@ public class Setting {
 
     public void setLastFinished() {
         lastFinished = new Date();
-        this.editValue(KEY_LAST_BEGIN, DatabaseUtil.formatDate(lastFinished));
+        this.editValue(KEY_LAST_FINISHED, DatabaseUtil.formatDate(lastFinished));
     }
 
     public int getLastGoalId() {

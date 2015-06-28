@@ -25,6 +25,6 @@
     <string name="goal_item_text_title">标题</string>
     <string name="goal_item_text_priority">优先级</string>
     <string name="goal_item_text_period">周期</string>
-    <string name="goal_item_text_tomato_spent">番茄数目：</string>
-    <string name="goal_item_text_time_spent">消耗时间：</string>
+    <string name="goal_item_text_tomato_spent">番茄：</string>
+    <string name="goal_item_text_time_spent">时间：</string>
 </resources>

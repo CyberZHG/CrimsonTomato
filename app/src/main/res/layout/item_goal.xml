@@ -27,32 +27,41 @@
                 android:id="@+id/check_box_finished"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TextView
                 android:id="@+id/text_view_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/goal_item_text_title"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_view_tomato_spent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/goal_item_text_tomato_spent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_marginTop="5dp"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/text_view_time_spent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/goal_item_text_time_spent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/text_view_tomato_spent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goal_item_text_tomato_spent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/text_view_time_spent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goal_item_text_time_spent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

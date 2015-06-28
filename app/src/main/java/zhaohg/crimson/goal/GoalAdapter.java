@@ -40,8 +40,8 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
         viewHolder.setGoal(goal);
         viewHolder.checkBoxFinished.setChecked(goal.isFinished());
         viewHolder.textViewTitle.setText(goal.getTitle());
-        viewHolder.textViewTomatoSpent.setText(context.getString(R.string.goal_item_text_tomato_spent) + " " + goal.getTomatoSpent());
-        viewHolder.textViewTimeSpent.setText(context.getString(R.string.goal_item_text_time_spent) + " " + goal.getFormatedMinuteSpent(context));
+        viewHolder.textViewTomatoSpent.setText(context.getString(R.string.goal_item_text_tomato_spent) + goal.getTomatoSpent());
+        viewHolder.textViewTimeSpent.setText(context.getString(R.string.goal_item_text_time_spent) + goal.getFormatedMinuteSpent(context));
     }
 
     @Override
