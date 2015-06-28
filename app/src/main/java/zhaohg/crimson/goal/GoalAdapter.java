@@ -37,14 +37,6 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         Goal goal = goals.get(i);
         viewHolder.setGoal(goal);
-        viewHolder.checkBoxFinished.setChecked(goal.isFinished());
-        viewHolder.textViewTitle.setText(goal.getTitle());
-        viewHolder.textViewTomatoSpent.setText(context.getString(R.string.goal_item_text_tomato_spent) + goal.getTomatoSpent());
-        viewHolder.textViewTimeSpent.setText(context.getString(R.string.goal_item_text_time_spent) + goal.getFormattedMinuteSpent(context));
-        if (goal.isFinished()) {
-            viewHolder.textViewInterval.setVisibility(View.VISIBLE);
-            viewHolder.textViewInterval.setText(context.getString(R.string.goal_item_text_interval) + DatabaseUtil.formatDate(goal.getCreateDate()) + " - " + DatabaseUtil.formatDate(goal.getFinishedDate()));
-        }
     }
 
     @Override
@@ -99,14 +91,16 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
 
         private Goal goal;
 
-        public final CheckBox checkBoxFinished;
-        public final TextView textViewTitle;
-        public final TextView textViewTomatoSpent;
-        public final TextView textViewTimeSpent;
-        public final TextView textViewInterval;
+        private final View viewPriorityColor;
+        private final CheckBox checkBoxFinished;
+        private final TextView textViewTitle;
+        private final TextView textViewTomatoSpent;
+        private final TextView textViewTimeSpent;
+        private final TextView textViewInterval;
 
         public ViewHolder(View view) {
             super(view);
+            viewPriorityColor = (View) view.findViewById(R.id.view_priority_color);
             checkBoxFinished = (CheckBox) view.findViewById(R.id.check_box_finished);
             checkBoxFinished.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -129,6 +123,15 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
 
         public void setGoal(Goal goal) {
             this.goal = goal;
+            viewPriorityColor.setBackgroundColor(Priority.getPriorityColor(context, goal.getPriority()));
+            checkBoxFinished.setChecked(goal.isFinished());
+            textViewTitle.setText(goal.getTitle());
+            textViewTomatoSpent.setText(context.getString(R.string.goal_item_text_tomato_spent) + goal.getTomatoSpent());
+            textViewTimeSpent.setText(context.getString(R.string.goal_item_text_time_spent) + goal.getFormattedMinuteSpent(context));
+            if (goal.isFinished()) {
+                textViewInterval.setVisibility(View.VISIBLE);
+                textViewInterval.setText(context.getString(R.string.goal_item_text_interval) + DatabaseUtil.formatDate(goal.getCreateDate()) + " - " + DatabaseUtil.formatDate(goal.getFinishedDate()));
+            }
         }
 
         private class OnPostClickerListener implements View.OnClickListener {

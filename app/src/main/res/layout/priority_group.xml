@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:crimson="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <zhaohg.crimson.goal.PriorityItemView
+        android:id="@+id/priority_item_blue"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        crimson:selected="true"
+        crimson:priority_color="@color/priority_blue"
+        crimson:selected_color="@color/priority_blue_selected"/>
+
+    <zhaohg.crimson.goal.PriorityItemView
+        android:id="@+id/priority_item_green"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        crimson:selected="false"
+        crimson:priority_color="@color/priority_green"
+        crimson:selected_color="@color/priority_green_selected"/>
+
+    <zhaohg.crimson.goal.PriorityItemView
+        android:id="@+id/priority_item_orange"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        crimson:selected="false"
+        crimson:priority_color="@color/priority_orange"
+        crimson:selected_color="@color/priority_orange_selected"/>
+
+    <zhaohg.crimson.goal.PriorityItemView
+        android:id="@+id/priority_item_red"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        crimson:selected="false"
+        crimson:priority_color="@color/priority_red"
+        crimson:selected_color="@color/priority_red_selected"/>
+
+    <zhaohg.crimson.goal.PriorityItemView
+        android:id="@+id/priority_item_purple"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        crimson:selected="false"
+        crimson:priority_color="@color/priority_purple"
+        crimson:selected_color="@color/priority_purple_selected"/>
+</LinearLayout>

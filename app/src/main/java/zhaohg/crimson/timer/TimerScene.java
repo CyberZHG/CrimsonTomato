@@ -16,7 +16,7 @@ public class TimerScene extends Scene {
     @Override
     public void initScene() {
         int cx = width / 2;
-        int cy = height / 2 - (int)(height * 0.06);
+        int cy = height / 2 - (int)(height * 0.01);
         int radius = (int)(Math.min(cx, cy) * 0.8);
         int diameter = radius * 2;
 

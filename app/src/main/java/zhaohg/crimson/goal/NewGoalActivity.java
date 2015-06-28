@@ -16,6 +16,7 @@ public class NewGoalActivity extends AppCompatActivity {
 
     private EditText editTextTitle;
     private SeekBar seekBarPeriod;
+    private PriorityGroupView priorityGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class NewGoalActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
+        priorityGroup = (PriorityGroupView) this.findViewById(R.id.priority_group);
     }
 
 
@@ -74,6 +77,7 @@ public class NewGoalActivity extends AppCompatActivity {
         Goal goal = new Goal();
         goal.setTitle(editTextTitle.getText().toString());
         goal.setPeriod(seekBarPeriod.getProgress() > 0 ? seekBarPeriod.getProgress() : 1);
+        goal.setPriority(priorityGroup.getPriority());
         GoalData goalData = new GoalData(this);
         goalData.addGoal(goal);
     }

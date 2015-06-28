@@ -27,5 +27,5 @@
     <string name="goal_item_text_period">周期</string>
     <string name="goal_item_text_tomato_spent">番茄：</string>
     <string name="goal_item_text_time_spent">时间：</string>
-    <string name="goal_item_text_interval">起始时间: </string>
+    <string name="goal_item_text_interval">起始时间：</string>
 </resources>

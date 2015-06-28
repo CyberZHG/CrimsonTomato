@@ -1,6 +1,11 @@
 package zhaohg.crimson.tomato;
 
+import android.content.Context;
+
 import java.util.Date;
+
+import zhaohg.crimson.R;
+import zhaohg.crimson.goal.Goal;
 
 public class Tomato {
 
@@ -9,6 +14,7 @@ public class Tomato {
     private Date end;
     private String title;
     private String location;
+    private String description;
     private boolean uploaded;
 
     public Tomato() {
@@ -58,6 +64,23 @@ public class Tomato {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDescription(Context context, Goal goal) {
+        description = "";
+        description += context.getString(R.string.goal_item_text_tomato_spent);
+        description += goal.getTomatoSpent();
+        description += " ";
+        description += context.getString(R.string.goal_item_text_time_spent);
+        description += goal.getFormattedMinuteSpent(context);
     }
 
     public boolean isSynced() {

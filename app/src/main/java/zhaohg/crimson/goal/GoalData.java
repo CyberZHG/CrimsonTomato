@@ -178,4 +178,13 @@ public class GoalData {
         db.close();
     }
 
+    public void updatePriority(Goal goal, int priority) {
+        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+        goal.setPriority(priority);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PRIORITY, goal.getPriority());
+        db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + goal.getId(), null);
+        db.close();
+    }
+
 }

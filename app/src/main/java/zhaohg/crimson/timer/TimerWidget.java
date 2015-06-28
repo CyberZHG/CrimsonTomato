@@ -260,6 +260,12 @@ public class TimerWidget extends Widget {
     private boolean touchEventWhenWait(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             this.period = setting.getPeriod();
+            int lastGoalId = setting.getLastGoalId();
+            GoalData goalData = new GoalData(context);
+            Goal goal = goalData.getGoal(lastGoalId);
+            if (goal != null) {
+                this.period = goal.getPeriod();
+            }
             this.begin = new Date();
             this.current = new Date();
             setting.setLastBegin(this.begin);
@@ -360,11 +366,11 @@ public class TimerWidget extends Widget {
                             end = new Date();
                             state = STATE_WAIT;
                             title = editText.getText().toString();
-                            addTomatoToDatabase();
                             if (goal != null) {
                                 goalData.addTomatoAndMinute(goal, (int) ((end.getTime() - begin.getTime()) / 1000 / 60));
-                                setting.setLastGoalId(-1);
                             }
+                            addTomatoToDatabase();
+                            setting.setLastGoalId(-1);
                             postInvalidate();
                             dialog.dismiss();
                         }
@@ -380,6 +386,14 @@ public class TimerWidget extends Widget {
         tomato.setBegin(this.begin);
         tomato.setEnd(this.end);
         tomato.setTitle(this.title);
+        int lastGoalId = setting.getLastGoalId();
+        GoalData goalData = new GoalData(context);
+        Goal goal = goalData.getGoal(lastGoalId);
+        if (goal == null) {
+            tomato.setDescription(context.getString(R.string.app_name));
+        } else {
+            tomato.setDescription(context, goal);
+        }
         TomatoData tomatoData = new TomatoData(this.context);
         tomatoData.addTomato(tomato);
     }
@@ -489,20 +503,21 @@ public class TimerWidget extends Widget {
 
     @Override
     public void onResume() {
-        if (setting.getLastBegin() != null) {
-            this.begin = setting.getLastBegin();
-            this.period = setting.getLastPeriod();
-            this.current = new Date();
-            this.state = STATE_RUNNING;
-            if ((current.getTime() - begin.getTime()) / 1000 / 60 >= period) {
-                this.state = STATE_FINISHED;
-            }
-        }
         int lastGoalId = setting.getLastGoalId();
         GoalData goalData = new GoalData(context);
         Goal goal = goalData.getGoal(lastGoalId);
         if (goal != null) {
             this.period = goal.getPeriod();
+        } else {
+            this.period = setting.getLastPeriod();
+        }
+        if (setting.getLastBegin() != null) {
+            this.begin = setting.getLastBegin();
+            this.current = new Date();
+            this.state = STATE_RUNNING;
+            if ((current.getTime() - begin.getTime()) / 1000 / 60 >= period) {
+                this.state = STATE_FINISHED;
+            }
         }
     }
 

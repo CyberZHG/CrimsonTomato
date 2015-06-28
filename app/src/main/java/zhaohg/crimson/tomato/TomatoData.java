@@ -22,13 +22,14 @@ import zhaohg.crimson.setting.Setting;
 
 public class TomatoData {
 
-    private static final String TABLE_NAME = "tomato_1";
+    private static final String TABLE_NAME = "tomato_2";
 
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_BEGIN_DATE = "begin_date";
     private static final String COLUMN_END_DATE = "end_date";
     private static final String COLUMN_TITLE = "title";
     private static final String COLUMN_LOCATION = "location";
+    private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_SYNCED = "synced";
 
     private final Context context;
@@ -42,12 +43,13 @@ public class TomatoData {
             SQLiteDatabase db = DatabaseUtil.getDatabase(context);
             db.execSQL(
                     "CREATE TABLE " + TABLE_NAME + " (" +
-                    "    " + COLUMN_ID + "         INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "    " + COLUMN_BEGIN_DATE + " VARCHAR(20), " +
-                    "    " + COLUMN_END_DATE + "   VARCHAR(20), " +
-                    "    " + COLUMN_TITLE + "      VARCHAR(140), " +
-                    "    " + COLUMN_LOCATION + "   VARCHAR(140), " +
-                    "    " + COLUMN_SYNCED + "     BOOLEAN" +
+                    "    " + COLUMN_ID + "          INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "    " + COLUMN_BEGIN_DATE + "  VARCHAR(20), " +
+                    "    " + COLUMN_END_DATE + "    VARCHAR(20), " +
+                    "    " + COLUMN_TITLE + "       VARCHAR(140), " +
+                    "    " + COLUMN_LOCATION + "    VARCHAR(140), " +
+                    "    " + COLUMN_DESCRIPTION + " VARCHAR(140)," +
+                    "    " + COLUMN_SYNCED + "      BOOLEAN" +
                     "); "
             );
             db.close();
@@ -68,6 +70,7 @@ public class TomatoData {
         contentValues.put(COLUMN_END_DATE, DatabaseUtil.formatDate(tomato.getEnd()));
         contentValues.put(COLUMN_TITLE, DatabaseUtil.sqliteEscape(tomato.getTitle()));
         contentValues.put(COLUMN_LOCATION, DatabaseUtil.sqliteEscape(tomato.getLocation()));
+        contentValues.put(COLUMN_DESCRIPTION, DatabaseUtil.sqliteEscape(tomato.getDescription()));
         contentValues.put(COLUMN_SYNCED, tomato.isSynced());
         db.insert(TABLE_NAME, null, contentValues);
         Setting setting = Setting.getInstance();
@@ -101,6 +104,7 @@ public class TomatoData {
             tomato.setEnd(DatabaseUtil.parseDate(cur.getString(cur.getColumnIndex(COLUMN_END_DATE))));
             tomato.setTitle(cur.getString(cur.getColumnIndex(COLUMN_TITLE)));
             tomato.setLocation(cur.getString(cur.getColumnIndex(COLUMN_LOCATION)));
+            tomato.setDescription(cur.getString(cur.getColumnIndex(COLUMN_DESCRIPTION)));
             tomato.setUploaded(cur.getInt(cur.getColumnIndex(COLUMN_SYNCED)) > 0);
             tomatoes.add(tomato);
         }
@@ -155,7 +159,7 @@ public class TomatoData {
         values.put(CalendarContract.Events.DTEND, endMillis);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
         values.put(CalendarContract.Events.TITLE, tomato.getTitle());
-        values.put(CalendarContract.Events.DESCRIPTION, context.getString(R.string.app_name));
+        values.put(CalendarContract.Events.DESCRIPTION, tomato.getDescription());
         values.put(CalendarContract.Events.EVENT_LOCATION, tomato.getLocation());
         values.put(CalendarContract.Events.EVENT_COLOR, Color.rgb(212, 46, 24));
         cr.insert(CalendarContract.Events.CONTENT_URI, values);
@@ -196,7 +200,7 @@ public class TomatoData {
                 writer.write(dateFormat.format(tomato.getEnd()) + ",");
                 writer.write(timeFormat.format(tomato.getEnd()) + ",");
                 writer.write("False,");
-                writer.write(addCsvEscape(context.getString(R.string.app_name)) + ",");
+                writer.write(addCsvEscape(tomato.getDescription()) + ",");
                 writer.write(addCsvEscape(tomato.getLocation()) + ",");
                 writer.write("True\n");
             }

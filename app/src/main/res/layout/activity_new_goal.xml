@@ -30,6 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -56,6 +57,28 @@
                 android:id="@+id/text_view_period_num"/>
 
         </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/goal_item_text_priority"/>
+
+            <zhaohg.crimson.goal.PriorityGroupView
+                android:id="@+id/priority_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </zhaohg.crimson.goal.PriorityGroupView>
+
+    </LinearLayout>
 
     </LinearLayout>
 

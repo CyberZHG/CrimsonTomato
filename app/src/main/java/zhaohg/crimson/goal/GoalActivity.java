@@ -48,6 +48,7 @@ public class GoalActivity extends AppCompatActivity {
 
         this.initTitle();
         this.initPeriod();
+        this.initPriority();
         this.initSpent();
         this.initStartNow();
         this.initDelete();
@@ -98,6 +99,17 @@ public class GoalActivity extends AppCompatActivity {
             }
         });
         seekBarPeriod.setProgress(goal.getPeriod());
+    }
+
+    private void initPriority() {
+        final PriorityGroupView priorityGroup = (PriorityGroupView) findViewById(R.id.priority_group);
+        priorityGroup.setPriority(goal.getPriority());
+        priorityGroup.setOnPriorityChangedListener(new PriorityGroupView.OnPriorityChangedListener() {
+            @Override
+            public void onPriorityChanged(int priority) {
+                goalData.updatePriority(goal, priority);
+            }
+        });
     }
 
     private void initSpent() {

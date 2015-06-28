@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="crimson">
+
+        <attr name="selected" format="boolean"/>
+        <attr name="priority_color" format="color"/>
+        <attr name="selected_color" format="color"/>
+
+    </declare-styleable>
+</resources>
