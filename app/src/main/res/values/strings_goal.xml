@@ -14,7 +14,7 @@
     <string name="goal_format_minute">Minute</string>
     <string name="goal_format_minutes">Minutes</string>
 
-    <string name="goal_current_prefix">Current: </string>
+    <string name="goal_current_prefix">Current：</string>
     <string name="dialog_remove_current_goal_title">Remove</string>
     <string name="dialog_remove_current_goal_message">Clear the current goal?</string>
 
@@ -25,7 +25,7 @@
     <string name="goal_item_text_title">Title</string>
     <string name="goal_item_text_priority">Priority</string>
     <string name="goal_item_text_period">Period</string>
-    <string name="goal_item_text_tomato_spent">Tomatoes: </string>
-    <string name="goal_item_text_time_spent">Time: </string>
-    <string name="goal_item_text_interval">Interval: </string>
+    <string name="goal_item_text_tomato_spent">Tomatoes：</string>
+    <string name="goal_item_text_time_spent">Time：</string>
+    <string name="goal_item_text_interval">Interval：</string>
 </resources>

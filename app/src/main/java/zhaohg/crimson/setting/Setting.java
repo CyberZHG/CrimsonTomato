@@ -19,6 +19,7 @@ public class Setting {
     private static final String KEY_LAST_BEGIN = "last_begin";
     private static final String KEY_LAST_FINISHED = "last_finished";
     private static final String KEY_LAST_GOAL_ID = "last_goal_id";
+    private static final String KEY_FAST_START = "fast_start";
     private static final String KEY_DEFAULT_TITLE = "default_title";
     private static final String KEY_SYNC_TO_CALENDAR = "sync_to_calendar";
     private static final String KEY_CALENDAR_ID = "calendar_id";
@@ -35,6 +36,7 @@ public class Setting {
     private Date lastBegin;
     private Date lastFinished;
     private int lastGoalId;
+    private boolean fastStart;
 
     private String defaultTitle;
     private boolean syncToCalendar;
@@ -74,6 +76,7 @@ public class Setting {
             this.setLastFinished();
         }
         this.lastGoalId = settings.getInt(KEY_LAST_GOAL_ID, -1);
+        this.fastStart = settings.getBoolean(KEY_FAST_START, false);
         this.defaultTitle = settings.getString(KEY_DEFAULT_TITLE, context.getString(R.string.app_name));
         this.syncToCalendar = settings.getBoolean(KEY_SYNC_TO_CALENDAR, true);
         this.calendarId = settings.getString(KEY_CALENDAR_ID, "");
@@ -170,6 +173,15 @@ public class Setting {
     public void setLastGoalId(int lastGoalId) {
         this.lastGoalId = lastGoalId;
         editValue(KEY_LAST_GOAL_ID, lastGoalId);
+    }
+
+    public boolean isFastStart() {
+        return fastStart;
+    }
+
+    public void setFastStart(boolean fastStart) {
+        this.fastStart = fastStart;
+        editValue(KEY_FAST_START, fastStart);
     }
 
     public String getDefaultTitle() {

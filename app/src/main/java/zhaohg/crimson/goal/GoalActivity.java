@@ -129,6 +129,7 @@ public class GoalActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Setting setting = Setting.getInstance();
                 setting.setLastGoalId(goal.getId());
+                setting.setFastStart(true);
                 Intent intent = new Intent();
                 intent.setClass(GoalActivity.this, MainActivity.class);
                 startActivity(intent);

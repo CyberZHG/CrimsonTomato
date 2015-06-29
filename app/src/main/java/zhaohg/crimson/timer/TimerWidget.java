@@ -370,7 +370,6 @@ public class TimerWidget extends Widget {
                                 goalData.addTomatoAndMinute(goal, (int) ((end.getTime() - begin.getTime()) / 1000 / 60));
                             }
                             addTomatoToDatabase();
-                            setting.setLastGoalId(-1);
                             postInvalidate();
                             dialog.dismiss();
                         }
@@ -454,7 +453,7 @@ public class TimerWidget extends Widget {
 
     private void timerEventWhenTransToFinished() {
         if (this.fontAlpha > 0.0f) {
-            this.fontAlpha -= 0.04f;
+            this.fontAlpha -= 0.06f;
             if (this.fontAlpha < 0.0f) {
                 this.fontAlpha = 0.0f;
                 this.state = STATE_FINISHED;
@@ -464,7 +463,7 @@ public class TimerWidget extends Widget {
 
     private void timerEventWhenFinished() {
         if (this.fontAlpha < 1.0f) {
-            this.fontAlpha += 0.04f;
+            this.fontAlpha += 0.06f;
             if (this.fontAlpha > 1.0f) {
                 this.fontAlpha = 1.0f;
             }
@@ -508,8 +507,15 @@ public class TimerWidget extends Widget {
         Goal goal = goalData.getGoal(lastGoalId);
         if (goal != null) {
             this.period = goal.getPeriod();
+            if (setting.isFastStart()) {
+                this.begin = new Date();
+                this.current = new Date();
+                this.state = STATE_RUNNING;
+                setting.setFastStart(false);
+            }
         } else {
             this.period = setting.getLastPeriod();
+            setting.setFastStart(false);
         }
         if (setting.getLastBegin() != null) {
             this.begin = setting.getLastBegin();
