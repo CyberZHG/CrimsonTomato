@@ -109,7 +109,7 @@ public class GoalData {
 
     public Vector<Goal> getUnfinishedGoalsOnPage(int pageNum) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        Cursor cur = DatabaseUtil.getPageSortedByIdWithCondition(db, TABLE_NAME, COLUMN_FINISHED + "=0", pageNum);
+        Cursor cur = DatabaseUtil.getPageSortedByIdWithCondition(db, TABLE_NAME, COLUMN_FINISHED + "=0", false, pageNum);
         Vector<Goal> goals = getGoalsFromCursor(cur);
         db.close();
         return goals;
@@ -117,7 +117,7 @@ public class GoalData {
 
     public Vector<Goal> getFinishedGoalsOnPage(int pageNum) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        Cursor cur = DatabaseUtil.getPageSortedByIdWithCondition(db, TABLE_NAME, COLUMN_FINISHED + "=1", pageNum);
+        Cursor cur = DatabaseUtil.getPageSortedByIdWithCondition(db, TABLE_NAME, COLUMN_FINISHED + "=1", true, pageNum);
         Vector<Goal> goals = getGoalsFromCursor(cur);
         db.close();
         return goals;
@@ -125,7 +125,7 @@ public class GoalData {
 
     public Vector<Goal> getGoalsOnPage(int pageNum) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        Cursor cur = DatabaseUtil.getPageSortedById(db, TABLE_NAME, pageNum);
+        Cursor cur = DatabaseUtil.getPageSortedById(db, TABLE_NAME, true, pageNum);
         Vector<Goal> goals = getGoalsFromCursor(cur);
         db.close();
         return goals;

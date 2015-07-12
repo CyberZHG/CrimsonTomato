@@ -114,7 +114,7 @@ public class TomatoData {
 
     public Vector<Tomato> getTomatoesOnPage(int pageNum) {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        Cursor cur = DatabaseUtil.getPageSortedById(db, TABLE_NAME, pageNum);
+        Cursor cur = DatabaseUtil.getPageSortedById(db, TABLE_NAME, true, pageNum);
         Vector<Tomato> tomatoes = getTomatoesFromCursor(cur);
         db.close();
         return tomatoes;

@@ -15,6 +15,7 @@ import java.util.List;
 
 import zhaohg.crimson.R;
 import zhaohg.crimson.data.DatabaseUtil;
+import zhaohg.crimson.setting.Setting;
 
 public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
 
@@ -108,6 +109,10 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
                     GoalData goalData = new GoalData(context);
                     goalData.updateFinished(goal, isChecked);
                     goalData.updateFinishedDate(goal);
+                    Setting setting = Setting.getInstance();
+                    if (setting.getLastGoalId() == goal.getId()) {
+                        setting.setLastGoalId(-1);
+                    }
                 }
             });
             textViewTitle = (TextView) view.findViewById(R.id.text_view_title);

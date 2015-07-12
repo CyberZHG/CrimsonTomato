@@ -419,12 +419,12 @@ public class TimerWidget extends Widget {
 
     private void timerEventWhenTransToRunning() {
         if (this.transStrokeWidth > 1.0f) {
-            this.transStrokeWidth -= 0.2f;
+            this.transStrokeWidth -= 0.7f;
         } else {
             this.state = STATE_RUNNING;
         }
         if (this.fontAlpha > 0.0f) {
-            this.fontAlpha -= 0.04f;
+            this.fontAlpha -= 0.07f;
             if (this.fontAlpha < 0.0f) {
                 this.fontAlpha = 0.0f;
             }
@@ -444,7 +444,7 @@ public class TimerWidget extends Widget {
             this.state = STATE_TRANS_TO_FINISHED;
         }
         if (this.fontAlpha < 1.0f) {
-            this.fontAlpha += 0.04f;
+            this.fontAlpha += 0.07f;
             if (this.fontAlpha > 1.0f) {
                 this.fontAlpha = 1.0f;
             }
@@ -453,7 +453,7 @@ public class TimerWidget extends Widget {
 
     private void timerEventWhenTransToFinished() {
         if (this.fontAlpha > 0.0f) {
-            this.fontAlpha -= 0.06f;
+            this.fontAlpha -= 0.07f;
             if (this.fontAlpha < 0.0f) {
                 this.fontAlpha = 0.0f;
                 this.state = STATE_FINISHED;
@@ -463,7 +463,7 @@ public class TimerWidget extends Widget {
 
     private void timerEventWhenFinished() {
         if (this.fontAlpha < 1.0f) {
-            this.fontAlpha += 0.06f;
+            this.fontAlpha += 0.07f;
             if (this.fontAlpha > 1.0f) {
                 this.fontAlpha = 1.0f;
             }

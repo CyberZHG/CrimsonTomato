@@ -55,32 +55,32 @@ public class DatabaseUtil {
         return db.query(false, tableName, null, "id=" + id, null, null, null, null, null);
     }
 
-    public static Cursor getPageSortedByKey(SQLiteDatabase db, String tableName, String keyColumn, int pageNum) {
+    public static Cursor getPageSortedByKey(SQLiteDatabase db, String tableName, String keyColumn, boolean desc, int pageNum) {
         return db.rawQuery(
                 "SELECT * " +
                 "FROM " + tableName + " " +
-                "ORDER BY " + keyColumn + " DESC " +
+                "ORDER BY " + keyColumn + " " + (desc ? "DESC" : "") + " " +
                 "LIMIT " + PAGE_SIZE + " " +
                 "OFFSET " + (PAGE_SIZE * pageNum) + ";", null);
     }
 
-    public static Cursor getPageSortedById(SQLiteDatabase db, String tableName, int pageNum) {
-        return getPageSortedByKey(db, tableName, "id", pageNum);
+    public static Cursor getPageSortedById(SQLiteDatabase db, String tableName, boolean desc, int pageNum) {
+        return getPageSortedByKey(db, tableName, "id", desc, pageNum);
     }
 
-    public static Cursor getPageSortedWithCondition(SQLiteDatabase db, String tableName, String condition, String keyColumn, int pageNum) {
+    public static Cursor getPageSortedWithCondition(SQLiteDatabase db, String tableName, String condition, String keyColumn, boolean desc, int pageNum) {
         return db.rawQuery(
                 "SELECT * " +
                 "FROM " + tableName + " " +
                 "WHERE " + condition + " " +
-                "ORDER BY " + keyColumn + " DESC " +
+                "ORDER BY " + keyColumn + " " + (desc ? "DESC" : "") + " " +
                 "LIMIT " + PAGE_SIZE + " " +
                 "OFFSET " + (PAGE_SIZE * pageNum) + ";", null);
 
     }
 
-    public static Cursor getPageSortedByIdWithCondition(SQLiteDatabase db, String tableName, String condition, int pageNum) {
-        return getPageSortedWithCondition(db, tableName, condition, "id", pageNum);
+    public static Cursor getPageSortedByIdWithCondition(SQLiteDatabase db, String tableName, String condition, boolean desc, int pageNum) {
+        return getPageSortedWithCondition(db, tableName, condition, "id", desc, pageNum);
     }
 
     public static void deleteAll(Context context, String tableName) {
