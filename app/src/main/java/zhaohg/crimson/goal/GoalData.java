@@ -98,7 +98,7 @@ public class GoalData {
             goal.setPeriod(cur.getInt(cur.getColumnIndex(COLUMN_PERIOD)));
             goal.setFinished(cur.getInt(cur.getColumnIndex(COLUMN_FINISHED)) > 0);
             goal.setCreateDate(DatabaseUtil.parseDate(cur.getString(cur.getColumnIndex(COLUMN_CREATE_DATE))));
-            goal.setCreateDate(DatabaseUtil.parseDate(cur.getString(cur.getColumnIndex(COLUMN_FINISHED_DATE))));
+            goal.setFinishedDate(DatabaseUtil.parseDate(cur.getString(cur.getColumnIndex(COLUMN_FINISHED_DATE))));
             goal.setTomatoSpent(cur.getInt(cur.getColumnIndex(COLUMN_TOMATO_SPENT)));
             goal.setMinuteSpent(cur.getInt(cur.getColumnIndex(COLUMN_MINUTE_SPENT)));
             goals.add(goal);
@@ -162,7 +162,7 @@ public class GoalData {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
         goal.setFinishedDate(new Date());
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_FINISHED_DATE, DatabaseUtil.formatDate(goal.getCreateDate()));
+        contentValues.put(COLUMN_FINISHED_DATE, DatabaseUtil.formatDate(goal.getFinishedDate()));
         db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + goal.getId(), null);
         db.close();
     }
