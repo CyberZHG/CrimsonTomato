@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="zhaohg.crimson" >
+    package="zhaohg.crimson">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -12,11 +12,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".main.MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,28 +25,23 @@
         </activity>
         <activity
             android:name=".setting.SettingActivity"
-            android:label="@string/title_activity_setting" >
-        </activity>
+            android:label="@string/title_activity_setting"></activity>
         <activity
             android:name=".tomato.HistoryActivity"
-            android:label="@string/title_activity_history" >
-        </activity>
+            android:label="@string/title_activity_history"></activity>
         <activity
             android:name=".setting.ChooseCalendarActivity"
-            android:label="@string/title_activity_choose_calendar" >
-        </activity>
+            android:label="@string/title_activity_choose_calendar"></activity>
         <activity
             android:name=".goal.GoalsActivity"
-            android:label="@string/title_activity_goals" >
-        </activity>
+            android:label="@string/title_activity_goals"></activity>
         <activity
             android:name=".goal.NewGoalActivity"
-            android:label="@string/title_activity_new_goal" >
-        </activity>
+            android:label="@string/title_activity_new_goal"></activity>
         <activity
             android:name=".goal.GoalActivity"
-            android:label="@string/title_activity_goal" >
-        </activity>
+            android:label="@string/title_activity_goal"></activity>
+        <activity android:name=".setting.DebugModeActivity"></activity>
     </application>
 
 </manifest>

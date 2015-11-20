@@ -109,6 +109,20 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Init debug button.
+        final Button buttonDebug = (Button) findViewById(R.id.button_debug_mode);
+        if (setting.isDebugMode()) {
+            buttonDebug.setVisibility(View.VISIBLE);
+            buttonDebug.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(SettingActivity.this, DebugModeActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

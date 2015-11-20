@@ -29,6 +29,8 @@ public class Setting {
     private Activity activity;
     private Context context;
 
+    private boolean debugMode = true;
+
     private int period;
     private int lastPeriod;
     private boolean vibrate;
@@ -106,6 +108,10 @@ public class Setting {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
         editor.apply();
+    }
+
+    public boolean isDebugMode() {
+        return this.debugMode;
     }
 
     public int getPeriod() {
