@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="color_primary">#44535c</color>
+    <color name="color_primary_dark">#263238</color>
+    <color name="text_color_primary">#ffffff</color>
+
     <color name="priority_blue">#00a2e8</color>
     <color name="priority_blue_selected">#0077aa</color>
 

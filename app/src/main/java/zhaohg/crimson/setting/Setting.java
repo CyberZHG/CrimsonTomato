@@ -29,7 +29,7 @@ public class Setting {
     private Activity activity;
     private Context context;
 
-    private boolean debugMode = true;
+    private boolean debugMode = false;
 
     private int period;
     private int lastPeriod;

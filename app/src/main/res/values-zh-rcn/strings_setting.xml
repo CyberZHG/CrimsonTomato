@@ -27,4 +27,6 @@
     <string name="setting_feedback">意见与反馈</string>
     <string name="setting_privacy">隐私策略</string>
     <string name="setting_privacy_desc">应用不收集用户的任何信息，只利用写权限。</string>
+
+    <string name="setting_debug">调试</string>
 </resources>
