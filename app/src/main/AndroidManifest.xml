@@ -41,7 +41,9 @@
         <activity
             android:name=".goal.GoalActivity"
             android:label="@string/title_activity_goal"></activity>
-        <activity android:name=".setting.DebugModeActivity"></activity>
+        <activity
+            android:name=".setting.DebugModeActivity"
+            android:label="@string/title_activity_debug_mode"></activity>
     </application>
 
 </manifest>
