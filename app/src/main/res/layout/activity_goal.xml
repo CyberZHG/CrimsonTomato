@@ -1,130 +1,146 @@
-<ScrollView
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="zhaohg.crimson.goal.GoalActivity">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:title="@string/title_activity_goal"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"/>
 
-        <!-- Dummy item to prevent auto focus. -->
-        <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_width="0px"
-            android:layout_height="0px"/>
-
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edit_text_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/goal_item_text_title" />
-
-        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+    <ScrollView
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="zhaohg.crimson.goal.GoalActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_gravity="center_vertical"
-                android:text="@string/setting_period" />
+            <!-- Dummy item to prevent auto focus. -->
+            <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"/>
 
-            <SeekBar
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:max="120"
-                android:id="@+id/seek_bar_period"
-                android:progress="25" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_gravity="center_vertical"
-                android:text="@string/setting_period_num"
-                android:id="@+id/text_view_period_num"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/goal_item_text_priority"/>
-
-            <zhaohg.crimson.goal.PriorityGroupView
-                android:id="@+id/priority_group"
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </zhaohg.crimson.goal.PriorityGroupView>
+                <EditText
+                    android:id="@+id/edit_text_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/goal_item_text_title" />
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_period" />
+
+                <SeekBar
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="120"
+                    android:id="@+id/seek_bar_period"
+                    android:progress="25" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_period_num"
+                    android:id="@+id/text_view_period_num"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/goal_item_text_priority"/>
+
+                <zhaohg.crimson.goal.PriorityGroupView
+                    android:id="@+id/priority_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </zhaohg.crimson.goal.PriorityGroupView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:id="@+id/text_view_tomato_spent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/goal_item_text_tomato_spent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+                <TextView
+                    android:id="@+id/text_view_time_spent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/goal_item_text_time_spent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_start_now"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/button_start_now" />
+
+            <Button
+                android:id="@+id/button_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#d6695b"
+                android:text="@string/action_delete" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="20dp">
+    </ScrollView>
 
-            <TextView
-                android:id="@+id/text_view_tomato_spent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/goal_item_text_tomato_spent"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-            <TextView
-                android:id="@+id/text_view_time_spent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/goal_item_text_time_spent"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"/>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button_start_now"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/button_start_now" />
-
-        <Button
-            android:id="@+id/button_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textColor="#d6695b"
-            android:text="@string/action_delete" />
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

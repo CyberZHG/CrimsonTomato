@@ -2,6 +2,7 @@
 <resources>
     <string name="title_activity_setting">设置</string>
     <string name="title_activity_choose_calendar">选择日历</string>
+    <string name="title_activity_debug_mode">调试</string>
 
     <string name="device_offline">设备未联网</string>
 

@@ -1,188 +1,204 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="zhaohg.crimson.setting.SettingActivity">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:showDividers="middle"
-        android:divider="@drawable/divier_setting"
-        android:orientation="vertical">
+        android:title="@string/title_activity_setting"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"/>
 
-        <!-- Dummy item to prevent auto focus. -->
-        <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_width="0px"
-            android:layout_height="0px"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/setting_schedule" />
+    <ScrollView
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="zhaohg.crimson.setting.SettingActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:showDividers="middle"
+            android:divider="@drawable/divider_setting"
+            android:orientation="vertical">
+
+            <!-- Dummy item to prevent auto focus. -->
+            <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_gravity="center_vertical"
-                android:text="@string/setting_period" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/setting_schedule" />
 
-            <SeekBar
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:max="120"
-                android:id="@+id/seek_bar_period"
-                android:progress="25" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_gravity="center_vertical"
-                android:text="@string/setting_period_num"
-                android:id="@+id/text_view_period_num"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_period_normal"
-            android:id="@+id/text_view_period_desc"/>
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_vibrate_desc"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/check_box_vibrate" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </View>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/setting_sync" />
-
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLength="140"
-                android:hint="@string/setting_sync_default_title"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_period" />
+
+                <SeekBar
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="120"
+                    android:id="@+id/seek_bar_period"
+                    android:progress="25" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_period_num"
+                    android:id="@+id/text_view_period_num"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_period_normal"
+                android:id="@+id/text_view_period_desc"/>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_vibrate_desc"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/edit_text_title"/>
+                android:id="@+id/check_box_vibrate" />
 
-        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_sync_to_calendar"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/check_box_sync_to_calendar"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </View>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting_sync_current_calendar"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/setting_sync" />
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="140"
+                    android:hint="@string/setting_sync_default_title"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/edit_text_title"/>
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_sync_to_calendar"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/check_box_sync_to_calendar"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_sync_current_calendar"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_sync_current_calendar_none"
+                    android:id="@+id/text_view_current_calendar"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_sync_choose_calendar"
+                android:id="@+id/button_choose_calendar"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </View>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting_sync_current_calendar_none"
-                android:id="@+id/text_view_current_calendar"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/setting_about" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/setting_source" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="https://github.com/CyberZHG/CrimsonTomato"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/setting_feedback" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="https://github.com/CyberZHG/CrimsonTomato/issues/new"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/setting_privacy" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_privacy_desc"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/setting_debug"
+                android:id="@+id/button_debug_mode"/>
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_sync_choose_calendar"
-            android:id="@+id/button_choose_calendar"/>
+    </ScrollView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </View>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/setting_about" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/setting_source" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:text="https://github.com/CyberZHG/CrimsonTomato"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/setting_feedback" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:text="https://github.com/CyberZHG/CrimsonTomato/issues/new"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/setting_privacy" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_privacy_desc"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="@string/setting_debug"
-            android:id="@+id/button_debug_mode"/>
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

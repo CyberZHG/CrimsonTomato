@@ -1,15 +1,12 @@
 package zhaohg.crimson.main;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,15 +29,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
 
         Setting.getInstance().init(this);
 
         new TomatoData(this).initDatabase();
         new GoalData(this).initDatabase();
 
-        this.mainView = new MainView(this);
+        this.mainView = (MainView) findViewById(R.id.main_view);
         this.scene = new TimerScene(this, this.mainView);
-        this.setContentView(this.mainView);
+        this.mainView.setScene(this.scene);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -93,22 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public class MainView extends View {
-        public MainView(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            scene.onDraw(canvas);
-        }
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            return scene.onTouchEvent(event);
-        }
     }
 
 }

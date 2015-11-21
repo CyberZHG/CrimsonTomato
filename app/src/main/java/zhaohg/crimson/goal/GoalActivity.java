@@ -3,10 +3,12 @@ package zhaohg.crimson.goal;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -35,6 +37,16 @@ public class GoalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         final int goalId = getIntent().getIntExtra(KEY_GOAL_ID, -1);
         goalData = new GoalData(this);
         goal = goalData.getGoal(goalId);
@@ -42,9 +54,6 @@ public class GoalActivity extends AppCompatActivity {
             this.finish();
             return;
         }
-
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.initTitle();
         this.initPeriod();

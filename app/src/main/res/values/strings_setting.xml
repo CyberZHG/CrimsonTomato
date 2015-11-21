@@ -2,6 +2,7 @@
 <resources>
     <string name="title_activity_setting">Settings</string>
     <string name="title_activity_choose_calendar">Choose Calendar</string>
+    <string name="title_activity_debug_mode">Debug Mode</string>
 
     <string name="device_offline">The device is off-line</string>
 
