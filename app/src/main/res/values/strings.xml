@@ -3,6 +3,9 @@
     <string name="app_name">Tomato Timer</string>
     <string name="hello_world">Hello world!</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
     <string name="action_confirm">Confirm</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_settings">Settings</string>
@@ -19,4 +22,5 @@
 
     <string name="timer_start">Start</string>
     <string name="timer_finished">Finished</string>
+
 </resources>

@@ -2,12 +2,20 @@ package zhaohg.crimson.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
 
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.color_primary_dark));
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         this.setSupportActionBar(toolbar);
 
@@ -42,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         this.mainView = (MainView) findViewById(R.id.main_view);
         this.scene = new TimerScene(this, this.mainView);
         this.mainView.setScene(this.scene);
+        this.initDrawer();
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -50,6 +66,60 @@ public class MainActivity extends AppCompatActivity {
                 scene.onTimerEvent();
             }
         }, 0, 50);
+    }
+
+    private void initDrawer() {
+        ArrayList<DrawerItem> drawerItems = new ArrayList<>();
+        drawerItems.add(new DrawerItem(R.drawable.goal, getResources().getString(R.string.action_goal)));
+        drawerItems.add(new DrawerItem(R.drawable.history, getResources().getString(R.string.action_history)));
+        drawerItems.add(new DrawerItem(R.drawable.settings, getResources().getString(R.string.action_settings)));
+        DrawerListAdapter drawerListAdapter = new DrawerListAdapter(getApplicationContext(), drawerItems);
+        ListView drawer = (ListView) findViewById(R.id.drawer);
+        drawer.setAdapter(drawerListAdapter);
+        drawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0: {
+                        Intent intent = new Intent();
+                        intent.setClass(MainActivity.this, GoalsActivity.class);
+                        startActivity(intent);
+                    }
+                    break;
+                    case 1: {
+                        Intent intent = new Intent();
+                        intent.setClass(MainActivity.this, HistoryActivity.class);
+                        startActivity(intent);
+                    }
+                    break;
+                    case 2: {
+                        Intent intent = new Intent();
+                        intent.setClass(MainActivity.this, SettingActivity.class);
+                        startActivity(intent);
+                    }
+                    break;
+                }
+            }
+        });
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) {
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
+                syncState();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+                syncState();
+            }
+        };
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        actionBarDrawerToggle.syncState();
     }
 
     @Override
@@ -62,38 +132,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         scene.onPause();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_item_goal: {
-                    Intent intent = new Intent();
-                    intent.setClass(MainActivity.this, GoalsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            case R.id.menu_item_history: {
-                    Intent intent = new Intent();
-                    intent.setClass(MainActivity.this, HistoryActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            case R.id.menu_item_setting: {
-                    Intent intent = new Intent();
-                    intent.setClass(MainActivity.this, SettingActivity.class);
-                    startActivity(intent);
-                }
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }

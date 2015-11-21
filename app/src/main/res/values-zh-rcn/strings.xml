@@ -3,6 +3,9 @@
     <string name="app_name">番茄计时</string>
     <string name="hello_world">你好，世界！</string>
 
+    <string name="open">开启</string>
+    <string name="close">关闭</string>
+
     <string name="action_confirm">确定</string>
     <string name="action_cancel">取消</string>
     <string name="action_settings">设置</string>

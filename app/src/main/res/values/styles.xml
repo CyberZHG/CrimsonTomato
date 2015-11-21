@@ -3,10 +3,5 @@
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
-        <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
-    </style>
-
-    <style name="ActionButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:src">@drawable/overflow</item>
     </style>
 </resources>
