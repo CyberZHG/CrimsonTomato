@@ -2,6 +2,7 @@ package zhaohg.crimson.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -69,36 +70,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDrawer() {
-        ArrayList<DrawerItem> drawerItems = new ArrayList<>();
-        drawerItems.add(new DrawerItem(R.drawable.goal, getResources().getString(R.string.action_goal)));
-        drawerItems.add(new DrawerItem(R.drawable.history, getResources().getString(R.string.action_history)));
-        drawerItems.add(new DrawerItem(R.drawable.settings, getResources().getString(R.string.action_settings)));
-        DrawerListAdapter drawerListAdapter = new DrawerListAdapter(getApplicationContext(), drawerItems);
-        ListView drawer = (ListView) findViewById(R.id.drawer);
-        drawer.setAdapter(drawerListAdapter);
-        drawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        NavigationView drawer = (NavigationView) findViewById(R.id.drawer);
+        drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0: {
-                        Intent intent = new Intent();
-                        intent.setClass(MainActivity.this, GoalsActivity.class);
-                        startActivity(intent);
-                    }
-                    break;
-                    case 1: {
-                        Intent intent = new Intent();
-                        intent.setClass(MainActivity.this, HistoryActivity.class);
-                        startActivity(intent);
-                    }
-                    break;
-                    case 2: {
-                        Intent intent = new Intent();
-                        intent.setClass(MainActivity.this, SettingActivity.class);
-                        startActivity(intent);
-                    }
-                    break;
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_item_goal: {
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, GoalsActivity.class);
+                                startActivity(intent);
+                            }
+                        break;
+                    case R.id.menu_item_history: {
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, HistoryActivity.class);
+                                startActivity(intent);
+                            }
+                        break;
+                    case R.id.menu_item_setting: {
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, SettingActivity.class);
+                                startActivity(intent);
+                            }
+                        break;
                 }
+                return true;
             }
         });
 
