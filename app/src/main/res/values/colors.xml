@@ -5,6 +5,7 @@
     <color name="color_primary_dark">#324191</color>
     <color name="text_color_primary">#F0FAFC</color>
     <color name="text_color_primary_dark">#000000</color>
+    <color name="color_accent">#03A6FF</color>
     <color name="color_running">#ED1C25</color>
 
     <color name="priority_blue">#00a2e8</color>

@@ -17,6 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/action_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="40dp"
+            android:src="@drawable/add"/>
+
         <zhaohg.crimson.sliding.SlidingTabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
