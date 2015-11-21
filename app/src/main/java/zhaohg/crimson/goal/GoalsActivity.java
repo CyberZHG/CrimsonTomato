@@ -5,19 +5,21 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import zhaohg.crimson.R;
-import zhaohg.crimson.sliding.SlidingFragment;
-import zhaohg.crimson.sliding.SlidingPagerAdapter;
-import zhaohg.crimson.sliding.SlidingTabLayout;
 
 public class GoalsActivity extends AppCompatActivity {
 
-    ViewPager viewPager;
+    private ArrayList<Fragment> fragments;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +46,30 @@ public class GoalsActivity extends AppCompatActivity {
             }
         });
 
-        final SlidingTabLayout slidingTab = (SlidingTabLayout) findViewById(R.id.slidingTab);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.slidingTab);
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.goal_show_type_unfinished)));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.goal_show_type_finished)));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.goal_show_type_all)));
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        ArrayList<SlidingFragment> fragments = new ArrayList<>();
+        fragments = new ArrayList<>();
         fragments.add(GoalFragment.newInstance(GoalFragment.SHOW_UNFINISHED));
         fragments.add(GoalFragment.newInstance(GoalFragment.SHOW_FINISHED));
         fragments.add(GoalFragment.newInstance(GoalFragment.SHOW_ALL));
-        SlidingPagerAdapter pagerAdapter = new SlidingPagerAdapter(getSupportFragmentManager(), fragments);
+        PagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+        };
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(pagerAdapter);
-        slidingTab.setViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
 }

@@ -1,6 +1,7 @@
 package zhaohg.crimson.goal;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +12,8 @@ import java.util.Vector;
 
 import zhaohg.crimson.R;
 import zhaohg.crimson.data.DatabaseUtil;
-import zhaohg.crimson.sliding.SlidingFragment;
 
-public class GoalFragment extends SlidingFragment {
+public class GoalFragment extends Fragment {
 
     private static final String BUNDLE_KEY_SHOW_TYPE = "show_type";
 
@@ -35,17 +35,6 @@ public class GoalFragment extends SlidingFragment {
         Bundle bundle = new Bundle();
         bundle.putInt(BUNDLE_KEY_SHOW_TYPE, showType);
         fragment.setArguments(bundle);
-        switch (showType) {
-            case SHOW_ALL:
-                fragment.setTitle("All");
-                break;
-            case SHOW_UNFINISHED:
-                fragment.setTitle("Unfinished");
-                break;
-            case SHOW_FINISHED:
-                fragment.setTitle("Finished");
-                break;
-        }
         return fragment;
     }
 

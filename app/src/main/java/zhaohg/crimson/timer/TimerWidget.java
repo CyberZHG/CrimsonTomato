@@ -3,7 +3,6 @@ package zhaohg.crimson.timer;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -45,8 +44,7 @@ public class TimerWidget extends Widget {
     private Date end;
     private String title;
 
-    private int waitingColor;
-    private int runningColor;
+    private int timerColor;
     private int textColor;
 
     private float transStrokeWidth;
@@ -54,8 +52,7 @@ public class TimerWidget extends Widget {
 
     public TimerWidget(Context context, View view) {
         super(context, view);
-        this.waitingColor = context.getResources().getColor(R.color.color_primary);
-        this.runningColor = context.getResources().getColor(R.color.color_running);
+        this.timerColor = context.getResources().getColor(R.color.color_primary);
         this.textColor = context.getResources().getColor(R.color.text_color_primary);
         this.onResume();
     }
@@ -122,7 +119,7 @@ public class TimerWidget extends Widget {
 
     private void drawWhenWait(Canvas canvas) {
         Paint paint = getDrawPaint();
-        paint.setColor(this.waitingColor);
+        paint.setColor(this.timerColor);
         paint.setStrokeWidth(getStrokeThick());
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawArc(getOval(), 0, 360, false, paint);
@@ -136,7 +133,7 @@ public class TimerWidget extends Widget {
 
     private void drawWhenTransToRunning(Canvas canvas) {
         Paint paint = getDrawPaint();
-        paint.setColor(this.waitingColor);
+        paint.setColor(this.timerColor);
         paint.setStrokeWidth(this.transStrokeWidth);
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawArc(getOval(), 0, 360, false, paint);
@@ -150,7 +147,7 @@ public class TimerWidget extends Widget {
 
     private void drawWhenRunning(Canvas canvas) {
         Paint paint = getDrawPaint();
-        paint.setColor(this.runningColor);
+        paint.setColor(this.timerColor);
         paint.setStrokeWidth(getStrokeThin());
         paint.setStyle(Paint.Style.STROKE);
         RectF oval = getOval();
@@ -186,7 +183,7 @@ public class TimerWidget extends Widget {
 
     private void drawWhenTransToFinished(Canvas canvas) {
         Paint paint = getDrawPaint();
-        paint.setColor(this.runningColor);
+        paint.setColor(this.timerColor);
         paint.setStrokeWidth(getStrokeThin());
         paint.setStyle(Paint.Style.STROKE);
         RectF oval = getOval();
@@ -222,7 +219,7 @@ public class TimerWidget extends Widget {
 
     private void drawWhenFinished(Canvas canvas) {
         Paint paint = getDrawPaint();
-        paint.setColor(this.runningColor);
+        paint.setColor(this.timerColor);
         paint.setStrokeWidth(getStrokeThick());
         paint.setStyle(Paint.Style.STROKE);
         RectF oval = getOval();

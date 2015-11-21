@@ -16,8 +16,9 @@ Features:
 
 See [Releases](https://github.com/CyberZHG/CrimsonTomato/releases).
 
-## Screen-shots v1.0.9
+## Screen-shots
 
-![v1.0.9_1](https://cloud.githubusercontent.com/assets/853842/11316782/2e67beb6-9050-11e5-880c-6133029eaf12.png)
-![v1.0.9_2](https://cloud.githubusercontent.com/assets/853842/11316779/26c1690a-9050-11e5-9fcd-9cd7f25e93f8.png)
-![v1.0.9_3](https://cloud.githubusercontent.com/assets/853842/11316781/26c6961e-9050-11e5-8b74-e702ae47e6d7.png)
+![v1.0.10_1](https://cloud.githubusercontent.com/assets/853842/11317338/cf4ff8f0-9066-11e5-9be3-87cffcedf80f.png)
+![v1.0.10_2](https://cloud.githubusercontent.com/assets/853842/11317339/cf502460-9066-11e5-94a9-71a87020643a.png)
+![v1.0.10_3](https://cloud.githubusercontent.com/assets/853842/11317340/cf51cd1a-9066-11e5-9759-92de1fd265a7.png)
+
