@@ -78,7 +78,7 @@ public class GoalFragment extends Fragment {
         loadNextPage();
     }
 
-    void loadNextPage() {
+    private void loadNextPage() {
         GoalData goalData = new GoalData(this.getActivity());
         Vector<Goal> goals;
         switch (this.showType) {

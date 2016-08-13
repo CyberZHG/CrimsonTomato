@@ -77,7 +77,7 @@ public class TomatoAdapter extends RecyclerView.Adapter<TomatoAdapter.ViewHolder
         notifyItemRemoved(position);
     }
 
-    void append(Tomato tomato) {
+    private void append(Tomato tomato) {
         if (!isExisted(tomato)) {
             int pos = tomatoes.size();
             tomatoes.add(tomato);

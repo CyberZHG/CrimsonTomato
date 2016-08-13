@@ -11,11 +11,11 @@ public abstract class Scene extends WidgetContainer {
 
     protected final Context context;
     protected final View view;
-    protected boolean initialized = false;
+    private boolean initialized = false;
     protected int width;
     protected int height;
 
-    public Scene(Context context, View view) {
+    protected Scene(Context context, View view) {
         this.context = context;
         this.view = view;
     }

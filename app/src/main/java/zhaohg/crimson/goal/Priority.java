@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 import zhaohg.crimson.R;
 
-public class Priority {
+class Priority {
 
     public static final int PRIORITY_BLUE = 0;
     public static final int PRIORITY_GREEN = 1;

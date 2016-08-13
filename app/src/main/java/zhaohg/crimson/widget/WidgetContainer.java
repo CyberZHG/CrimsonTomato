@@ -18,7 +18,7 @@ public abstract class WidgetContainer {
         this.widgets.remove(widget);
     }
 
-    public void drawChildren(Canvas canvas) {
+    private void drawChildren(Canvas canvas) {
         for (Widget widget : this.widgets) {
             if (widget.isVisible()) {
                 widget.onDraw(canvas);
@@ -31,7 +31,7 @@ public abstract class WidgetContainer {
         drawChildren(canvas);
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
+    protected boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
             if (this.lastTouchWidget != null) {
                 if (this.lastTouchWidget.onTouchEvent(event)) {

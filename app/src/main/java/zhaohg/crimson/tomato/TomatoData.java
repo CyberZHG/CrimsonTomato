@@ -95,7 +95,7 @@ public class TomatoData {
         DatabaseUtil.deleteById(context, TABLE_NAME, id);
     }
 
-    Vector<Tomato> getTomatoesFromCursor(Cursor cur) {
+    private Vector<Tomato> getTomatoesFromCursor(Cursor cur) {
         Vector<Tomato> tomatoes = new Vector();
         while (cur.moveToNext()) {
             Tomato tomato = new Tomato();
@@ -120,7 +120,7 @@ public class TomatoData {
         return tomatoes;
     }
 
-    Vector<Tomato> getUnsyncedTomatoes() {
+    private Vector<Tomato> getUnsyncedTomatoes() {
         SQLiteDatabase db = DatabaseUtil.getDatabase(context);
         Cursor cur = db.query(false, TABLE_NAME, null, COLUMN_SYNCED + "=0", null, null, null, null, null);
         Vector<Tomato> tomatoes = getTomatoesFromCursor(cur);
@@ -139,7 +139,7 @@ public class TomatoData {
         }
     }
 
-    void syncToCalendar(Tomato tomato) {
+    private void syncToCalendar(Tomato tomato) {
         Setting setting = Setting.getInstance();
         if (setting.getCalendarId().equals("")) {
             return;
@@ -171,7 +171,7 @@ public class TomatoData {
         db.close();
     }
 
-    String addCsvEscape(String s) {
+    private String addCsvEscape(String s) {
         String ret = "\"";
         for (int i = 0; i < s.length(); ++i) {
             if (s.charAt(i) == '"' || s.charAt(i) == '\\') {

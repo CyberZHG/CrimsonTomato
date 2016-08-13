@@ -142,7 +142,7 @@ public class CurrentGoalWidget extends Widget {
         return false;
     }
 
-    public boolean touchEventWhenShow(MotionEvent event) {
+    private boolean touchEventWhenShow(MotionEvent event) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle(this.context.getString(R.string.dialog_remove_current_goal_title));
         builder.setMessage(this.context.getString(R.string.dialog_remove_current_goal_message));
@@ -167,7 +167,7 @@ public class CurrentGoalWidget extends Widget {
         return true;
     }
 
-    public boolean touchEventWhenHide(MotionEvent event) {
+    private boolean touchEventWhenHide(MotionEvent event) {
         return false;
     }
 

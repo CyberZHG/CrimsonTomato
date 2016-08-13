@@ -74,7 +74,7 @@ public class Setting {
         init((Context)activity);
     }
 
-    public void init(Context context) {
+    private void init(Context context) {
         this.context = context;
         SharedPreferences settings = this.getSharedPreference();
         this.period = settings.getInt(KEY_PERIOD, 25);
@@ -104,21 +104,21 @@ public class Setting {
         return this.context.getSharedPreferences(PREFERENCE_NAME, Activity.MODE_PRIVATE);
     }
 
-    void editValue(String key, int value) {
+    private void editValue(String key, int value) {
         SharedPreferences settings = this.getSharedPreference();
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
         editor.apply();
     }
 
-    void editValue(String key, boolean value) {
+    private void editValue(String key, boolean value) {
         SharedPreferences settings = this.getSharedPreference();
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(key, value);
         editor.apply();
     }
 
-    void editValue(String key, String value) {
+    private void editValue(String key, String value) {
         SharedPreferences settings = this.getSharedPreference();
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
