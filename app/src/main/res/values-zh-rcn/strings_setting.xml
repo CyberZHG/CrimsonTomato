@@ -8,11 +8,11 @@
 
     <string name="setting_schedule">计划</string>
     <string name="setting_period">周期</string>
+    <string name="setting_period_suite_num">工作组数</string>
+    <string name="setting_period_short_break">短休息时间</string>
+    <string name="setting_period_long_break">长休息时间</string>
     <string name="setting_period_num">25分钟</string>
     <string name="setting_period_num_suffix">分钟</string>
-    <string name="setting_period_too_short">你在逗我?</string>
-    <string name="setting_period_normal">默认配置是25分钟。</string>
-    <string name="setting_period_too_long">All work and no play makes Jack a dull boy.</string>
     <string name="setting_vibrate">震动</string>
     <string name="setting_vibrate_desc">结束时震动提醒</string>
 

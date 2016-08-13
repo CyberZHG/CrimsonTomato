@@ -8,11 +8,11 @@
 
     <string name="setting_schedule">Schedule</string>
     <string name="setting_period">Period</string>
+    <string name="setting_period_suite_num">Suite Number</string>
+    <string name="setting_period_short_break">Short Break</string>
+    <string name="setting_period_long_break">Long Break</string>
     <string name="setting_period_num">25 mins</string>
     <string name="setting_period_num_suffix"> mins</string>
-    <string name="setting_period_too_short">Are you kidding me?</string>
-    <string name="setting_period_normal">25 minutes is the default setting.</string>
-    <string name="setting_period_too_long">All work and no play makes Jack a dull boy.</string>
     <string name="setting_vibrate">Vibrate</string>
     <string name="setting_vibrate_desc">Vibrate when finished</string>
 

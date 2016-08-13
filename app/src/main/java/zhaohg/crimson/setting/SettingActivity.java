@@ -2,8 +2,6 @@ package zhaohg.crimson.setting;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -37,7 +35,6 @@ public class SettingActivity extends AppCompatActivity {
         // Init period setting.
         final SeekBar seekBarPeriod = (SeekBar) this.findViewById(R.id.seek_bar_period);
         final TextView textViewPeriodNum = (TextView) this.findViewById(R.id.text_view_period_num);
-        final TextView textViewPeriodDesc = (TextView) this.findViewById(R.id.text_view_period_desc);
         seekBarPeriod.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -45,13 +42,6 @@ public class SettingActivity extends AppCompatActivity {
                     progress = 1;
                 }
                 textViewPeriodNum.setText(progress + getString(R.string.setting_period_num_suffix));
-                if (progress < 20) {
-                    textViewPeriodDesc.setText(getString(R.string.setting_period_too_short));
-                } else if (progress > 60) {
-                    textViewPeriodDesc.setText(getString(R.string.setting_period_too_long));
-                } else {
-                    textViewPeriodDesc.setText(getString(R.string.setting_period_normal));
-                }
             }
 
             @Override
