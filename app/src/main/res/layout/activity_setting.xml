@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_gravity="center_vertical"
-                    android:text="4"
+                    android:text="@string/setting_suite_num_default"
                     android:id="@+id/text_view_suite_num"/>
 
             </LinearLayout>
@@ -261,7 +261,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
-                android:text="https://github.com/CyberZHG/CrimsonTomato/issues/new"/>
+                android:text="@string/setting_feedback_url"/>
 
             <TextView
                 android:layout_width="wrap_content"
