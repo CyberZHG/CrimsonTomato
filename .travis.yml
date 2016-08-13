@@ -1,0 +1,11 @@
+language: android
+android:
+  components:
+    - build-tools-24.0.1
+    - android-24
+    - sys-img-armeabi-v7a-android-24
+    - sys-img-x86-android-24
+before_install:
+  - chmod +x gradlew
+script:
+  - ./gradlew build connectedCheck
