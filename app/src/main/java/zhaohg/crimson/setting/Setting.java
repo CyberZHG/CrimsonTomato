@@ -13,6 +13,9 @@ public class Setting {
 
     private static final String PREFERENCE_NAME = "setting";
     private static final String KEY_PERIOD = "period";
+    private static final String KEY_SHORT_BREAK = "short_break";
+    private static final String KEY_LONG_BREAK = "long_break";
+    private static final String KEY_PERIOD_DAY_COUNT = "day_count";
     private static final String KEY_LAST_PERIOD = "last_period";
     private static final String KEY_VIBRATE = "vibrate";
     private static final String KEY_VIBRATED = "vibrated";
@@ -32,6 +35,9 @@ public class Setting {
     private boolean debugMode = false;
 
     private int period;
+    private int shortBreak;
+    private int longBreak;
+    private int dayCount;
     private int lastPeriod;
     private boolean vibrate;
     private boolean vibrated;
@@ -68,6 +74,9 @@ public class Setting {
         this.context = context;
         SharedPreferences settings = this.getSharedPreference();
         this.period = settings.getInt(KEY_PERIOD, 25);
+        this.shortBreak = settings.getInt(KEY_SHORT_BREAK, 5);
+        this.longBreak = settings.getInt(KEY_LONG_BREAK, 15);
+        this.dayCount = settings.getInt(KEY_PERIOD_DAY_COUNT, 0);
         this.lastPeriod = settings.getInt(KEY_LAST_PERIOD, 25);
         this.vibrate = settings.getBoolean(KEY_VIBRATE, true);
         this.vibrated = settings.getBoolean(KEY_VIBRATED, false);
@@ -118,9 +127,36 @@ public class Setting {
         return this.period;
     }
 
+    public int getShortBreak() {
+        return this.shortBreak;
+    }
+
+    public int getLongBreak() {
+        return this.longBreak;
+    }
+
+    public int getDayCount() {
+        return this.dayCount;
+    }
+
     public void setPeriod(int period) {
         this.period = period;
         this.editValue(KEY_PERIOD, period);
+    }
+
+    public void setShortBreak(int period) {
+        this.shortBreak = period;
+        this.editValue(KEY_SHORT_BREAK, period);
+    }
+
+    public void setLongBreak(int period) {
+        this.longBreak = period;
+        this.editValue(KEY_LONG_BREAK, period);
+    }
+
+    public void setDayCount(int count) {
+        this.dayCount = count;
+        this.editValue(KEY_PERIOD_DAY_COUNT, count);
     }
 
     public int getLastPeriod() {

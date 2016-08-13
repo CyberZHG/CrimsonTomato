@@ -59,6 +59,58 @@ public class SettingActivity extends AppCompatActivity {
         });
         seekBarPeriod.setProgress(setting.getPeriod());
 
+        final SeekBar seekShortBreak = (SeekBar) this.findViewById(R.id.seek_bar_short_break);
+        final TextView textViewShortBreak = (TextView) this.findViewById(R.id.text_view_short_break);
+        seekShortBreak.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 0) {
+                    progress = 1;
+                }
+                textViewShortBreak.setText(progress + getString(R.string.setting_period_num_suffix));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                if (progress == 0) {
+                    progress = 1;
+                }
+                setting.setShortBreak(progress);
+            }
+        });
+        seekShortBreak.setProgress(setting.getShortBreak());
+
+        final SeekBar seekLongBreak = (SeekBar) this.findViewById(R.id.seek_bar_long_break);
+        final TextView textViewLongBreak = (TextView) this.findViewById(R.id.text_view_long_break);
+        seekLongBreak.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 0) {
+                    progress = 1;
+                }
+                textViewLongBreak.setText(progress + getString(R.string.setting_period_num_suffix));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                if (progress == 0) {
+                    progress = 1;
+                }
+                setting.setLongBreak(progress);
+            }
+        });
+        seekLongBreak.setProgress(setting.getLongBreak());
+
         // Init vibrate setting.
         final CheckBox checkBoxVibrate = (CheckBox) this.findViewById(R.id.check_box_vibrate);
         checkBoxVibrate.setChecked(setting.isVibrate());
