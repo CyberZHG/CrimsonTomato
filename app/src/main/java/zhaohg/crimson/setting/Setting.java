@@ -16,6 +16,7 @@ public class Setting {
     private static final String KEY_SUITE_NUMBER = "suite_number";
     private static final String KEY_SHORT_BREAK = "short_break";
     private static final String KEY_LONG_BREAK = "long_break";
+    private static final String KEY_SHOW_PROGRESS = "show_progress";
     private static final String KEY_PERIOD_DAY_COUNT = "day_count";
     private static final String KEY_LAST_PERIOD = "last_period";
     private static final String KEY_VIBRATE = "vibrate";
@@ -39,6 +40,7 @@ public class Setting {
     private int suiteNum;
     private int shortBreak;
     private int longBreak;
+    private boolean showProgress;
     private int dayCount;
     private int lastPeriod;
     private boolean vibrate;
@@ -79,6 +81,7 @@ public class Setting {
         this.suiteNum = settings.getInt(KEY_SUITE_NUMBER, 4);
         this.shortBreak = settings.getInt(KEY_SHORT_BREAK, 5);
         this.longBreak = settings.getInt(KEY_LONG_BREAK, 15);
+        this.showProgress = settings.getBoolean(KEY_SHOW_PROGRESS, true);
         this.dayCount = settings.getInt(KEY_PERIOD_DAY_COUNT, 0);
         this.lastPeriod = settings.getInt(KEY_LAST_PERIOD, 25);
         this.vibrate = settings.getBoolean(KEY_VIBRATE, true);
@@ -142,6 +145,10 @@ public class Setting {
         return this.longBreak;
     }
 
+    public boolean isShowProgress() {
+        return this.showProgress;
+    }
+
     public int getDayCount() {
         return this.dayCount;
     }
@@ -164,6 +171,11 @@ public class Setting {
     public void setLongBreak(int period) {
         this.longBreak = period;
         this.editValue(KEY_LONG_BREAK, period);
+    }
+
+    public void setShowProgress(boolean show) {
+        this.showProgress = show;
+        this.editValue(KEY_SHOW_PROGRESS, show);
     }
 
     public void setDayCount(int count) {

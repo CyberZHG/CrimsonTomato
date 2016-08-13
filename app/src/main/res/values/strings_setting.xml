@@ -7,7 +7,7 @@
     <string name="device_offline">The device is off-line</string>
 
     <string name="setting_schedule">Schedule</string>
-    <string name="setting_period">Period</string>
+    <string name="setting_work_period">Work Period</string>
     <string name="setting_period_suite_num">Suite Number</string>
     <string name="setting_period_short_break">Short Break</string>
     <string name="setting_period_long_break">Long Break</string>
@@ -15,6 +15,9 @@
     <string name="setting_period_num_suffix"> mins</string>
     <string name="setting_vibrate">Vibrate</string>
     <string name="setting_vibrate_desc">Vibrate when finished</string>
+
+    <string name="setting_display">Display</string>
+    <string name="setting_show_progress">Show today\'s progress</string>
 
     <string name="setting_sync">Sync</string>
     <string name="setting_sync_default_title">Default Title</string>

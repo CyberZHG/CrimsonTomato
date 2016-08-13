@@ -20,9 +20,9 @@ public class ProgressWidget extends Widget {
 
     @Override
     protected void selfDraw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setColor(context.getResources().getColor(R.color.color_primary));
+        if (!setting.isShowProgress()) {
+            return;
+        }
         int dayCount = setting.getDayCount();
         if (dayCount == 0) {
             return;
@@ -35,6 +35,9 @@ public class ProgressWidget extends Widget {
         int totalWidth = (suiteCount + singleCount - 1) * iconSize;
         int x = getCenterX() - (totalWidth) / 2;
         int y = getCenterY();
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(context.getResources().getColor(R.color.color_primary));
         for (int i = 0; i < suiteCount + singleCount; ++i) {
             paint.setStrokeWidth(Math.max(1, (int)(iconSize * 0.1)));
             paint.setStyle(Paint.Style.STROKE);
