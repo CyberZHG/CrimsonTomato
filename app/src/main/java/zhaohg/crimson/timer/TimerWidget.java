@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import zhaohg.crimson.R;
@@ -43,6 +44,7 @@ public class TimerWidget extends Widget {
     private Date current;
     private Date end;
     private String title;
+    private boolean isBreakFinished;
 
     private int timerColor;
     private int textColor;
@@ -126,7 +128,13 @@ public class TimerWidget extends Widget {
         paint.setColor(this.textColor);
         paint.setStyle(Paint.Style.FILL);
         paint.setAlpha((int) (255 * fontAlpha));
-        canvas.drawText(context.getString(R.string.timer_start), getTextMidX(), (int)(getTextBaseY(paint) - h * 0.03), paint);
+        String text = "";
+        if (isBreakFinished) {
+            text = context.getString(R.string.timer_start);
+        } else {
+            text = context.getString(R.string.timer_break);
+        }
+        canvas.drawText(text, getTextMidX(), (int)(getTextBaseY(paint) - h * 0.03), paint);
         paint.setTextSize(getSubTextSize());
         canvas.drawText(getRestTimeString(), getTextMidX(), (int)(y + h * 0.70), paint);
     }
@@ -368,6 +376,16 @@ public class TimerWidget extends Widget {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Calendar last = Calendar.getInstance();
+                            Calendar current = Calendar.getInstance();
+                            last.setTime(setting.getLastBegin());
+                            current.setTime(new Date());
+                            if (last.get(Calendar.YEAR) == current.get(Calendar.YEAR) &&
+                                last.get(Calendar.DAY_OF_YEAR) == current.get(Calendar.DAY_OF_YEAR)) {
+                                setting.setDayCount(setting.getDayCount() + 1);
+                            } else {
+                                setting.setDayCount(1);
+                            }
                             setting.setLastBegin(null);
                             setting.setLastFinished();
                             end = new Date();
@@ -496,7 +514,15 @@ public class TimerWidget extends Widget {
     }
 
     private String getRestTimeString() {
-        return getFormattedTimeString((new Date().getTime() - setting.getLastFinished().getTime()) / 1000);
+        int breakPeriod = setting.getShortBreak();
+        if (setting.getDayCount() == 0) {
+            breakPeriod = 0;
+        } else if (setting.getDayCount() % setting.getSuiteNum() == 0) {
+            breakPeriod = setting.getLongBreak();
+        }
+        long remainTime = breakPeriod * 60 - (new Date().getTime() - setting.getLastFinished().getTime()) / 1000;
+        this.isBreakFinished = remainTime <= 0;
+        return getFormattedTimeString(remainTime);
     }
 
     private String getRemainTimeString() {

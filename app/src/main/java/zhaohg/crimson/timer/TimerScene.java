@@ -21,12 +21,16 @@ public class TimerScene extends Scene {
         int diameter = radius * 2;
 
         TimerWidget timerWidget = new TimerWidget(context, view);
-        timerWidget.setGeometry(cx - radius, cy - radius, diameter, diameter);
+        timerWidget.setGeometry(cx - radius, cy - radius - (int)(height * 0.05), diameter, diameter);
         this.addChild(timerWidget);
 
         CurrentGoalWidget currentGoalWidget = new CurrentGoalWidget(context, view);
-        currentGoalWidget.setGeometry(0, (int)(height * 0.94), width, (int)(height * 0.03));
+        currentGoalWidget.setGeometry(0, (int)(height * 0.85), width, (int)(height * 0.04));
         this.addChild(currentGoalWidget);
+
+        ProgressWidget progressWidget = new ProgressWidget(context, view);
+        progressWidget.setGeometry(0, (int)(height * 0.91), width, (int)(height * 0.06));
+        this.addChild(progressWidget);
     }
 
     @Override

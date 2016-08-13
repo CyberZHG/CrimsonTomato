@@ -29,13 +29,6 @@
             android:divider="@drawable/divider_setting"
             android:orientation="vertical">
 
-            <!-- Dummy item to prevent auto focus. -->
-            <LinearLayout
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:layout_width="0px"
-                android:layout_height="0px"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/setting_period" />
+                    android:text="@string/setting_work_period" />
 
                 <SeekBar
                     android:layout_width="0dp"
@@ -72,6 +65,96 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_period_suite_num" />
+
+                <SeekBar
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="10"
+                    android:id="@+id/seek_bar_suite_num"
+                    android:progress="4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_suite_num_default"
+                    android:id="@+id/text_view_suite_num"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_period_short_break" />
+
+                <SeekBar
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="120"
+                    android:id="@+id/seek_bar_short_break"
+                    android:progress="25" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_period_num"
+                    android:id="@+id/text_view_short_break"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_period_long_break" />
+
+                <SeekBar
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="120"
+                    android:id="@+id/seek_bar_long_break"
+                    android:progress="25" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/setting_period_num"
+                    android:id="@+id/text_view_long_break"/>
+
+            </LinearLayout>
+
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,11 +171,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/setting_display" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_show_progress"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/check_box_show_progress" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/setting_sync" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:focusable="true" android:focusableInTouchMode="true" >
 
                 <EditText
                     android:layout_width="match_parent"
@@ -153,25 +255,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/setting_source" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:text="https://github.com/CyberZHG/CrimsonTomato"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/setting_feedback" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
-                android:text="https://github.com/CyberZHG/CrimsonTomato/issues/new"/>
+                android:text="@string/setting_feedback_url"/>
 
             <TextView
                 android:layout_width="wrap_content"

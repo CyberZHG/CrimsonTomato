@@ -12,7 +12,7 @@ public class DatabaseUtil {
 
     public static final int PAGE_SIZE = 50;
 
-    public static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static SQLiteDatabase getDatabase(Context context) {
         return context.openOrCreateDatabase("tomato.db", Context.MODE_PRIVATE, null);

@@ -203,7 +203,7 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
-    void loadNextPage() {
+    private void loadNextPage() {
         TomatoData tomatoData = new TomatoData(this);
         Vector<Tomato> tomatoes = tomatoData.getTomatoesOnPage(this.pageNum);
         TomatoAdapter adapter = (TomatoAdapter) recycleTomatoes.getAdapter();

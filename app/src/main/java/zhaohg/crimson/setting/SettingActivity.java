@@ -59,6 +59,84 @@ public class SettingActivity extends AppCompatActivity {
         });
         seekBarPeriod.setProgress(setting.getPeriod());
 
+        final SeekBar seekBarSuiteNum = (SeekBar) this.findViewById(R.id.seek_bar_suite_num);
+        final TextView textViewSuiteNum = (TextView) this.findViewById(R.id.text_view_suite_num);
+        seekBarSuiteNum.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 0) {
+                    progress = 1;
+                }
+                textViewSuiteNum.setText("" + progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                if (progress == 0) {
+                    progress = 1;
+                }
+                setting.setSuiteNum(progress);
+            }
+        });
+        seekBarSuiteNum.setProgress(setting.getSuiteNum());
+
+        final SeekBar seekShortBreak = (SeekBar) this.findViewById(R.id.seek_bar_short_break);
+        final TextView textViewShortBreak = (TextView) this.findViewById(R.id.text_view_short_break);
+        seekShortBreak.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 0) {
+                    progress = 1;
+                }
+                textViewShortBreak.setText(progress + getString(R.string.setting_period_num_suffix));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                if (progress == 0) {
+                    progress = 1;
+                }
+                setting.setShortBreak(progress);
+            }
+        });
+        seekShortBreak.setProgress(setting.getShortBreak());
+
+        final SeekBar seekLongBreak = (SeekBar) this.findViewById(R.id.seek_bar_long_break);
+        final TextView textViewLongBreak = (TextView) this.findViewById(R.id.text_view_long_break);
+        seekLongBreak.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 0) {
+                    progress = 1;
+                }
+                textViewLongBreak.setText(progress + getString(R.string.setting_period_num_suffix));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                if (progress == 0) {
+                    progress = 1;
+                }
+                setting.setLongBreak(progress);
+            }
+        });
+        seekLongBreak.setProgress(setting.getLongBreak());
+
         // Init vibrate setting.
         final CheckBox checkBoxVibrate = (CheckBox) this.findViewById(R.id.check_box_vibrate);
         checkBoxVibrate.setChecked(setting.isVibrate());
@@ -66,6 +144,16 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 setting.setVibrate(isChecked);
+            }
+        });
+
+        // Init show progress setting.
+        final CheckBox checkBoxShowProgress = (CheckBox) this.findViewById(R.id.check_box_show_progress);
+        checkBoxShowProgress.setChecked(setting.isShowProgress());
+        checkBoxShowProgress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setting.setShowProgress(isChecked);
             }
         });
 

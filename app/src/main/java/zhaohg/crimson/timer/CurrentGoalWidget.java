@@ -53,14 +53,13 @@ public class CurrentGoalWidget extends Widget {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float fontHeight = fontMetrics.bottom - fontMetrics.top;
         float textBaseY = getBottom() - (getH() - fontHeight) / 2 - fontMetrics.bottom;
-        int midX = (getLeft() + getRight()) / 2;
         String text = context.getString(R.string.goal_current_prefix) + " " + goal.getTitle();
         float textWidth = paint.measureText(text);
         while (textWidth > getW() * 0.85) {
             text = text.substring(0, text.length() - 4) + "...";
             textWidth = paint.measureText(text);
         }
-        canvas.drawText(text, midX, textBaseY, paint);
+        canvas.drawText(text, getCenterX(), textBaseY, paint);
     }
 
     @Override
@@ -143,7 +142,7 @@ public class CurrentGoalWidget extends Widget {
         return false;
     }
 
-    public boolean touchEventWhenShow(MotionEvent event) {
+    private boolean touchEventWhenShow(MotionEvent event) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle(this.context.getString(R.string.dialog_remove_current_goal_title));
         builder.setMessage(this.context.getString(R.string.dialog_remove_current_goal_message));
@@ -168,7 +167,7 @@ public class CurrentGoalWidget extends Widget {
         return true;
     }
 
-    public boolean touchEventWhenHide(MotionEvent event) {
+    private boolean touchEventWhenHide(MotionEvent event) {
         return false;
     }
 

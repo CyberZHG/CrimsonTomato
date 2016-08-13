@@ -5,4 +5,9 @@
         <item name="android:textColorPrimary">@color/text_color_primary</item>
         <item name="android:colorAccent" tools:targetApi="21">@color/color_accent</item>
     </style>
+
+    <style name="NavigationViewStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:listPreferredItemHeight">?android:attr/actionBarSize</item>
+    </style>
 </resources>

@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/setting_period" />
+                    android:text="@string/setting_work_period" />
 
                 <SeekBar
                     android:layout_width="0dp"

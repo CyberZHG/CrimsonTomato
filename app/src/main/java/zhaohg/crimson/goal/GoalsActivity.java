@@ -47,11 +47,11 @@ public class GoalsActivity extends AppCompatActivity {
             }
         });
 
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.slidingTab);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tab);
         tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.goal_show_type_unfinished)));
         tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.goal_show_type_finished)));
         tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.goal_show_type_all)));
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
         fragments = new ArrayList<>();
         fragments.add(GoalFragment.newInstance(GoalFragment.SHOW_UNFINISHED));
         fragments.add(GoalFragment.newInstance(GoalFragment.SHOW_FINISHED));
@@ -71,6 +71,7 @@ public class GoalsActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
     }
 
 }

@@ -6,13 +6,13 @@ import android.view.View;
 public abstract class Widget extends WidgetContainer {
 
     protected final Context context;
-    protected final View view;
+    private final View view;
 
     protected int x;
     protected int y;
     protected int w;
     protected int h;
-    protected boolean visible = true;
+    private boolean visible = true;
 
     public Widget(Context context, View view) {
         this.context = context;
@@ -72,6 +72,14 @@ public abstract class Widget extends WidgetContainer {
 
     public int getBottom() {
         return this.y + this.h;
+    }
+
+    public int getCenterX() {
+        return this.x + (this.w >> 1);
+    }
+
+    public int getCenterY() {
+        return this.y + (this.h >> 1);
     }
 
     public boolean isVisible() {

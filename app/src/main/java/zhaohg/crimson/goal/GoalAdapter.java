@@ -72,7 +72,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
         notifyDataSetChanged();
     }
 
-    void append(Goal goal) {
+    private void append(Goal goal) {
         if (!isExisted(goal)) {
             int pos = goals.size();
             goals.add(goal);

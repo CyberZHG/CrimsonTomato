@@ -44,7 +44,7 @@ public class PriorityGroupView extends LinearLayout {
 
     private void initItems() {
         priority = Priority.PRIORITY_BLUE;
-        this.inflate(getContext(), R.layout.priority_group, this);
+        inflate(getContext(), R.layout.priority_group, this);
 
         PriorityItemView itemBlue = (PriorityItemView) findViewById(R.id.priority_item_blue);
         itemBlue.setPriority(Priority.PRIORITY_BLUE);

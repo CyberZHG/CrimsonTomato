@@ -88,7 +88,7 @@ public class GoalData {
         DatabaseUtil.deleteById(context, TABLE_NAME, id);
     }
 
-    Vector<Goal> getGoalsFromCursor(Cursor cur) {
+    private Vector<Goal> getGoalsFromCursor(Cursor cur) {
         Vector<Goal> goals = new Vector();
         while (cur.moveToNext()) {
             Goal goal = new Goal();

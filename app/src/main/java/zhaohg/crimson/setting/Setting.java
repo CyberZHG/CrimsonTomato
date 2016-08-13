@@ -13,6 +13,11 @@ public class Setting {
 
     private static final String PREFERENCE_NAME = "setting";
     private static final String KEY_PERIOD = "period";
+    private static final String KEY_SUITE_NUMBER = "suite_number";
+    private static final String KEY_SHORT_BREAK = "short_break";
+    private static final String KEY_LONG_BREAK = "long_break";
+    private static final String KEY_SHOW_PROGRESS = "show_progress";
+    private static final String KEY_PERIOD_DAY_COUNT = "day_count";
     private static final String KEY_LAST_PERIOD = "last_period";
     private static final String KEY_VIBRATE = "vibrate";
     private static final String KEY_VIBRATED = "vibrated";
@@ -32,6 +37,11 @@ public class Setting {
     private boolean debugMode = false;
 
     private int period;
+    private int suiteNum;
+    private int shortBreak;
+    private int longBreak;
+    private boolean showProgress;
+    private int dayCount;
     private int lastPeriod;
     private boolean vibrate;
     private boolean vibrated;
@@ -64,10 +74,15 @@ public class Setting {
         init((Context)activity);
     }
 
-    public void init(Context context) {
+    private void init(Context context) {
         this.context = context;
         SharedPreferences settings = this.getSharedPreference();
         this.period = settings.getInt(KEY_PERIOD, 25);
+        this.suiteNum = settings.getInt(KEY_SUITE_NUMBER, 4);
+        this.shortBreak = settings.getInt(KEY_SHORT_BREAK, 5);
+        this.longBreak = settings.getInt(KEY_LONG_BREAK, 15);
+        this.showProgress = settings.getBoolean(KEY_SHOW_PROGRESS, true);
+        this.dayCount = settings.getInt(KEY_PERIOD_DAY_COUNT, 0);
         this.lastPeriod = settings.getInt(KEY_LAST_PERIOD, 25);
         this.vibrate = settings.getBoolean(KEY_VIBRATE, true);
         this.vibrated = settings.getBoolean(KEY_VIBRATED, false);
@@ -89,21 +104,21 @@ public class Setting {
         return this.context.getSharedPreferences(PREFERENCE_NAME, Activity.MODE_PRIVATE);
     }
 
-    void editValue(String key, int value) {
+    private void editValue(String key, int value) {
         SharedPreferences settings = this.getSharedPreference();
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
         editor.apply();
     }
 
-    void editValue(String key, boolean value) {
+    private void editValue(String key, boolean value) {
         SharedPreferences settings = this.getSharedPreference();
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(key, value);
         editor.apply();
     }
 
-    void editValue(String key, String value) {
+    private void editValue(String key, String value) {
         SharedPreferences settings = this.getSharedPreference();
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
@@ -118,9 +133,54 @@ public class Setting {
         return this.period;
     }
 
+    public int getSuiteNum() {
+        return this.suiteNum;
+    }
+
+    public int getShortBreak() {
+        return this.shortBreak;
+    }
+
+    public int getLongBreak() {
+        return this.longBreak;
+    }
+
+    public boolean isShowProgress() {
+        return this.showProgress;
+    }
+
+    public int getDayCount() {
+        return this.dayCount;
+    }
+
     public void setPeriod(int period) {
         this.period = period;
         this.editValue(KEY_PERIOD, period);
+    }
+
+    public void setSuiteNum(int num) {
+        this.suiteNum = num;
+        this.editValue(KEY_SUITE_NUMBER, num);
+    }
+
+    public void setShortBreak(int period) {
+        this.shortBreak = period;
+        this.editValue(KEY_SHORT_BREAK, period);
+    }
+
+    public void setLongBreak(int period) {
+        this.longBreak = period;
+        this.editValue(KEY_LONG_BREAK, period);
+    }
+
+    public void setShowProgress(boolean show) {
+        this.showProgress = show;
+        this.editValue(KEY_SHOW_PROGRESS, show);
+    }
+
+    public void setDayCount(int count) {
+        this.dayCount = count;
+        this.editValue(KEY_PERIOD_DAY_COUNT, count);
     }
 
     public int getLastPeriod() {
