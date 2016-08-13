@@ -31,7 +31,7 @@ public abstract class WidgetContainer {
         drawChildren(canvas);
     }
 
-    protected boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
             if (this.lastTouchWidget != null) {
                 if (this.lastTouchWidget.onTouchEvent(event)) {
