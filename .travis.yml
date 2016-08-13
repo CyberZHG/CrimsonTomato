@@ -1,10 +1,10 @@
 language: android
 android:
   components:
-    - build-tools-24.0.1
-    - android-24
-    - sys-img-armeabi-v7a-android-24
-    - sys-img-x86-android-24
+    - build-tools-23.0.1
+    - android-23
+    - sys-img-armeabi-v7a-android-23
+    - sys-img-x86-android-23
 before_install:
   - chmod +x gradlew
 script:
