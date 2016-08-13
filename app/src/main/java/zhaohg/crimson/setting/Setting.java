@@ -13,6 +13,7 @@ public class Setting {
 
     private static final String PREFERENCE_NAME = "setting";
     private static final String KEY_PERIOD = "period";
+    private static final String KEY_SUITE_NUMBER = "suite_number";
     private static final String KEY_SHORT_BREAK = "short_break";
     private static final String KEY_LONG_BREAK = "long_break";
     private static final String KEY_PERIOD_DAY_COUNT = "day_count";
@@ -35,6 +36,7 @@ public class Setting {
     private boolean debugMode = false;
 
     private int period;
+    private int suiteNum;
     private int shortBreak;
     private int longBreak;
     private int dayCount;
@@ -74,6 +76,7 @@ public class Setting {
         this.context = context;
         SharedPreferences settings = this.getSharedPreference();
         this.period = settings.getInt(KEY_PERIOD, 25);
+        this.suiteNum = settings.getInt(KEY_SUITE_NUMBER, 4);
         this.shortBreak = settings.getInt(KEY_SHORT_BREAK, 5);
         this.longBreak = settings.getInt(KEY_LONG_BREAK, 15);
         this.dayCount = settings.getInt(KEY_PERIOD_DAY_COUNT, 0);
@@ -127,6 +130,10 @@ public class Setting {
         return this.period;
     }
 
+    public int getSuiteNum() {
+        return this.suiteNum;
+    }
+
     public int getShortBreak() {
         return this.shortBreak;
     }
@@ -142,6 +149,11 @@ public class Setting {
     public void setPeriod(int period) {
         this.period = period;
         this.editValue(KEY_PERIOD, period);
+    }
+
+    public void setSuiteNum(int num) {
+        this.suiteNum = num;
+        this.editValue(KEY_SUITE_NUMBER, num);
     }
 
     public void setShortBreak(int period) {
