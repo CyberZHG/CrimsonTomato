@@ -29,13 +29,6 @@
             android:divider="@drawable/divider_setting"
             android:orientation="vertical">
 
-            <!-- Dummy item to prevent auto focus. -->
-            <LinearLayout
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:layout_width="0px"
-                android:layout_height="0px"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -200,7 +193,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:focusable="true" android:focusableInTouchMode="true" >
 
                 <EditText
                     android:layout_width="match_parent"
@@ -256,18 +250,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/setting_about" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/setting_source" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:text="https://github.com/CyberZHG/CrimsonTomato"/>
 
             <TextView
                 android:layout_width="wrap_content"
