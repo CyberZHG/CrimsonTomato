@@ -3,6 +3,7 @@ package zhaohg.crimson.goal;
 import android.content.Context;
 
 import java.util.Date;
+import java.util.Locale;
 
 import zhaohg.crimson.R;
 
@@ -96,7 +97,7 @@ public class Goal {
 
     public String getFormattedMinuteSpent(Context context) {
         if (minuteSpent > 60) {
-            return String.format("%.2f", minuteSpent / 60.0f) + " " + context.getString(R.string.goal_format_hours);
+            return String.format(Locale.getDefault(), "%.2f", minuteSpent / 60.0f) + " " + context.getString(R.string.goal_format_hours);
         }
         return minuteSpent + " " + context.getString(R.string.goal_format_minutes);
     }

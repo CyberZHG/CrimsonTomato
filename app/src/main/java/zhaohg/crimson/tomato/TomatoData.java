@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.Vector;
 
@@ -99,7 +100,7 @@ public class TomatoData {
     }
 
     private Vector<Tomato> getTomatoesFromCursor(Cursor cur) {
-        Vector<Tomato> tomatoes = new Vector();
+        Vector tomatoes = new Vector();
         while (cur.moveToNext()) {
             Tomato tomato = new Tomato();
             tomato.setId(cur.getInt(cur.getColumnIndex(COLUMN_ID)));
@@ -188,8 +189,8 @@ public class TomatoData {
     }
 
     public void exportToCsv(FileOutputStream output) throws IOException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss aa");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss aa", Locale.getDefault());
         OutputStreamWriter writer = new OutputStreamWriter(output);
         writer.write("Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private" + "\n");
         for (int pageNum = 0; ; ++pageNum) {

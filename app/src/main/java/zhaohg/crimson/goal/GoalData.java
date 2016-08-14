@@ -89,7 +89,7 @@ public class GoalData {
     }
 
     private Vector<Goal> getGoalsFromCursor(Cursor cur) {
-        Vector<Goal> goals = new Vector();
+        Vector goals = new Vector();
         while (cur.moveToNext()) {
             Goal goal = new Goal();
             goal.setId(cur.getInt(cur.getColumnIndex(COLUMN_ID)));

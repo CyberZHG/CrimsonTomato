@@ -37,9 +37,6 @@ public class MainView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (scene != null) {
-            return scene.onTouchEvent(event);
-        }
-        return false;
+        return scene != null && scene.onTouchEvent(event);
     }
 }

@@ -16,7 +16,7 @@ import zhaohg.crimson.widget.Widget;
 
 public class ProgressWidget extends Widget {
 
-    private Setting setting = Setting.getInstance();
+    private final Setting setting = Setting.getInstance();
 
     public ProgressWidget(Context context, View view) {
         super(context, view);

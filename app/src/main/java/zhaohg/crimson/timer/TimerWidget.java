@@ -37,7 +37,7 @@ public class TimerWidget extends Widget {
     private static final int STATE_TRANS_TO_FINISHED = 3;
     private static final int STATE_FINISHED = 4;
 
-    private Setting setting = Setting.getInstance();
+    private final Setting setting = Setting.getInstance();
 
     private int state = STATE_WAIT;
     private int period = 25;
@@ -47,8 +47,8 @@ public class TimerWidget extends Widget {
     private String title;
     private boolean isBreakFinished;
 
-    private int timerColor;
-    private int textColor;
+    private final int timerColor;
+    private final int textColor;
 
     private float transStrokeWidth;
     private float fontAlpha = 1.0f;
@@ -129,7 +129,7 @@ public class TimerWidget extends Widget {
         paint.setColor(this.textColor);
         paint.setStyle(Paint.Style.FILL);
         paint.setAlpha((int) (255 * fontAlpha));
-        String text = "";
+        String text;
         if (isBreakFinished) {
             text = context.getString(R.string.timer_start);
         } else {
