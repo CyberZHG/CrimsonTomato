@@ -7,6 +7,9 @@ import android.graphics.RectF;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import zhaohg.crimson.R;
 import zhaohg.crimson.setting.Setting;
 import zhaohg.crimson.widget.Widget;
@@ -51,6 +54,18 @@ public class ProgressWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
             }
             x += iconSize;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        Calendar last = Calendar.getInstance();
+        Calendar current = Calendar.getInstance();
+        last.setTime(setting.getLastFinished());
+        current.setTime(new Date());
+        if (last.get(Calendar.YEAR) != current.get(Calendar.YEAR) ||
+            last.get(Calendar.DAY_OF_YEAR) != current.get(Calendar.DAY_OF_YEAR)) {
+            setting.setDayCount(0);
         }
     }
 

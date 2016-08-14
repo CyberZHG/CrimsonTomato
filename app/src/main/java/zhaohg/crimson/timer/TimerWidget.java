@@ -379,7 +379,7 @@ public class TimerWidget extends Widget {
                         public void onClick(DialogInterface dialog, int which) {
                             Calendar last = Calendar.getInstance();
                             Calendar current = Calendar.getInstance();
-                            last.setTime(setting.getLastBegin());
+                            last.setTime(setting.getLastFinished());
                             current.setTime(new Date());
                             if (last.get(Calendar.YEAR) == current.get(Calendar.YEAR) &&
                                 last.get(Calendar.DAY_OF_YEAR) == current.get(Calendar.DAY_OF_YEAR)) {
