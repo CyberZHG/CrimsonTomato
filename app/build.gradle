@@ -8,8 +8,8 @@ android {
         applicationId "zhaohg.crimson"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 17
-        versionName "1.0.11"
+        versionCode 18
+        versionName "1.0.12"
         multiDexEnabled true
     }
     buildTypes {

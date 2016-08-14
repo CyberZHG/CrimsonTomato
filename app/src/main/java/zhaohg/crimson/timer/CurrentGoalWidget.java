@@ -23,7 +23,7 @@ public class CurrentGoalWidget extends Widget {
     private static final int STATE_SHOW = 2;
     private static final int STATE_HIDING = 3;
 
-    private Setting setting = Setting.getInstance();
+    private final Setting setting = Setting.getInstance();
 
     private int state = STATE_HIDE;
     private float textAlpha = 0.0f;

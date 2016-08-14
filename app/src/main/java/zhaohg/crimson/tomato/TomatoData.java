@@ -1,18 +1,22 @@
 package zhaohg.crimson.tomato;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.provider.CalendarContract;
+import android.support.v4.content.ContextCompat;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.Vector;
 
@@ -96,7 +100,7 @@ public class TomatoData {
     }
 
     private Vector<Tomato> getTomatoesFromCursor(Cursor cur) {
-        Vector<Tomato> tomatoes = new Vector();
+        Vector tomatoes = new Vector();
         while (cur.moveToNext()) {
             Tomato tomato = new Tomato();
             tomato.setId(cur.getInt(cur.getColumnIndex(COLUMN_ID)));
@@ -144,31 +148,32 @@ public class TomatoData {
         if (setting.getCalendarId().equals("")) {
             return;
         }
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.setTime(tomato.getBegin());
-        long startMillis = beginTime.getTimeInMillis();
-        Calendar endTime = Calendar.getInstance();
-        endTime.setTime(tomato.getEnd());
-        long endMillis = endTime.getTimeInMillis();
+        if (ContextCompat.checkSelfPermission(this.context, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+            Calendar beginTime = Calendar.getInstance();
+            beginTime.setTime(tomato.getBegin());
+            long startMillis = beginTime.getTimeInMillis();
+            Calendar endTime = Calendar.getInstance();
+            endTime.setTime(tomato.getEnd());
+            long endMillis = endTime.getTimeInMillis();
 
-        ContentResolver cr = context.getContentResolver();
-        ContentValues values = new ContentValues();
-        TimeZone timeZone = TimeZone.getDefault();
-        values.put(CalendarContract.Events.CALENDAR_ID, setting.getCalendarId());
-        values.put(CalendarContract.Events.DTSTART, startMillis);
-        values.put(CalendarContract.Events.DTEND, endMillis);
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
-        values.put(CalendarContract.Events.TITLE, tomato.getTitle());
-        values.put(CalendarContract.Events.DESCRIPTION, tomato.getDescription());
-        values.put(CalendarContract.Events.EVENT_LOCATION, tomato.getLocation());
-        values.put(CalendarContract.Events.EVENT_COLOR, Color.rgb(212, 46, 24));
-        cr.insert(CalendarContract.Events.CONTENT_URI, values);
-
-        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_SYNCED, 1);
-        db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + tomato.getId(), null);
-        db.close();
+            ContentResolver cr = context.getContentResolver();
+            ContentValues values = new ContentValues();
+            TimeZone timeZone = TimeZone.getDefault();
+            values.put(CalendarContract.Events.CALENDAR_ID, setting.getCalendarId());
+            values.put(CalendarContract.Events.DTSTART, startMillis);
+            values.put(CalendarContract.Events.DTEND, endMillis);
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+            values.put(CalendarContract.Events.TITLE, tomato.getTitle());
+            values.put(CalendarContract.Events.DESCRIPTION, tomato.getDescription());
+            values.put(CalendarContract.Events.EVENT_LOCATION, tomato.getLocation());
+            values.put(CalendarContract.Events.EVENT_COLOR, Color.rgb(212, 46, 24));
+            cr.insert(CalendarContract.Events.CONTENT_URI, values);
+            SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COLUMN_SYNCED, 1);
+            db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + tomato.getId(), null);
+            db.close();
+        }
     }
 
     private String addCsvEscape(String s) {
@@ -184,8 +189,8 @@ public class TomatoData {
     }
 
     public void exportToCsv(FileOutputStream output) throws IOException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss aa");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss aa", Locale.getDefault());
         OutputStreamWriter writer = new OutputStreamWriter(output);
         writer.write("Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private" + "\n");
         for (int pageNum = 0; ; ++pageNum) {

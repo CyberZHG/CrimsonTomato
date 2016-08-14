@@ -2,6 +2,7 @@ package zhaohg.crimson.goal;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 
 import zhaohg.crimson.R;
 
@@ -16,15 +17,15 @@ class Priority {
     public static int getPriorityColor(Context context, int priority) {
         switch (priority) {
             case PRIORITY_BLUE:
-                return context.getResources().getColor((R.color.priority_blue));
+                return ContextCompat.getColor(context, R.color.priority_blue);
             case PRIORITY_GREEN:
-                return context.getResources().getColor((R.color.priority_green));
+                return ContextCompat.getColor(context, R.color.priority_green);
             case PRIORITY_ORANGE:
-                return context.getResources().getColor((R.color.priority_orange));
+                return ContextCompat.getColor(context, R.color.priority_orange);
             case PRIORITY_RED:
-                return context.getResources().getColor((R.color.priority_red));
+                return ContextCompat.getColor(context, R.color.priority_red);
             case PRIORITY_PURPLE:
-                return context.getResources().getColor((R.color.priority_purple));
+                return ContextCompat.getColor(context, R.color.priority_purple);
         }
         return Color.WHITE;
     }

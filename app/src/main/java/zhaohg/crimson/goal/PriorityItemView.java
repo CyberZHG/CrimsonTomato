@@ -103,6 +103,6 @@ public class PriorityItemView extends View {
     }
 
     public interface OnSelectedChangedListener {
-        public void onSelectedChanged(boolean selected);
+        void onSelectedChanged(boolean selected);
     }
 }

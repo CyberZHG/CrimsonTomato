@@ -7,12 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DatabaseUtil {
 
     public static final int PAGE_SIZE = 50;
 
-    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
     public static SQLiteDatabase getDatabase(Context context) {
         return context.openOrCreateDatabase("tomato.db", Context.MODE_PRIVATE, null);

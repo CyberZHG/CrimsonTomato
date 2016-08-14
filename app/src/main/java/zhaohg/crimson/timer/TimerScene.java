@@ -2,6 +2,7 @@ package zhaohg.crimson.timer;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import zhaohg.crimson.R;
@@ -35,7 +36,7 @@ public class TimerScene extends Scene {
 
     @Override
     public void selfDraw(Canvas canvas) {
-        canvas.drawColor(context.getResources().getColor(R.color.background_material_dark));
+        canvas.drawColor(ContextCompat.getColor(context, R.color.background_material_dark));
     }
 
 }

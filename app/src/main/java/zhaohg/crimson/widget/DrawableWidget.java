@@ -3,6 +3,7 @@ package zhaohg.crimson.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 public class DrawableWidget extends Widget {
@@ -22,7 +23,7 @@ public class DrawableWidget extends Widget {
     }
 
     public void setDrawable(int drawableId) {
-        this.drawable = this.context.getResources().getDrawable(drawableId);
+        this.drawable = ContextCompat.getDrawable(this.context, drawableId);
         this.drawable.setBounds(getLeft(), getTop(), getRight(), getBottom());
     }
 

@@ -101,7 +101,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ViewHolder>  {
 
         public ViewHolder(View view) {
             super(view);
-            viewPriorityColor = (View) view.findViewById(R.id.view_priority_color);
+            viewPriorityColor = view.findViewById(R.id.view_priority_color);
             checkBoxFinished = (CheckBox) view.findViewById(R.id.check_box_finished);
             checkBoxFinished.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

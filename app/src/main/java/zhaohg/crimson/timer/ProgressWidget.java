@@ -4,7 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import zhaohg.crimson.R;
 import zhaohg.crimson.setting.Setting;
@@ -12,7 +16,7 @@ import zhaohg.crimson.widget.Widget;
 
 public class ProgressWidget extends Widget {
 
-    private Setting setting = Setting.getInstance();
+    private final Setting setting = Setting.getInstance();
 
     public ProgressWidget(Context context, View view) {
         super(context, view);
@@ -37,7 +41,7 @@ public class ProgressWidget extends Widget {
         int y = getCenterY();
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(context.getResources().getColor(R.color.color_primary));
+        paint.setColor(ContextCompat.getColor(context, R.color.color_primary));
         for (int i = 0; i < suiteCount + singleCount; ++i) {
             paint.setStrokeWidth(Math.max(1, (int)(iconSize * 0.1)));
             paint.setStyle(Paint.Style.STROKE);
@@ -50,6 +54,18 @@ public class ProgressWidget extends Widget {
                 canvas.drawArc(oval, 0, 360, false, paint);
             }
             x += iconSize;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        Calendar last = Calendar.getInstance();
+        Calendar current = Calendar.getInstance();
+        last.setTime(setting.getLastFinished());
+        current.setTime(new Date());
+        if (last.get(Calendar.YEAR) != current.get(Calendar.YEAR) ||
+            last.get(Calendar.DAY_OF_YEAR) != current.get(Calendar.DAY_OF_YEAR)) {
+            setting.setDayCount(0);
         }
     }
 

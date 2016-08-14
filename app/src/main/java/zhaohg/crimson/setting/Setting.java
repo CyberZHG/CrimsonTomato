@@ -34,7 +34,7 @@ public class Setting {
     private Activity activity;
     private Context context;
 
-    private boolean debugMode = false;
+    private final boolean debugMode = false;
 
     private int period;
     private int suiteNum;

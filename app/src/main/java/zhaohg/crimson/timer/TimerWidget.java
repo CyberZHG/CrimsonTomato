@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Vibrator;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -36,7 +37,7 @@ public class TimerWidget extends Widget {
     private static final int STATE_TRANS_TO_FINISHED = 3;
     private static final int STATE_FINISHED = 4;
 
-    private Setting setting = Setting.getInstance();
+    private final Setting setting = Setting.getInstance();
 
     private int state = STATE_WAIT;
     private int period = 25;
@@ -46,16 +47,16 @@ public class TimerWidget extends Widget {
     private String title;
     private boolean isBreakFinished;
 
-    private int timerColor;
-    private int textColor;
+    private final int timerColor;
+    private final int textColor;
 
     private float transStrokeWidth;
     private float fontAlpha = 1.0f;
 
     public TimerWidget(Context context, View view) {
         super(context, view);
-        this.timerColor = context.getResources().getColor(R.color.color_primary);
-        this.textColor = context.getResources().getColor(R.color.text_color_primary);
+        this.timerColor = ContextCompat.getColor(context, R.color.color_primary);
+        this.textColor = ContextCompat.getColor(context, R.color.text_color_primary);
         this.onResume();
     }
 
@@ -128,7 +129,7 @@ public class TimerWidget extends Widget {
         paint.setColor(this.textColor);
         paint.setStyle(Paint.Style.FILL);
         paint.setAlpha((int) (255 * fontAlpha));
-        String text = "";
+        String text;
         if (isBreakFinished) {
             text = context.getString(R.string.timer_start);
         } else {
@@ -378,7 +379,7 @@ public class TimerWidget extends Widget {
                         public void onClick(DialogInterface dialog, int which) {
                             Calendar last = Calendar.getInstance();
                             Calendar current = Calendar.getInstance();
-                            last.setTime(setting.getLastBegin());
+                            last.setTime(setting.getLastFinished());
                             current.setTime(new Date());
                             if (last.get(Calendar.YEAR) == current.get(Calendar.YEAR) &&
                                 last.get(Calendar.DAY_OF_YEAR) == current.get(Calendar.DAY_OF_YEAR)) {
