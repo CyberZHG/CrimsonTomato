@@ -1,6 +1,9 @@
 Crimson Tomato
 ==============
 
+[![Travis](https://img.shields.io/travis/CyberZHG/CrimsonTomato.svg?maxAge=2592000)](https://travis-ci.org/CyberZHG/CrimsonTomato)
+[![GitHub release](https://img.shields.io/github/release/CyberZHG/CrimsonTomato.svg?maxAge=2592000)](https://github.com/CyberZHG/CrimsonTomato/releases)
+
 ## Introduction
 
 The time management application related to [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique).
