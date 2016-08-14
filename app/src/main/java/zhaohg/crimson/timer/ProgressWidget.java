@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import zhaohg.crimson.R;
@@ -37,7 +38,7 @@ public class ProgressWidget extends Widget {
         int y = getCenterY();
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(context.getResources().getColor(R.color.color_primary));
+        paint.setColor(ContextCompat.getColor(context, R.color.color_primary));
         for (int i = 0; i < suiteCount + singleCount; ++i) {
             paint.setStrokeWidth(Math.max(1, (int)(iconSize * 0.1)));
             paint.setStyle(Paint.Style.STROKE);

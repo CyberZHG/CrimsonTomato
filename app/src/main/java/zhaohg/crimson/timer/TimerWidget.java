@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Vibrator;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -54,8 +55,8 @@ public class TimerWidget extends Widget {
 
     public TimerWidget(Context context, View view) {
         super(context, view);
-        this.timerColor = context.getResources().getColor(R.color.color_primary);
-        this.textColor = context.getResources().getColor(R.color.text_color_primary);
+        this.timerColor = ContextCompat.getColor(context, R.color.color_primary);
+        this.textColor = ContextCompat.getColor(context, R.color.text_color_primary);
         this.onResume();
     }
 

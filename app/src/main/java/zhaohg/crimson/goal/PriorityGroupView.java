@@ -90,7 +90,7 @@ public class PriorityGroupView extends LinearLayout {
     }
 
     public interface OnPriorityChangedListener {
-        public void onPriorityChanged(int priority);
+        void onPriorityChanged(int priority);
     }
 
 }

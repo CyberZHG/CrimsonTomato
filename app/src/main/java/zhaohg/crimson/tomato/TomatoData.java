@@ -1,12 +1,15 @@
 package zhaohg.crimson.tomato;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.provider.CalendarContract;
+import android.support.v4.content.ContextCompat;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -144,31 +147,32 @@ public class TomatoData {
         if (setting.getCalendarId().equals("")) {
             return;
         }
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.setTime(tomato.getBegin());
-        long startMillis = beginTime.getTimeInMillis();
-        Calendar endTime = Calendar.getInstance();
-        endTime.setTime(tomato.getEnd());
-        long endMillis = endTime.getTimeInMillis();
+        if (ContextCompat.checkSelfPermission(this.context, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+            Calendar beginTime = Calendar.getInstance();
+            beginTime.setTime(tomato.getBegin());
+            long startMillis = beginTime.getTimeInMillis();
+            Calendar endTime = Calendar.getInstance();
+            endTime.setTime(tomato.getEnd());
+            long endMillis = endTime.getTimeInMillis();
 
-        ContentResolver cr = context.getContentResolver();
-        ContentValues values = new ContentValues();
-        TimeZone timeZone = TimeZone.getDefault();
-        values.put(CalendarContract.Events.CALENDAR_ID, setting.getCalendarId());
-        values.put(CalendarContract.Events.DTSTART, startMillis);
-        values.put(CalendarContract.Events.DTEND, endMillis);
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
-        values.put(CalendarContract.Events.TITLE, tomato.getTitle());
-        values.put(CalendarContract.Events.DESCRIPTION, tomato.getDescription());
-        values.put(CalendarContract.Events.EVENT_LOCATION, tomato.getLocation());
-        values.put(CalendarContract.Events.EVENT_COLOR, Color.rgb(212, 46, 24));
-        cr.insert(CalendarContract.Events.CONTENT_URI, values);
-
-        SQLiteDatabase db = DatabaseUtil.getDatabase(context);
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_SYNCED, 1);
-        db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + tomato.getId(), null);
-        db.close();
+            ContentResolver cr = context.getContentResolver();
+            ContentValues values = new ContentValues();
+            TimeZone timeZone = TimeZone.getDefault();
+            values.put(CalendarContract.Events.CALENDAR_ID, setting.getCalendarId());
+            values.put(CalendarContract.Events.DTSTART, startMillis);
+            values.put(CalendarContract.Events.DTEND, endMillis);
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+            values.put(CalendarContract.Events.TITLE, tomato.getTitle());
+            values.put(CalendarContract.Events.DESCRIPTION, tomato.getDescription());
+            values.put(CalendarContract.Events.EVENT_LOCATION, tomato.getLocation());
+            values.put(CalendarContract.Events.EVENT_COLOR, Color.rgb(212, 46, 24));
+            cr.insert(CalendarContract.Events.CONTENT_URI, values);
+            SQLiteDatabase db = DatabaseUtil.getDatabase(context);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COLUMN_SYNCED, 1);
+            db.update(TABLE_NAME, contentValues, COLUMN_ID + "=" + tomato.getId(), null);
+            db.close();
+        }
     }
 
     private String addCsvEscape(String s) {
