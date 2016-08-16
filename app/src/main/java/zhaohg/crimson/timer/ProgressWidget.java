@@ -35,7 +35,7 @@ public class ProgressWidget extends Widget {
         int singleCount = dayCount % setting.getSuiteNum();
         int iconSize = (int)(getH() * 0.9);
         int halfIconSize = iconSize >> 1;
-        iconSize = (int)(iconSize * 1.2);
+        iconSize = (int)(iconSize * 1.5);
         int totalWidth = (suiteCount + singleCount - 1) * iconSize;
         int x = getCenterX() - (totalWidth) / 2;
         int y = getCenterY();
@@ -49,7 +49,7 @@ public class ProgressWidget extends Widget {
             canvas.drawArc(oval, 0, 360, false, paint);
             if (i < suiteCount) {
                 paint.setStyle(Paint.Style.FILL);
-                int innerSize = (int)(iconSize * 0.3);
+                int innerSize = (int)(halfIconSize * 0.6);
                 oval = new RectF(x - innerSize, y - innerSize, x + innerSize, y + innerSize);
                 canvas.drawArc(oval, 0, 360, false, paint);
             }
