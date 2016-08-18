@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "813435505600",
+    "firebase_url": "https://citric-aleph-98405.firebaseio.com",
+    "project_id": "citric-aleph-98405",
+    "storage_bucket": "citric-aleph-98405.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813435505600:android:ac98f6d71de6f446",
+        "android_client_info": {
+          "package_name": "zhaohg.crimson"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813435505600-hgujs7vs160n41vmrtggnfd3a9ttjs0p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zhaohg.crimson",
+            "certificate_hash": "7A0A20DC57661D9F6EFEDE0423114F127B425A0A"
+          }
+        },
+        {
+          "client_id": "813435505600-9i5f0rikomb49jrng8p0ca8h3lm8om5k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxIX11hAnirmER-bMYlptGubp_SpFc_ME"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813435505600-9i5f0rikomb49jrng8p0ca8h3lm8om5k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
