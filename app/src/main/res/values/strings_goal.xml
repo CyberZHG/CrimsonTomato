@@ -24,8 +24,8 @@
 
     <string name="goal_item_text_title">Title</string>
     <string name="goal_item_text_priority">Priority</string>
-    <string name="goal_item_text_period">Period</string>
-    <string name="goal_item_text_tomato_spent">Tomatoes：</string>
-    <string name="goal_item_text_time_spent">Time：</string>
-    <string name="goal_item_text_interval">Interval：</string>
+    <string name="goal_item_text_period">Length</string>
+    <string name="goal_item_text_tomato_spent">Pomodoros: </string>
+    <string name="goal_item_text_time_spent">Time Spent: </string>
+    <string name="goal_item_text_interval">Interval: </string>
 </resources>

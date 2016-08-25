@@ -7,13 +7,14 @@
     <string name="device_offline">The device is off-line</string>
 
     <string name="setting_schedule">Schedule</string>
-    <string name="setting_work_period">Work Period</string>
+    <string name="setting_work_period">Pomodoro Length</string>
     <string name="setting_period_suite_num">Suite Number</string>
     <string name="setting_period_short_break">Short Break</string>
     <string name="setting_period_long_break">Long Break</string>
     <string name="setting_period_num">25 mins</string>
     <string name="setting_period_num_suffix"> mins</string>
     <string name="setting_suite_num_default">4</string>
+    <string name="setting_suite_num_suffix"> pomodoros</string>
     <string name="setting_vibrate">Vibrate</string>
     <string name="setting_vibrate_desc">Vibrate when finished</string>
 
