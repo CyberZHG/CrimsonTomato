@@ -36,3 +36,5 @@ dependencies {
     compile 'com.android.support:design:24.1.1'
     compile 'com.github.brnunes:swipeablerecyclerview:1.0.1'
 }
+
+apply plugin: 'com.google.gms.google-services'
